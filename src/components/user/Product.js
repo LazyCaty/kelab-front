@@ -2,13 +2,12 @@
 import React,{Component} from 'react';
 import UserHead from "./common/UserHead"
 import Footer from './common/Footer';
-import {connect} from 'react-redux';
 import { Input,Menu,  Breadcrumb,message } from 'antd';
-import "./Nlp.less";
+import "./Product.less";
 
 const SubMenu = Menu.SubMenu;
 const Search = Input.Search;
-class Nlp extends Component{
+class Product extends Component{
     constructor(props){
         super(props);
         this.state={
@@ -32,11 +31,11 @@ class Nlp extends Component{
     render(){
         return(
             <div>
-                <div className="nlp-header">
+                <div className="product-header">
                     <UserHead />
                 </div>
-                <div className="nlp-content">
-                    <div className="nlp-menuNav">
+                <div className="product-content">
+                    <div className="product-menuNav">
                     <Menu
                         theme={this.state.theme}
                         onClick={this.handleClick}
@@ -64,7 +63,7 @@ class Nlp extends Component{
                         </SubMenu>
                     </Menu>
                     </div>
-                    <div className="nlp-dataList">
+                    <div className="product-dataList">
                         <Breadcrumb>
                             <Breadcrumb.Item>主页</Breadcrumb.Item>
                             <Breadcrumb.Item>
@@ -83,7 +82,7 @@ class Nlp extends Component{
                         <p>some article</p>
                     </div>
                 </div>
-                <div className="nlp-footer">
+                <div className="product-footer">
                     <Footer />
                 </div>
             </div>
@@ -91,9 +90,5 @@ class Nlp extends Component{
     }
 }
 
-//组件关联
-const mapStateToProps = state => {
-    return {questionRecord: state.questionRecord};
-};
-Nlp = connect(mapStateToProps)(Nlp);
-export default Nlp;
+
+export default Product;

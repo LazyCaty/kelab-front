@@ -38,6 +38,7 @@ class MenuNav extends Component{
                             <Menu.Item key="3"><NavLink to=''>语言分析</NavLink></Menu.Item>
                             <Menu.Item key="4"><NavLink to=''>云平台API</NavLink></Menu.Item>
                             <Menu.Item key="5"><NavLink to=''>算法演示</NavLink></Menu.Item>
+                            <Menu.Item key="6"><NavLink to='/'>返回主页</NavLink></Menu.Item>
                         </Menu>
                     </div>
                 </div>
