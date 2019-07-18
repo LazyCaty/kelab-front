@@ -1,24 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="20741418-732f-478e-ad7d-a14e29848c2e" name="默认更改列表" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/Homepage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/Homepage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/Homepage.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/Homepage.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/UserHome.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/UserHome.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/UserHome.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/UserHome.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/common/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/common/Footer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/common/Footer.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/common/Footer.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/common/UserHead.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/common/UserHead.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/common/UserHead.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/common/UserHead.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/login.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/Login.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants/action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/action.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/reducer/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducer/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/index.js" afterDir="false" />
-    </list>
+    <list default="true" id="20741418-732f-478e-ad7d-a14e29848c2e" name="默认更改列表" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -107,8 +90,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="399">
-                <caret line="55" column="14" lean-forward="true" selection-start-line="55" selection-start-column="14" selection-end-line="55" selection-end-column="14" />
+              <first_editor relative-caret-position="294">
+                <caret line="50" column="16" lean-forward="true" selection-start-line="50" selection-start-column="16" selection-end-line="50" selection-end-column="16" />
               </first_editor>
               <second_editor />
             </state>
@@ -328,12 +311,12 @@
       <workItem from="1561638361777" duration="4542000" />
       <workItem from="1562054372475" duration="2018000" />
       <workItem from="1563357372742" duration="597000" />
-      <workItem from="1563420951669" duration="2801000" />
+      <workItem from="1563420951669" duration="3404000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88794000" />
+    <option name="totallyTimeSpent" value="89397000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -754,8 +737,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="399">
-            <caret line="55" column="14" lean-forward="true" selection-start-line="55" selection-start-column="14" selection-end-line="55" selection-end-column="14" />
+          <first_editor relative-caret-position="294">
+            <caret line="50" column="16" lean-forward="true" selection-start-line="50" selection-start-column="16" selection-end-line="50" selection-end-column="16" />
           </first_editor>
           <second_editor />
         </state>
