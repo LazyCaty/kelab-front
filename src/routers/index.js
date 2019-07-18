@@ -5,32 +5,40 @@ import Nlp from "../components/user/Nlp"
 import Chm from "../components/user/reproduction/Chm"
 import MenuNav from "../components/user/reproduction/MenuNav"
 import NlpRepro from "../components/user/reproduction/NlpRepro"
+import Admin from '../components/admin/AdminHome'
+import AdminServer from '../components/admin/AdminServer'
 import {Layout} from 'antd';
-import Login from '../components/user/login';
-import Registered from '../components/user/registered';
 
 class Routes extends Component{
     render(){
         return(
-        <Router>
-            <Switch>
+            <Router>
+                <Switch>
                     <Route path="/" exact component={Homepage}/>
                     <Route path="/nlp" exact component={Nlp}/>
-                    <Route path="/login" exact component={Login}/>
-                    <Route path="/registered" exact component={Registered}/>
+
+
+
                     <Route path='/reproduction/' render={
                         () => <Layout style={{backgroundColor:"white"}}>
                             <MenuNav/>
-                                <Switch>
-                                    <Route path='/reproduction/chm'  component={Chm}/>
-                                    <Route path='/reproduction/nlp'  component={NlpRepro}/>
-                                </Switch>
+                            <Switch>
+                                <Route path='/reproduction/chm'  component={Chm}/>
+                                <Route path='/reproduction/nlp'  component={NlpRepro}/>
+                            </Switch>
                         </Layout>
                     }
                     />
-            </Switch>
-        </Router>
-      
+
+                    <Route path="/admin" render={()=><Admin>
+                        <Switch>
+                            <Route Path="/admin/server" exact component={AdminServer}></Route>
+                        </Switch>
+                    </Admin>
+                    }></Route>
+                </Switch>
+            </Router>
+
         )
     }
 }
