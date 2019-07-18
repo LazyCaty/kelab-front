@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route,Switch } from 'react-router-dom'
 import Homepage from '../components/user/Homepage'
-import Nlp from "../components/user/Nlp"
+import Product from "../components/user/Product"
 import Chm from "../components/user/reproduction/Chm"
 import MenuNav from "../components/user/reproduction/MenuNav"
 import NlpRepro from "../components/user/reproduction/NlpRepro"
@@ -15,7 +15,7 @@ class Routes extends Component{
             <Router>
                 <Switch>
                     <Route path="/" exact component={Homepage}/>
-                    <Route path="/nlp" exact component={Nlp}/>
+                    <Route path="/product" exact component={Product}/>
 
 
 
