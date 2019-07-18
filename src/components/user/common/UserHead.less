@@ -5,19 +5,19 @@
 @colorE:#1CD8DB;
 
 .userhead-wrap{
-    height: 100px;
+    height: 100%;
     color: @colorB;
     float:left;
     position: absolute;
     z-index: 999;
     width:100%;
-    
+
 }
 .userhead-content{
-    height: 100px;
+
     text-align: center;
     line-height: 50px;
-  
+    font-size:15px;
     box-sizing:border-box;
     -moz-box-sizing:border-box; /* Firefox */
     -webkit-box-sizing:border-box; /* Safari */
@@ -25,38 +25,46 @@
 
 .userhead-bottomItem{
     cursor:pointer;
+    a{
+        color:#fff;
+    }
 }
 
 .userhead-bottomItem:hover{
     color: @colorE;
-    position: relative;  
-}
-
-.userhead-bottomItem div a:link{
-    color:@colorB!important;
-}
-
-.userhead-bottomItem div a:visited{
-    color:@colorB!important;
-}
-
-.userhead-bottomItem div a:hover{
-    color:@colorE!important;
+    position: relative;
 }
 
 .userhead-login:hover{
     background-color: #A22E83;
 }
+.userhead-login {
+    cursor:pointer;
+    a{
+        color: #ffffff;
+    }
+    span:hover{
+        color: @colorE;
+    }
+
+}
+
 
 .userhead-logo{
-    color: transparent;
+
     font-size: 22px;
-background-color : #fff;
-text-shadow : rgba(255,255,255,0.5) 0 5px 6px, rgba(255,255,255,0.2) 1px 3px 3px;
--webkit-background-clip : text;
-width: 100%;
-padding: 20px;
+    color : #fff;
+    text-align:right;
+    padding-right:30px;
+    margin-right:60%;
+    margin-top:2px;
+    border-right:1px solid #fff;
+
 }
+.userhead-login-displayno{
+    display:none;
+}
+
 
 
 
