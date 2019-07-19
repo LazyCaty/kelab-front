@@ -21,5 +21,13 @@ export default KeyMirror({
     GET_SERVER_ADD_SUCCESS:null,
     GET_SERVER_ADD_FAILURE:null,
 
+    GET_SERVER_DELETE_SUCCESS:null,
+    GET_SERVER_DELETE_FAILURE:null,
+
+    GET_SERVER_UPDATA_SUCCESS:null,
+    GET_SERVER_UPDATA__FAILURE:null,
+
+
+
 })
 
