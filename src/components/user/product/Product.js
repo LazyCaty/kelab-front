@@ -1,7 +1,7 @@
 /*自然语言处理产品界面*/
 import React,{Component} from 'react';
-import UserHead from "./common/UserHead"
-import Footer from './common/Footer';
+import UserHead from "../common/UserHead"
+import Footer from '../common/Footer';
 import { Input,Menu,  Breadcrumb,message } from 'antd';
 import "./Product.less";
 

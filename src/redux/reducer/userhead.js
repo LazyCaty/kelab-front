@@ -1,4 +1,4 @@
-import actions from '../../constants/action';
+import actions from '../action/index';
 const{
     GET_USER_MENU_SUCCESS,
     GET_USER_MENU_FAILURE,
