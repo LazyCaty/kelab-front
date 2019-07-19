@@ -1,6 +1,6 @@
 import axios from 'axios';
-import actions from '../../../constants/action';
-import configs from '../../../constants/configs';
+import actions from '../index';
+import configs from '../common/configs';
 const {
     GET_ADMIN_SERVER_SUCCESS,
     GET_ADMIN_SERVER_FAILURE,

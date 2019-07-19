@@ -1,4 +1,4 @@
-import actions from '../../constants/action';
+import actions from '../action/index';
 const{
     GET_ADMIN_MENU_SUCCESS,
     GET_ADMIN_MENU_FAILUER

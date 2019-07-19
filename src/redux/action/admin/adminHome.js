@@ -1,6 +1,6 @@
 import axios from 'axios';
-import configs from '../../../constants/configs';
-import actions from '../../../constants/action';
+import configs from '../common/configs';
+import actions from '../index';
 import { async } from 'rsvp';
 const {
 

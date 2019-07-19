@@ -33,7 +33,7 @@ class MenuNav extends Component{
                             style={{ lineHeight: '64px' }}
                             onSelect={this.changeMenuState}
                         >
-                            <Menu.Item key="1"><NavLink to='/reproduction/chm'>首页</NavLink></Menu.Item>
+                            <Menu.Item key="1"><NavLink to='/reproduction/'>首页</NavLink></Menu.Item>
                             <Menu.Item key="2"><NavLink to='/reproduction/nlp'>语言处理</NavLink></Menu.Item>
                             <Menu.Item key="3"><NavLink to=''>语言分析</NavLink></Menu.Item>
                             <Menu.Item key="4"><NavLink to=''>云平台API</NavLink></Menu.Item>
