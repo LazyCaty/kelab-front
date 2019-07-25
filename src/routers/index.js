@@ -22,7 +22,7 @@ class Routes extends Component{
                         () => <Layout style={{backgroundColor:"white"}}>
                             <Switch>
                                 <Route path='/product/' exact component={ProIndex}/>
-                                <Route path='/product/detail' exact  component={Product}/>
+                                <Route path='/product/document' exact  component={Product}/>
                             </Switch>
                         </Layout>
                     }

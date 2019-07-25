@@ -4,7 +4,7 @@ import './ProIndex.less';
 import Footer from "../common/Footer";
 import UserHead from "../common/UserHead"
 import { Menu,  List, Avatar,Card,} from 'antd';
-import {getServiceClass,getServiceSubject} from "../../../redux/action/user/product";
+import {getServiceClass,getServiceSubject} from "../../../redux/action/user/proIndex";
 import {connect} from 'react-redux';
 
 
@@ -29,11 +29,10 @@ class ProIndex extends Component{
             page: 1,
             rows: 1
         })).then(() => {
-            if(!!this.props.product.getServiceClass){
-                console.log(this.props.product)
-                if(this.props.product.getServiceClass.code === 'SUCCESS') {
+            if(!!this.props.proIndex.getServiceClass){
+                if(this.props.proIndex.getServiceClass.code === 'SUCCESS') {
                     this.setState({
-                        serviceClass:this.props.product.getServiceClass.data.pagingList
+                        serviceClass:this.props.proIndex.getServiceClass.data.pagingList
                     })
                 }
             }
@@ -44,10 +43,10 @@ class ProIndex extends Component{
             page: 1,
             rows: 1,
         })).then(()=>{
-            if(!!this.props.product.getServiceSubject){
-                if(this.props.product.getServiceSubject.code === 'SUCCESS') {
+            if(!!this.props.proIndex.getServiceSubject){
+                if(this.props.proIndex.getServiceSubject.code === 'SUCCESS') {
                     this.setState({
-                        serviceSubject:this.props.product.getServiceSubject.data.pagingList
+                        serviceSubject:this.props.proIndex.getServiceSubject.data.pagingList
                     })
                     console.log(this.state.serviceSubject)
                 }
@@ -121,34 +120,40 @@ class ProIndex extends Component{
                 ]
             },
         ];*/
+        //获取当前状态的值
+        let serviceClass = this.state.serviceClass;
+        let serviceSubject = this.state.serviceSubject;
+        let serverName = null;
+        console.log(serviceClass);
+        //生成导航栏数据
+        let menuData = [];
+        for(let i = 0;i < serviceClass.length;i++)
+        {
+            let key = serviceClass[i].id.toString();
+            let href = '#' + key;
+            let name = serviceClass[i].name;
+            serverName = name;
+            menuData.push(
+                <Menu.Item key={key}><a href={href}>{name}</a></Menu.Item>
+            )
+        }
         //生成具体微服务项信息
         let listInfo = [];
-        for(let i = 0;i < this.state.serviceSubject.length;i++)
+        for(let i = 0;i < serviceSubject.length;i++)
         {
             listInfo.push({
-                id: this.state.serviceSubject[i].id.toString(),
-                serverId: this.state.serviceSubject[i].serverId.toString(),
+                id: serviceSubject[i].id.toString(),
+                serverId: serviceSubject[i].serverId.toString(),
                 //！！！可能导致分类和服务不匹配的bug
-                serverName: this.state.serviceClass[i].name,
+                serverName: serverName,
             })
         }
         //生成具体微服务项数据
         let listData = [];
-        for(let i = 0;i < this.state.serviceSubject.length;i++)
+        for(let i = 0;i < serviceSubject.length;i++)
         {
             listData.push(
-                <div className="proIndex-linkList"><a>{this.state.serviceSubject[i].name}</a></div>
-            )
-        }
-        //生成导航栏数据
-        let menuData = [];
-        for(let i = 0;i < this.state.serviceClass.length;i++)
-        {
-            let key = this.state.serviceClass[i].id.toString();
-            let href = '#' + key;
-            let name = this.state.serviceClass[i].name;
-            menuData.push(
-                <Menu.Item key={key}><a href={href}>{name}</a></Menu.Item>
+                <div className="proIndex-linkList"><a>{serviceSubject[i].name}</a></div>
             )
         }
         return(
@@ -200,7 +205,7 @@ class ProIndex extends Component{
 }
 //组件和状态关联
 const mapStateToProps = state => {
-   return {product:state.product};
+   return {proIndex:state.proIndex};
 };
 ProIndex = connect(mapStateToProps)(ProIndex);
 export default ProIndex;
