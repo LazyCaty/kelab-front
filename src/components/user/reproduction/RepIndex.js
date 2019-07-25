@@ -21,10 +21,10 @@ class RepIndex extends Component{
                 avatar:'https://i.loli.net/2019/05/01/5cc9a551c68a3.png',
                 title: '语言处理',
                 children:[
-                    <div className="repIndex-linkList"><a>中文分析</a></div>,
-                    <div className="repIndex-linkList"><a>词性标注</a></div>,
-                    <div className="repIndex-linkList"><a>命名实体识别</a></div>,
-                    <div className="repIndex-linkList"><a>依存句法分析</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>中文分析</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>词性标注</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>命名实体识别</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>依存句法分析</a></div>,
                 ]
             },
             {
@@ -32,14 +32,14 @@ class RepIndex extends Component{
                 avatar:'https://i.loli.net/2019/05/01/5cc9a7552dfde.png',
                 title: '语言分析',
                 children:[
-                    <div className="repIndex-linkList"><a>关键词抽取</a></div>,
-                    <div className="repIndex-linkList"><a>自动摘要</a></div>,
-                    <div className="repIndex-linkList"><a>主题检测</a></div>,
-                    <div className="repIndex-linkList"><a>情感分析</a></div>,
-                    <div className="repIndex-linkList"><a>词法相似度分析</a></div>,
-                    <div className="repIndex-linkList"><a>文本相似度计算</a></div>,
-                    <div className="repIndex-linkList"><a>word2vect语言表示模型</a></div>,
-                    <div className="repIndex-linkList"><a>BERT语言表示模型</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>关键词抽取</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>自动摘要</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>主题检测</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>情感分析</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>词法相似度分析</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>文本相似度计算</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>word2vect语言表示模型</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>BERT语言表示模型</a></div>,
                 ]
             },
             {
@@ -47,10 +47,10 @@ class RepIndex extends Component{
                 avatar:'https://i.loli.net/2019/05/01/5cc9a7fb80b5f.png',
                 title: '云平台API',
                 children:[
-                    <div className="repIndex-linkList"><a>讯飞</a></div>,
-                    <div className="repIndex-linkList"><a>腾讯文智</a></div>,
-                    <div className="repIndex-linkList"><a>阿里云</a></div>,
-                    <div className="repIndex-linkList"><a>百度云</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>讯飞</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>腾讯文智</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>阿里云</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>百度云</a></div>,
                 ]
             },
             {
@@ -58,14 +58,14 @@ class RepIndex extends Component{
                 avatar:'https://i.loli.net/2019/05/01/5cc9a8bf3129c.png',
                 title: '算法资源',
                 children:[
-                    <div className="repIndex-linkList"><a>分类</a></div>,
-                    <div className="repIndex-linkList"><a>回归</a></div>,
-                    <div className="repIndex-linkList"><a>聚类</a></div>,
-                    <div className="repIndex-linkList"><a>降维</a></div>,
-                    <div className="repIndex-linkList"><a>概率图模型</a></div>,
-                    <div className="repIndex-linkList"><a>文本挖掘</a></div>,
-                    <div className="repIndex-linkList"><a>优化</a></div>,
-                    <div className="repIndex-linkList"><a>深度学习</a></div>
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>分类</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>回归</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>聚类</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>降维</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>概率图模型</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>文本挖掘</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>优化</a></div>,
+                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>深度学习</a></div>
                 ]
             },
         ];
