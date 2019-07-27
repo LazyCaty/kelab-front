@@ -48,7 +48,6 @@ class ProIndex extends Component{
                     this.setState({
                         serviceSubject:this.props.proIndex.getServiceSubject.data.pagingList
                     })
-                    console.log(this.state.serviceSubject)
                 }
             }
         })
@@ -59,7 +58,6 @@ class ProIndex extends Component{
      * @param e
      */
     navChange = (e) => {
-        console.log('click ', e);
         this.setState({
             current: e.key,
         });
