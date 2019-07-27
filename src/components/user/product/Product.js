@@ -14,12 +14,18 @@ class Product extends Component{
     constructor(props){
         super(props);
         this.state={
-            current:'1',
-            docMenu:[],
-            menuIndex:'',
+            //菜单当前选中项
+            current: '1',
+            //导航菜单
+            docMenu: [],
+            //分类索引
+            menuIndex: '',
         }
     }
 
+    /**
+     * 组件加载完毕用于ajax请求
+     */
     componentDidMount(){
         this.props.dispatch(getDocMenu({
             serverId: 1,
@@ -29,7 +35,7 @@ class Product extends Component{
                     this.setState({
                         docMenu:this.props.product.getDocMenu.data
                     })
-                    console.log(this.props)
+                    console.log(this.state.docMenu)
                 }
             }
         })
@@ -43,7 +49,7 @@ class Product extends Component{
         this.setState({
             current: e.key,
         });
-        this.getMenuIndex(this.props.location.hash)
+        this.getMenuIndex(window.location.hash)
     }
 
     /**
@@ -51,7 +57,7 @@ class Product extends Component{
      * @returns {*}
      */
     getMenuIndex = (e) =>{
-        e = parseInt(e.replace('#',''));
+        e = parseInt(e.replace('#/',''));
         if(this.state.docMenu.length !== 0){
             for (let i = 0;i < this.state.docMenu.docSubVos.length;i++){
                 for(let j = 0;j < this.state.docMenu.docSubVos[i].docEntities.length;j++){
@@ -71,15 +77,18 @@ class Product extends Component{
         //获取菜单
         let subMenuData = [];
         let docMenu = this.state.docMenu;
+        //具体单项服务名字索引
+        let subjectIndex = [];
         if(docMenu.length !== 0){
             for (let i = 0;i < docMenu.docSubVos.length;i++){
                 let MenuData = [];
                 for (let j = 0;j < docMenu.docSubVos[i].docEntities.length;j++){
                     let key = docMenu.docSubVos[i].docEntities[j].id.toString();
-                    let href = '#' + key;
+                    let href = window.location.pathname + '#/' + key;
                     MenuData.push(
-                        <Menu.Item key={key}><a href={href}>{docMenu.docSubVos[i].docEntities[j].name}</a></Menu.Item>
+                        <Menu.Item key={key}><Link to={href}>{docMenu.docSubVos[i].docEntities[j].name}</Link></Menu.Item>
                     )
+                    subjectIndex.push(docMenu.docSubVos[i].docEntities[j].name)
                 }
                 let key = docMenu.docSubVos[i].id;
                 subMenuData.push(
@@ -114,11 +123,14 @@ class Product extends Component{
                         <Breadcrumb>
                             <Breadcrumb.Item><Link to={'/product'}>主页</Link></Breadcrumb.Item>
                             <Breadcrumb.Item>
-                                <a href="">{this.state.docMenu.name}</a>
+                                <Link to={window.location.pathname}>{this.state.docMenu.name}</Link>
                             </Breadcrumb.Item>
-                            {}
                             <Breadcrumb.Item>{this.state.menuIndex === '' ? "简介" :
-                                    this.state.docMenu.docSubVos[this.state.menuIndex - 1].name}</Breadcrumb.Item>
+                                this.state.docMenu.docSubVos[this.state.menuIndex - 1].name}
+                            </Breadcrumb.Item>
+                            <Breadcrumb.Item>
+                                {subjectIndex.length === 0 ? "" : subjectIndex[this.state.current - 1]}
+                            </Breadcrumb.Item>
                         </Breadcrumb>
                         <Search
                             placeholder="请输入关键词"
