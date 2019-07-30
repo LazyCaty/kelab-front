@@ -3,16 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="20741418-732f-478e-ad7d-a14e29848c2e" name="默认更改列表" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-<<<<<<< HEAD
-      <change beforePath="$PROJECT_DIR$/src/components/user/product/Product.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/product/Product.js" afterDir="false" />
-=======
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/admin/AdminServer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/AdminServer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/admin/AdminServer.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/AdminServer.less" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/action/admin/adminServer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/action/admin/adminServer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/action/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/action/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/reducer/adminServer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducer/adminServer.js" afterDir="false" />
->>>>>>> 57fa1fc6d21b94c63e5ecbb8bd20ba693ffbda4e
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -23,81 +19,16 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-<<<<<<< HEAD
-  <component name="FUSProjectUsageTrigger">
-    <session id="-1585638020">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="8" />
-          <entry key="project.open.time.0" value="2" />
-          <entry key="project.open.time.1" value="2" />
-          <entry key="project.open.time.17" value="2" />
-          <entry key="project.open.time.21" value="1" />
-          <entry key="project.open.time.27" value="1" />
-          <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="9" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="jpg" value="2" />
-          <entry key="js" value="81" />
-          <entry key="less" value="13" />
-          <entry key="png" value="9" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="Image" value="11" />
-          <entry key="JavaScript" value="81" />
-          <entry key="Less" value="13" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="js" value="6024" />
-          <entry key="less" value="314" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="JavaScript" value="6024" />
-          <entry key="Less" value="314" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
-=======
->>>>>>> 57fa1fc6d21b94c63e5ecbb8bd20ba693ffbda4e
   <component name="FavoritesManager">
     <favorites_list name="kalab_front" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-<<<<<<< HEAD
-        <entry file="file://$PROJECT_DIR$/src/components/user/product/ProIndex.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="162" column="13" selection-start-line="162" selection-start-column="13" selection-end-line="162" selection-end-column="13" />
-              <folding>
-                <element signature="e#12#52#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/components/user/product/Product.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="128" column="45" selection-start-line="128" selection-start-column="45" selection-end-line="128" selection-end-column="45" />
-=======
         <entry file="file://$PROJECT_DIR$/src/components/admin/AdminHome.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="168">
               <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
->>>>>>> 57fa1fc6d21b94c63e5ecbb8bd20ba693ffbda4e
               <folding>
                 <element signature="e#11#49#0" expanded="true" />
               </folding>
@@ -138,10 +69,6 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/redux/reducer/adminServer.js">
           <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-            <state relative-caret-position="171">
-              <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
-=======
             <state relative-caret-position="329">
               <caret line="20" column="25" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
             </state>
@@ -153,7 +80,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="42">
               <caret line="2" column="40" lean-forward="true" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
->>>>>>> 57fa1fc6d21b94c63e5ecbb8bd20ba693ffbda4e
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -264,8 +190,8 @@
         <option value="$PROJECT_DIR$/src/redux/action/user/product.js" />
         <option value="$PROJECT_DIR$/src/redux/reducer/product.js" />
         <option value="$PROJECT_DIR$/src/redux/reducer/index.js" />
-        <option value="$PROJECT_DIR$/src/components/user/product/Product.less" />
         <option value="$PROJECT_DIR$/src/components/user/product/ProIndex.js" />
+        <option value="$PROJECT_DIR$/src/components/user/product/Product.less" />
         <option value="$PROJECT_DIR$/src/components/user/product/Product.js" />
         <option value="$PROJECT_DIR$/src/redux/action/index.js" />
         <option value="$PROJECT_DIR$/src/redux/reducer/adminServer.js" />
@@ -320,25 +246,8 @@
               <item name="kalab_front" type="b2602c69:ProjectViewProjectNode" />
               <item name="kalab_front" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-<<<<<<< HEAD
-              <item name="redux" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="kalab_front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="kalab_front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="redux" type="462c0819:PsiDirectoryNode" />
-              <item name="action" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="kalab_front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="kalab_front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routers" type="462c0819:PsiDirectoryNode" />
-=======
               <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="admin" type="462c0819:PsiDirectoryNode" />
->>>>>>> 57fa1fc6d21b94c63e5ecbb8bd20ba693ffbda4e
             </path>
           </expand>
           <select />
@@ -429,23 +338,13 @@
       <workItem from="1564037277269" duration="7445000" />
       <workItem from="1564051785733" duration="11680000" />
       <workItem from="1564230357687" duration="1643000" />
-<<<<<<< HEAD
-      <workItem from="1564232700067" duration="5155000" />
-      <workItem from="1564400724719" duration="141000" />
-      <workItem from="1564495785344" duration="4588000" />
-=======
       <workItem from="1564232700067" duration="4878000" />
       <workItem from="1564380848792" duration="19266000" />
->>>>>>> 57fa1fc6d21b94c63e5ecbb8bd20ba693ffbda4e
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-<<<<<<< HEAD
-    <option name="totallyTimeSpent" value="161066000" />
-=======
     <option name="totallyTimeSpent" value="175326000" />
->>>>>>> 57fa1fc6d21b94c63e5ecbb8bd20ba693ffbda4e
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -460,11 +359,7 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-<<<<<<< HEAD
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49894738" visible="true" weight="0.17635404" />
-=======
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49894738" visible="true" weight="0.1845238" />
->>>>>>> 57fa1fc6d21b94c63e5ecbb8bd20ba693ffbda4e
       <window_info id="Structure" order="1" sideWeight="0.5010526" side_tool="true" weight="0.24966975" />
       <window_info id="npm" order="2" sideWeight="0.5010526" side_tool="true" weight="0.24966975" />
       <window_info id="Favorites" order="3" sideWeight="0.5010526" side_tool="true" weight="0.24966975" />
@@ -479,11 +374,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50132275" side_tool="true" />
       <window_info anchor="bottom" id="调试" order="10" />
-<<<<<<< HEAD
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49867725" visible="true" weight="0.32907802" />
-=======
       <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49867725" visible="true" weight="0.109836064" />
->>>>>>> 57fa1fc6d21b94c63e5ecbb8bd20ba693ffbda4e
       <window_info anchor="bottom" id="Messages" order="12" />
       <window_info anchor="bottom" id="找到" order="13" />
       <window_info anchor="bottom" id="消息" order="14" />
@@ -555,16 +446,6 @@
       <provider editor-type-id="text-editor">
         <state relative-caret-position="513">
           <caret line="27" column="10" lean-forward="true" selection-start-line="27" selection-start-column="10" selection-end-line="27" selection-end-column="10" />
-<<<<<<< HEAD
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/admin/AdminServer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1197">
-          <caret line="67" column="10" selection-start-line="67" selection-start-column="10" selection-end-line="67" selection-end-column="10" />
-=======
->>>>>>> 57fa1fc6d21b94c63e5ecbb8bd20ba693ffbda4e
         </state>
       </provider>
     </entry>
@@ -721,17 +602,10 @@
         <state relative-caret-position="-1140" />
       </provider>
     </entry>
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/src/redux/action/user/proIndex.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="4" column="52" selection-start-line="4" selection-start-column="52" selection-end-line="4" selection-end-column="52" />
-=======
     <entry file="file://$PROJECT_DIR$/src/components/user/product/ProIndex.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1292">
           <caret line="74" column="62" selection-start-line="74" selection-start-column="58" selection-end-line="74" selection-end-column="62" />
->>>>>>> 57fa1fc6d21b94c63e5ecbb8bd20ba693ffbda4e
         </state>
       </provider>
     </entry>
@@ -801,17 +675,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/user/product/ProIndex.js">
+    <entry file="file://$PROJECT_DIR$/src/redux/action/user/product.js">
       <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-        <state>
-          <caret line="162" column="13" selection-start-line="162" selection-start-column="13" selection-end-line="162" selection-end-column="13" />
-=======
         <state relative-caret-position="336">
           <caret line="16" column="58" selection-start-line="16" selection-start-column="58" selection-end-line="16" selection-end-column="60" />
->>>>>>> 57fa1fc6d21b94c63e5ecbb8bd20ba693ffbda4e
           <folding>
-            <element signature="e#12#52#0" expanded="true" />
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -830,22 +699,6 @@
         </state>
       </provider>
     </entry>
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/src/redux/action/user/product.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/user/product/Product.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="128" column="45" selection-start-line="128" selection-start-column="45" selection-end-line="128" selection-end-column="45" />
-=======
     <entry file="file://$PROJECT_DIR$/src/redux/action/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
@@ -857,7 +710,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
           <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
->>>>>>> 57fa1fc6d21b94c63e5ecbb8bd20ba693ffbda4e
           <folding>
             <element signature="e#11#49#0" expanded="true" />
           </folding>
