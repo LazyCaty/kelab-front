@@ -5,7 +5,7 @@ import Footer from '../common/Footer';
 import {getDocMenu} from "../../../redux/action/user/product";
 import { Input,Menu,  Breadcrumb,message } from 'antd';
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom';
+import {Link,BrowserRouter} from 'react-router-dom';
 import "./Product.less";
 
 const SubMenu = Menu.SubMenu;
@@ -50,7 +50,8 @@ class Product extends Component{
             current: e.key,
         });
         this.getMenuIndex(window.location.hash)
-    }
+
+    };
 
     /**
      * 获取当前菜单索引
@@ -87,7 +88,7 @@ class Product extends Component{
                     let href = window.location.pathname + '#/' + key;
                     MenuData.push(
                         <Menu.Item key={key}><Link to={href}>{docMenu.docSubVos[i].docEntities[j].name}</Link></Menu.Item>
-                    )
+                    );
                     subjectIndex.push(docMenu.docSubVos[i].docEntities[j].name)
                 }
                 let key = docMenu.docSubVos[i].id;
@@ -123,11 +124,10 @@ class Product extends Component{
                         <Breadcrumb>
                             <Breadcrumb.Item><Link to={'/product'}>主页</Link></Breadcrumb.Item>
                             <Breadcrumb.Item>
-                                <Link to={window.location.pathname}>{this.state.docMenu.name}</Link>
+                                <BrowserRouter forceRefresh={true}><Link to={window.location.pathname} >{this.state.docMenu.name}</Link></BrowserRouter>
                             </Breadcrumb.Item>
                             <Breadcrumb.Item>{this.state.menuIndex === '' ? "简介" :
-                                this.state.docMenu.docSubVos[this.state.menuIndex - 1].name}
-                            </Breadcrumb.Item>
+                                this.state.docMenu.docSubVos[this.state.menuIndex - 1].name}</Breadcrumb.Item>
                             <Breadcrumb.Item>
                                 {subjectIndex.length === 0 ? "" : subjectIndex[this.state.current - 1]}
                             </Breadcrumb.Item>
