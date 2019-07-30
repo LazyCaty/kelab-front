@@ -2,9 +2,12 @@ import React,{Component} from 'react';
 import { Table,Button ,Icon,Pagination,Card,Form,Input,Select} from 'antd';
 import {connect} from 'react-redux'
 import {getServe,addServe} from "../../redux/action/admin/adminServer";
+import AdminSubject from './AdminSubject';
+import EditorDemo from './BraftEditors';
 import './AdminServer.less';
 
 const FormItem=Form.Item;
+
 const {Option} = Select;
 @connect(state=>({
         adminServer:state.adminServer
@@ -80,7 +83,8 @@ class AdminServer extends Component{
                     <Button onClick={this.changeButton}>添加服务</Button>
                 </header>
                 <article className="admin-server-content">
-                    <Table dataSource={this.state.dataSource} columns={columns} pagination={false} />
+                    <Table dataSource={this.state.dataSource} expandedRowRender={record => <AdminSubject serverid={record.id} /> }  columns={columns} pagination={false} />
+
                 </article>
                 <footer>
                     <Pagination total={6}  defaultPageSize={4}   defaultCurrent={1} onChange={this.getCurrPage} />
@@ -118,6 +122,10 @@ class AdminServer extends Component{
                             </Select>)
                         }
                     </FormItem>
+                        <FormItem>
+                           <EditorDemo />
+
+                        </FormItem>
 
                 </Form>
                     <Button onClick={this.SubmitForm}>提交</Button>

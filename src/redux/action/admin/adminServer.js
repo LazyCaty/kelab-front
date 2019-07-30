@@ -9,7 +9,9 @@ const {
     GET_SERVER_DELETE_SUCCESS,
     GET_SERVER_DELETE_FAILURE,
     GET_SERVER_UPDATA_SUCCESS,
-    GET_SERVER_UPDATA__FAILURE
+    GET_SERVER_UPDATA__FAILURE,
+    GET_SERVER_SUBJECT_SUCCESS,
+    GET_SERVER_SUBJECT_FAILURE,
 }=actions;
 
 const baseUrl=configs.baseUrl;
@@ -64,16 +66,24 @@ export function deteleServer(){
     };
 }
 
-// 更新服务
-export function updataServer(){
+
+
+// 获取服务主体
+export function getSubject(page,rows,serverId ){
     return async(dispatch) => {
         try {
             //let headers = getTokenHeader({});
-            //const data = (await axios.get(`${baseUrl}`+"server.do?name="+serverInformation.name+"&description="+serverInformation.description+"&status="+serverInformation.status)).data;
+            const data = (await axios.get(`${baseUrl}`+"serverSubject.do?page="+page+"&rows="+rows+"&serverId="+serverId)).data;
 
-            //console.log("cg");
+
+            const res=data.data;console.log("res",res);
+            dispatch({
+                type:GET_SERVER_SUBJECT_SUCCESS,
+                data:res
+            })
+
         } catch (error) {
-            //alert('sever err');
+            alert(error);
         }
     };
 }
