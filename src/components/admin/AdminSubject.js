@@ -32,7 +32,7 @@ class AdminSubject extends Component{
                 key:'id',
             },
             {
-                title:'name',
+                title:'微服务',
                 dataIndex:'name',
                 key:'name',
             },

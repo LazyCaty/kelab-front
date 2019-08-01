@@ -8,6 +8,7 @@ import RepIndex from "../components/user/reproduction/RepIndex"
 import NlpRepro from "../components/user/reproduction/NlpRepro"
 import Admin from '../components/admin/AdminHome'
 import AdminServer from '../components/admin/AdminServer'
+import AdminMenber from '../components/admin/AdminMenber'
 import {Layout} from 'antd';
 
 class Routes extends Component{
@@ -42,11 +43,13 @@ class Routes extends Component{
 
                     <Route path="/admin" render={()=><Admin>
                         <Switch>
-                            <Route Path="/admin/server" exact component={AdminServer}></Route>
+                            <Route path="/admin/menbers" exact component={AdminMenber} />
+                            <Route path="/admin/server" exact component={AdminServer} />
+
                         </Switch>
                     </Admin>
-                    }></Route>
-                </Switch>
+                    } />
+            </Switch>
             </Router>
 
         )

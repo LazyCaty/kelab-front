@@ -57,7 +57,7 @@ class AdminServer extends Component{
 
         const columns=[
             {
-                title:'服务',
+                title:'产品',
                 dataIndex:'name',
                 key:'name',
 
@@ -72,7 +72,7 @@ class AdminServer extends Component{
                 dataIndex:'',
                 key:'',
                 render:()=>{
-                    return <div><Icon type="delete" />|<Icon type="setting"  /></div>
+                    return <div><Icon type="form" /></div>
                 }
             }
         ]
