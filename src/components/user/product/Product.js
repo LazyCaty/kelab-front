@@ -3,7 +3,7 @@ import React,{Component} from 'react';
 import UserHead from "../common/UserHead"
 import Footer from '../common/Footer';
 import {getDocMenu} from "../../../redux/action/user/product";
-import { Input,Menu,  Breadcrumb,message } from 'antd';
+import { Input,Menu,  Breadcrumb } from 'antd';
 import {connect} from 'react-redux'
 import {Link,BrowserRouter} from 'react-router-dom';
 import "./Product.less";
@@ -35,7 +35,6 @@ class Product extends Component{
                     this.setState({
                         docMenu:this.props.product.getDocMenu.data
                     })
-                    console.log(this.state.docMenu)
                 }
             }
         })
@@ -71,10 +70,11 @@ class Product extends Component{
             }
         }
 
-    }
+    };
 
 
     render(){
+
         //获取菜单
         let subMenuData = [];
         let docMenu = this.state.docMenu;

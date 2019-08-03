@@ -1,10 +1,10 @@
 import React,{Component} from 'react';
-import "./MenuNav.less"
+import "./NavMenu.less"
 import {NavLink} from 'react-router-dom';
 import { Menu } from 'antd';
 
 
-class MenuNav extends Component{
+class NavMenu extends Component{
     constructor(props){
         super(props);
         this.state={
@@ -26,7 +26,7 @@ class MenuNav extends Component{
         return(
             <div>
                 <div className="reproduction-header">
-                    <div className="reproduction-menuNav">
+                    <div className="reproduction-navMenu">
                         <Menu
                             mode="horizontal"
                             selectedKeys={[this.state.menuState]}
@@ -50,4 +50,4 @@ class MenuNav extends Component{
     }
 }
 
-export default MenuNav;
+export default NavMenu;
