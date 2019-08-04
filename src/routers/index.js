@@ -11,6 +11,8 @@ import AdminServer from '../components/admin/AdminServer'
 import AdminMenber from '../components/admin/AdminMenber'
 import GeneralView from '../components/user/personal/GeneralView'
 import NoFound from '../components/404/NoFound'
+import AccountInfo from '../components/user/personal/AccountInfo'
+import Goods from '../components/user/personal/Goods'
 
 class Routes extends Component{
     render(){
@@ -20,7 +22,9 @@ class Routes extends Component{
                     <Route path='/' exact component = {Homepage}/>
                     <Route path='/personal/' render = { () =>
                             <Switch>
-                                <Route path = '/personal' exact component = {GeneralView}/>
+                                <Route path = '/personal/' exact component = {GeneralView}/>
+                                <Route path = '/personal/account' exact component = {AccountInfo}/>
+                                <Route path = '/personal/goods' exact component = {Goods}/>
                             </Switch>
                     }
                     />
