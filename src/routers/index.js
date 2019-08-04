@@ -10,6 +10,7 @@ import Admin from '../components/admin/AdminHome'
 import AdminServer from '../components/admin/AdminServer'
 import AdminMenber from '../components/admin/AdminMenber'
 import GeneralView from '../components/user/personal/GeneralView'
+import NoFound from '../components/404/NoFound'
 
 class Routes extends Component{
     render(){
@@ -52,6 +53,7 @@ class Routes extends Component{
                         </Switch>
                     </Admin>
                     } />
+                    <Route component={NoFound} path="*" />
             </Switch>
             </Router>
 
