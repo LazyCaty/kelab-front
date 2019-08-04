@@ -45,7 +45,7 @@ class Routes extends Component{
                     />
 
 
-                    <Route path="/admin" render={()=><Admin>
+             <Route path="/admin" render={()=><Admin>
                         <Switch>
                             <Route path="/admin/menbers" exact component={AdminMenber} />
                             <Route path="/admin/server" exact component={AdminServer} />
@@ -55,6 +55,7 @@ class Routes extends Component{
                     } />
                     <Route component={NoFound} path="*" />
             </Switch>
+            
             </Router>
 
         )
