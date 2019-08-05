@@ -5,7 +5,6 @@ import { Layout, Menu, Icon } from 'antd';
 import {NavLink} from 'react-router-dom'
 
 const { Sider } = Layout;
-const { SubMenu } = Menu;
 
 class NavMenu extends Component{
     constructor(props){
@@ -16,7 +15,6 @@ class NavMenu extends Component{
     }
 
     onCollapse = collapsed => {
-/*        console.log(collapsed);*/
         this.setState({ collapsed });
     };
 
