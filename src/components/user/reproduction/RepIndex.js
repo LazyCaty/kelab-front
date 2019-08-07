@@ -38,8 +38,6 @@ class RepIndex extends Component{
                     <div className="repIndex-linkList"><a href='http://www.baidu.com'>情感分析</a></div>,
                     <div className="repIndex-linkList"><a href='http://www.baidu.com'>词法相似度分析</a></div>,
                     <div className="repIndex-linkList"><a href='http://www.baidu.com'>文本相似度计算</a></div>,
-                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>word2vect语言表示模型</a></div>,
-                    <div className="repIndex-linkList"><a href='http://www.baidu.com'>BERT语言表示模型</a></div>,
                 ]
             },
             {

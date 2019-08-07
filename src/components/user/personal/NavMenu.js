@@ -5,7 +5,6 @@ import { Layout, Menu, Icon } from 'antd';
 import {NavLink} from 'react-router-dom'
 
 const { Sider } = Layout;
-const { SubMenu } = Menu;
 
 class NavMenu extends Component{
     constructor(props){
@@ -16,7 +15,6 @@ class NavMenu extends Component{
     }
 
     onCollapse = collapsed => {
-/*        console.log(collapsed);*/
         this.setState({ collapsed });
     };
 
@@ -43,8 +41,9 @@ class NavMenu extends Component{
                                         <span>账号信息</span>
                                     </NavLink>
                                 </Menu.Item>
-                                    <Menu.Item key="/personal/goods"><NavLink to='/personal/goods'>
-                                        <span><Icon type="shop" />已购产品</span></NavLink></Menu.Item>
+                                    <Menu.Item key="/personal/goods">
+                                        <NavLink to='/personal/goods'>
+                                            <Icon type="shop" /><span>已购产品</span></NavLink></Menu.Item>
                             </Menu>
                         </Sider>
                     </Layout>

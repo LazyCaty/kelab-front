@@ -13,6 +13,7 @@ import GeneralView from '../components/user/personal/GeneralView'
 import NoFound from '../components/404/NoFound'
 import AccountInfo from '../components/user/personal/AccountInfo'
 import Goods from '../components/user/personal/Goods'
+import AdminDoc from '../components/admin/AdminDoc'
 
 class Routes extends Component{
     render(){
@@ -53,6 +54,7 @@ class Routes extends Component{
                         <Switch>
                             <Route path="/admin/menbers" exact component={AdminMenber} />
                             <Route path="/admin/server" exact component={AdminServer} />
+                            <Route path='/admin/document' exact component={AdminDoc} />
 
                         </Switch>
                     </Admin>

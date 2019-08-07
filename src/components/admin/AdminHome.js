@@ -28,7 +28,7 @@ class AdminHome extends Component{
     }
 
     handleClick=(e)=> {
-        console.log('click', e);
+
     }
 
     render()
@@ -39,8 +39,19 @@ class AdminHome extends Component{
                 <Col span={3} className="admin-aside">
                     <div className="admin-aside-logo" ><img src="http://www.cs.swust.edu.cn/assets/img/logo2.png"/></div>
                     <Menu style={{marginTop:'20px'}} theme={this.state.theme} onClick={this.handleClick}  mode="vertical">
-
-                        {
+                        <Menu.Item key='0' >
+                            <Icon type="user" /><span ><Link className="admin-aside-link" to='/admin/menbers' >用户管理</Link></span>
+                        </Menu.Item>
+                        <Menu.Item key='1' >
+                            <Icon type="user" /><span ><Link className="admin-aside-link" to='/admin/server' >微服务管理</Link></span>
+                        </Menu.Item>
+                        <Menu.Item key='2' >
+                            <Icon type="user" /><span ><Link className="admin-aside-link" to='/admin/document' >文档管理</Link></span>
+                        </Menu.Item>
+                        <Menu.Item key='3' >
+                            <Icon type="user" /><span ><Link className="admin-aside-link" to='/4' >平台管理</Link></span>
+                        </Menu.Item>
+{/*                        {
                             this.state.menu.map((item,index)=>{
                                 if(item.children)
                                 {return  <SubMenu key={index} title={<span>
@@ -64,7 +75,7 @@ class AdminHome extends Component{
                                 }
                             })
 
-                        }
+                        }*/}
                     </Menu>
                 </Col>
                 <Col span={21}>
