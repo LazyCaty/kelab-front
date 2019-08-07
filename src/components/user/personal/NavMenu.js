@@ -41,8 +41,9 @@ class NavMenu extends Component{
                                         <span>账号信息</span>
                                     </NavLink>
                                 </Menu.Item>
-                                    <Menu.Item key="/personal/goods"><NavLink to='/personal/goods'>
-                                        <span><Icon type="shop" />已购产品</span></NavLink></Menu.Item>
+                                    <Menu.Item key="/personal/goods">
+                                        <NavLink to='/personal/goods'>
+                                            <Icon type="shop" /><span>已购产品</span></NavLink></Menu.Item>
                             </Menu>
                         </Sider>
                     </Layout>
