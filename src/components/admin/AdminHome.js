@@ -28,7 +28,7 @@ class AdminHome extends Component{
     }
 
     handleClick=(e)=> {
-        console.log('click', e);
+
     }
 
     render()

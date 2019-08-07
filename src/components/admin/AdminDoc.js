@@ -7,58 +7,65 @@ class AdminDoc extends Component{
     constructor(props){
         super(props);
         this.state = {
-            addDocModal: false
+            addDocModal: false,
+            changeDocModal:false,
         }
     }
 
     /**
+     * 修改文档内容
+     * @param data
+     */
+    changeDoc = () => {
+        this.setState({
+            changeDocModal: true,
+        });
+    };
+
+    /**
      * 添加文档对话框
      */
-    showModal = () => {
+    addDocShowModal = () => {
         this.setState({
             addDocModal: true,
         });
     };
 
-    handleOk = (e) => {
-        console.log(e);
+    addDocHandleOk = (e) => {
         this.setState({
             addDocModal: false,
         });
     };
 
-    handleCancel = e => {
-        console.log(e);
+    addDocHandleCancel = e => {
         this.setState({
             addDocModal: false,
         });
     };
 
+    /**
+     * 修改文档对话框
+     */
+
+    changeDocHandleOk = (e) => {
+        this.setState({
+            changeDocModal: false,
+        });
+    };
+
+    changeDocHandleCancel = e => {
+        this.setState({
+            changeDocModal: false,
+        });
+    };
     render(){
         const { getFieldDecorator } = this.props.form;
-        const columns=[
-            {title:'id',dataIndex:'id'},
-            {title:"文档名",dataIndex:'name'},
-            { title: '简述', dataIndex: 'des' },
-            { title: '时间', dataIndex: 'time' },
-            {
-                dataIndex: 'revise',
-                render: () => <a href="javascript:;">修改</a>,
-            },
-            {
-                dataIndex: 'delete',
-                render: () => <a href="javascript:;">删除</a>,
-            }
-
-        ];
-
-        const data = [
-            {
-                id: 1,
-                name:'test',
-                des:'some description',
-                time:'2019/8/5',
-            },
+        const data = [{
+            id: 1,
+            name:'test',
+            des:'some description',
+            time:'2019/8/5',
+        },
             {
                 id: 2,
                 name:'test2',
@@ -70,19 +77,82 @@ class AdminDoc extends Component{
                 name:'test3',
                 des:'some description',
                 time:'2019/8/5',
+            }];
+
+        const columns=[
+            {title:'id',dataIndex:'id'},
+            {title:"文档名",dataIndex:'name'},
+            { title: '简述', dataIndex: 'des' },
+            { title: '时间', dataIndex: 'time' },
+            {
+                dataIndex: 'revise',
+                render: (text, record) => {
+                    return(
+                        <Button onClick={()=>{this.changeDoc(record)}}>修改</Button>
+                    )
+                }
+            },
+            {
+                dataIndex: 'delete',
+                render: (text, record) => {
+                    return (
+                        <Button >删除</Button>
+                    )
+                }
             }
+
         ];
+
         return(
             <div className="admin-doc">
                 <Card title="文档管理">
                     <div style={{margin:'10px 0'}}>
                         {/**/}
-                        <Button  onClick={this.showModal}>添加文档</Button>
+                        <Button  onClick={this.addDocShowModal}>添加文档</Button>
                         <Modal
                             title="添加文档"
                             visible={this.state.addDocModal}
-                            onOk={this.handleOk}
-                            onCancel={this.handleCancel}
+                            onOk={this.addDocHandleOk}
+                            onCancel={this.addDocHandleCancel}
+                            okText='确定'
+                            cancelText='取消'
+                        >
+                            <Form>
+                                <Form.Item>
+                                    {getFieldDecorator('文档ID', {
+                                        rules: [{ required: true, message: '请输入要添加的文档ID!' }],
+                                    })(
+                                        <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                               placeholder="ID" />
+                                    )}
+                                </Form.Item>
+                                <Form.Item>
+                                    {getFieldDecorator('文档名称', {
+                                        rules: [{ required: true, message: '请输入要添加的文档名称!' }],
+                                    })(
+                                        <Input prefix={<Icon type="robot" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                               placeholder="名称" />
+                                    )}
+                                </Form.Item>
+                                <Form.Item>
+                                    {getFieldDecorator('文档简述', {
+                                        rules: [{ required: true, message: '请输入要添加的文档简述!' }],
+                                    })(
+                                        <Input prefix={<Icon type="solution" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                               placeholder="简述" />
+                                    )}
+                                </Form.Item>
+                                <Form.Item>
+                                    <label>内容</label>
+                                    <EditorDemo />
+                                </Form.Item>
+                            </Form>
+                        </Modal>
+                        <Modal
+                            title="修改文档"
+                            visible={this.state.changeDocModal}
+                            onOk={this.changeDocHandleOk}
+                            onCancel={this.changeDocHandleCancel}
                             okText='确定'
                             cancelText='取消'
                         >
