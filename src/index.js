@@ -9,13 +9,9 @@ import {applyMiddleware, createStore} from 'redux';
 import * as serviceWorker from './serviceWorker';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
-const middleware = [thunk];
-const composeEnhancers = composeWithDevTools({
-});
-
 // 数据仓库
-const store = createStore(reducer,composeEnhancers(
-    applyMiddleware(...middleware)));
+const store = createStore(reducer,composeWithDevTools(
+    applyMiddleware(thunk)));
 
 ReactDOM.render(
     <Provider store={store}>
