@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { Table,Button ,Icon,Pagination,Card,Form,Input,Select} from 'antd';
+import { Table,Button ,Icon,Pagination,Card,Form,Input,Select,Modal} from 'antd';
 import {connect} from 'react-redux'
 import {getServe,addServe} from "../../redux/action/admin/adminServer";
 import AdminSubject from './AdminSubject';
@@ -19,6 +19,7 @@ class AdminServer extends Component{
     state={
         dataSource:[],
         buttonState:false, // 添加按钮是否点击
+        visible: false
     }
     componentDidMount() {
         this.props.dispatch(getServe(1,4)).then(()=>{
@@ -50,6 +51,25 @@ class AdminServer extends Component{
         })
 
     }
+    showModal = () => {
+        this.setState({
+          visible: true,
+        });
+      };
+    
+      handleOk = e => {
+        console.log(e);
+        this.setState({
+          visible: false,
+        });
+      };
+    
+      handleCancel = e => {
+        console.log(e);
+        this.setState({
+          visible: false,
+        });
+      };
 
     render(){
 
@@ -80,7 +100,7 @@ class AdminServer extends Component{
         return <div>
             <Card title="微服务管理"  >
                 <header className="admin-server-head">
-                    <Button onClick={this.changeButton}>添加服务</Button>
+                    <Button onClick={this.showModal}>添加服务</Button>
                 </header>
                 <article className="admin-server-content">
                     <Table dataSource={this.state.dataSource} expandedRowRender={record => <AdminSubject serverid={record.id} /> }  columns={columns} pagination={false} />
@@ -90,50 +110,50 @@ class AdminServer extends Component{
                     <Pagination total={6}  defaultPageSize={4}   defaultCurrent={1} onChange={this.getCurrPage} />
                 </footer>
             </Card>
+             <Modal
+          title="Basic Modal"
+          visible={this.state.visible}
+          onOk={this.SubmitForm}
+          onCancel={this.handleCancel}
+          okText="提交"
+          cancelText="取消"
+        >
+           <Card title={'添加微服务'} >
 
-            {
-                this.state.buttonState?<div>
-             <div className="admin-server-set">
+<Form layout="horizontal">
+<FormItem label="服务名称：">
+    {
+        getFieldDecorator('name')(<Input placeholder={"请输入服务名"}/>)
+    }
+</FormItem>
 
-                <Card title={'添加微服务'} extra={<Icon type="close" onClick={this.changeButton}/>}>
-
-                    <Form layout="horizontal">
-                    <FormItem label="服务名称：">
-                        {
-                            getFieldDecorator('name')(<Input placeholder={"请输入服务名"}/>)
-                        }
-                    </FormItem>
-
-                    <FormItem label="服务描述：">
-                        {
-                            getFieldDecorator('description')(<Input placeholder={"请输入对微服务的描述"}/>)
-                        }
-                    </FormItem>
+<FormItem label="服务描述：">
+    {
+        getFieldDecorator('description')(<Input placeholder={"请输入对微服务的描述"}/>)
+    }
+</FormItem>
 
 
-                    <FormItem label="服务状态">
-                        {
-                            getFieldDecorator('status',{
-                                initialValue:'2',
-                            })(<Select style={{ width: 120 }}>
-                                <Option value="1">close</Option>
-                                <Option value="2">opened</Option>
-                                <Option value="3">pending</Option>
-                            </Select>)
-                        }
-                    </FormItem>
-                        <FormItem>
-                           <EditorDemo />
+<FormItem label="服务状态">
+    {
+        getFieldDecorator('status',{
+            initialValue:'2',
+        })(<Select style={{ width: 120 }}>
+            <Option value="1">close</Option>
+            <Option value="2">opened</Option>
+            <Option value="3">pending</Option>
+        </Select>)
+    }
+</FormItem>
+    <FormItem>
+       <EditorDemo />
 
-                        </FormItem>
+    </FormItem>
 
-                </Form>
-                    <Button onClick={this.SubmitForm}>提交</Button>
-                </Card>
+</Form>
 
-             </div>
-             <div className="admin-server-set-mask"></div>
-             </div>:""}
+</Card>
+        </Modal>
         </div>
 
     }
