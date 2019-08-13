@@ -5,16 +5,17 @@ import 'braft-editor/dist/index.css'
 import Markdown from 'braft-extensions/dist/markdown'
 import { ContentUtils } from 'braft-utils'
 const MarkdownOptions = {
-   // includeEditors: ['BraftEditor'], 
 };
 BraftEditor.use(Markdown(MarkdownOptions));
 export default class EditorDemo extends React.Component {
+
     constructor(props){
-        super(props);
+        super(props); 
+       this.state = {
+        editorState: BraftEditor.createEditorState(props.value || null) // 接收数据
     }
-    state = {
-        editorState: BraftEditor.createEditorState(this.props.value||null) // 接收数据
     }
+
 
     async componentDidMount () {
         // 假设此处从服务端获取html格式的编辑器内容
@@ -56,6 +57,9 @@ export default class EditorDemo extends React.Component {
         window.previewWindow.document.write(this.buildPreviewHtml());
         window.previewWindow.document.close();
     };
+    lookGrammer=()=>{
+      
+    }
 
     buildPreviewHtml() {
         return `
@@ -129,8 +133,8 @@ export default class EditorDemo extends React.Component {
             },{
                 key: 'markdown',
                 type: 'button',
-                text: '使用 Markdown 语法',
-              onClick: this.insertText
+                text: '查看Markdown 语法',
+              onClick: this.lookGrammer,
             }
           ]
         return (

@@ -92,7 +92,7 @@ class AdminServer extends Component{
                 dataIndex:'',
                 key:'',
                 render:()=>{
-                    return <div><Icon type="form" /></div>
+                    return <div ><Button>编辑</Button>  <Button>删除</Button>  <Button>添加微服务</Button></div>
                 }
             }
         ]
@@ -111,7 +111,7 @@ class AdminServer extends Component{
                 </footer>
             </Card>
              <Modal
-          title="Basic Modal"
+          title="添加服务"
           visible={this.state.visible}
           onOk={this.SubmitForm}
           onCancel={this.handleCancel}
@@ -145,9 +145,8 @@ class AdminServer extends Component{
         </Select>)
     }
 </FormItem>
-    <FormItem>
+    <FormItem lable="编辑文档">
        <EditorDemo />
-
     </FormItem>
 
 </Form>

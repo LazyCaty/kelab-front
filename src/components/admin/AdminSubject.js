@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Table} from 'antd';
+import {Table,Button,Popover} from 'antd';
 import {connect} from 'react-redux';
 import {getSubject} from '../../redux/action/admin/adminServer';
 @connect(state=>({
@@ -25,6 +25,7 @@ class AdminSubject extends Component{
     }
 
     render(){
+     
         const columns=[
             {
                 title:'ID',
@@ -40,7 +41,7 @@ class AdminSubject extends Component{
                 title:'Action',
                 dataIndex:'',
                 key:'action',
-                render: () => <a href="javascript:;">Delete</a>,
+                render: () => <div><Button>编辑</Button>  <Button>删除</Button>  <Button>添加版本</Button></div>,
             }
         ]
 
