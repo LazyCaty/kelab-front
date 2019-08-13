@@ -25,7 +25,7 @@ class Login extends Component{
 
     toLogin=()=>{
         let apply=this.props.form.getFieldsValue();//获取表单信息
-        // this.props.dispatch(sendLogin(apply,1));
+        this.props.dispatch(sendLogin(apply,1));
     }
 
 
@@ -89,7 +89,7 @@ class Login extends Component{
 
 
                                 </FormItem>
-                                <Button style={{width:300,marginLeft:25}}  type="primary" onClick={this.toLogin()}>登录</Button>
+                                <Button style={{width:300,marginLeft:25}}  type="primary" onClick={this.toLogin}>登录</Button>
                                 <FormItem>
                                     <div></div>
                                     <div></div>
@@ -156,7 +156,7 @@ class Login extends Component{
                                     }
                                     <div style={{width:50,float:'right'} }>验证码</div>
                                 </FormItem>
-                                <Button style={{width:300,marginLeft:25}} onClick={this.toLogin()}  type="primary">提交</Button>
+                                <Button style={{width:300,marginLeft:25}} onClick={this.toLogin}  type="primary">提交</Button>
 
                                 <FormItem>
                                     <div></div>

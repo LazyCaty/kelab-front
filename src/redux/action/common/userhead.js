@@ -40,7 +40,7 @@ export function getMenu()
 export function sendLogin(apply,num)
 {
     return (dispatch)=>{
-
+        console.log(apply,num);
         axios({
             method: 'GET',
             url: `${baseUrln}user/login`,
@@ -66,7 +66,7 @@ export function sendLogin(apply,num)
                 type:GET_USERS_LOGIN_FAILURE,
                 data:false
             })
-            //alert('登录出错了');
+            alert('登录出错了');
         })
     }
 
