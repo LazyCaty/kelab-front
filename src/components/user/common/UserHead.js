@@ -82,7 +82,7 @@ class UserHead extends Component {
 
                     </Col>
                     <Col span={2} className="userhead-bottomItem" onMouseOver={()=>this.handleItem(this.state.itembox2)} onMouseLeave={()=>this.leaveItem(this.state.itembox2)}>
-                        <div><Link to={'/reproduction'}>演示</Link></div>
+                        <div><Link to={'/reproduction/nlp'}>演示</Link></div>
 
                     </Col>
                     <Col span={2} className="userhead-bottomItem" onMouseOver={()=>this.handleItem(this.state.itembox3)} onMouseLeave={()=>this.leaveItem(this.state.itembox3)}>
