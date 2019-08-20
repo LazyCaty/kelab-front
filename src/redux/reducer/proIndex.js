@@ -2,7 +2,7 @@ import actions from '../action/index';
 
 const {
     GET_SERVICE_CLASSIFICATION_SUCCESS,
-    GET_SERVICE_SUBJECT_SUCCESS,
+    GET_SERVICE_SUCCESS,
 } = actions;
 
 export default (state = {},action) => {
@@ -12,10 +12,10 @@ export default (state = {},action) => {
                 ...state,
                 getServiceClass: action.data,
             };
-        case GET_SERVICE_SUBJECT_SUCCESS:
+        case GET_SERVICE_SUCCESS:
             return {
                 ...state,
-                getServiceSubject: action.data,
+                getService: action.data,
             };
         default:
             return state;

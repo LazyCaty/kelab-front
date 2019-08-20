@@ -8,7 +8,6 @@ class NavMenu extends Component{
     constructor(props){
         super(props);
         this.state={
-            menuState:"1",
         }
     }
 
@@ -17,7 +16,6 @@ class NavMenu extends Component{
      * @return {*}
      */
     changeMenuState = (e) =>{
-        console.log(e);
         this.setState({
            menuState:e.key,
         });
@@ -29,16 +27,15 @@ class NavMenu extends Component{
                     <div className="reproduction-navMenu">
                         <Menu
                             mode="horizontal"
-                            selectedKeys={[this.state.menuState]}
+                            selectedKeys={window.location.pathname}
                             style={{ lineHeight: '64px' }}
-                            onSelect={this.changeMenuState}
                         >
-                            <Menu.Item key="1"><NavLink to='/reproduction/'>首页</NavLink></Menu.Item>
-                            <Menu.Item key="2"><NavLink to='/reproduction/nlp'>语言处理</NavLink></Menu.Item>
+                            <Menu.Item key="/reproduction/nlp"><NavLink to='/reproduction/nlp'>语言处理</NavLink></Menu.Item>
                             <Menu.Item key="3"><NavLink to=''>语言分析</NavLink></Menu.Item>
                             <Menu.Item key="4"><NavLink to=''>云平台API</NavLink></Menu.Item>
                             <Menu.Item key="5"><NavLink to=''>算法演示</NavLink></Menu.Item>
-                            <Menu.Item key="6"><NavLink to='/'>返回主页</NavLink></Menu.Item>
+                            <Menu.Item key="6"><NavLink to='/product'>返回产品列表</NavLink></Menu.Item>
+                            <Menu.Item key="7"><NavLink to='/'>返回主页</NavLink></Menu.Item>
                         </Menu>
                     </div>
                 </div>

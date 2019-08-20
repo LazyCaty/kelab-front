@@ -4,7 +4,6 @@ import Homepage from '../components/user/Homepage'
 import Product from "../components/user/product/Product"
 import ProIndex from "../components/user/product/ProIndex"
 import NavMenu from "../components/user/reproduction/NavMenu"
-import RepIndex from "../components/user/reproduction/RepIndex"
 import NlpRepro from "../components/user/reproduction/NlpRepro"
 import Admin from '../components/admin/AdminHome'
 import AdminServer from '../components/admin/AdminServer'
@@ -42,7 +41,6 @@ class Routes extends Component{
                     <Route path='/reproduction/' render = {() =>
                         <NavMenu>
                             <Switch>
-                                <Route path='/reproduction' exact component = {RepIndex}/>
                                 <Route path='/reproduction/nlp' exact  component = {NlpRepro}/>
                             </Switch>
                         </NavMenu>

@@ -34,9 +34,15 @@ export default KeyMirror({
     //获取服务分类
     GET_SERVICE_CLASSIFICATION_SUCCESS:null,
     GET_SERVICE_CLASSIFICATION_FAILURE:null,
-    //获取分类下的具体服务
+
+    //获取微服务
+    GET_SERVICE_SUCCESS: null,
+    GET_SERVICE_FAILURE: null,
+
+    //获取服务主体
     GET_SERVICE_SUBJECT_SUCCESS:null,
     GET_SERVICE_SUBJECT_FAILURE:null,
+
     //获取产品说明文档
     GET_PRODUCT_DOCUMENT_SUCCESS:null,
     GET_PRODUCT_DOCUMENT_FAILURE:null,
