@@ -1,6 +1,8 @@
 import axios from 'axios';
 import actions from '../index';
 import configs from '../common/configs';
+import {message} from 'antd';
+import Qs from 'qs';
 const {
     GET_ADMIN_SERVER_SUCCESS,
     GET_ADMIN_SERVER_FAILURE,
@@ -35,15 +37,16 @@ export function getServe(page,pageSize)
 
 }
 
-// 添加服务
-export function addServe(serverInformation)
+// 添加修改服务
+export function addServe(query='')
 {
+    alert(`${Qs.stringify(query)}`);
     return async(dispatch) => {
         try {
+            console.log(`${Qs.stringify(query)}`);
             //let headers = getTokenHeader({});
-            const data = (await axios.get(`${baseUrl}`+"server.do?name="+serverInformation.name+"&description="+serverInformation.description+"&status="+serverInformation.status)).data;
-
-            console.log("cg");
+            const data = (await axios.get(`${baseUrl}server.do?${Qs.stringify(query)}`)).data;
+            message.success('添加成功');
         } catch (error) {
             alert('sever err');
         }
@@ -53,15 +56,13 @@ export function addServe(serverInformation)
 
 // 删除服务
 
-export function deteleServer(){
+export function deteleServer(query=""){
     return async(dispatch) => {
         try {
-            //let headers = getTokenHeader({});
-            //const data = (await axios.get(`${baseUrl}`+"server.do?name="+serverInformation.name+"&description="+serverInformation.description+"&status="+serverInformation.status)).data;
-
-            //console.log("cg");
+            const data = (await axios.get(`${baseUrl}server.do?${Qs.stringify(query)}`)).data;
+            message.success('删除成功');
         } catch (error) {
-            //alert('sever err');
+            alert('sever err');
         }
     };
 }
