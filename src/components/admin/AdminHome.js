@@ -37,7 +37,7 @@ class AdminHome extends Component{
 
             <Row className="admin-home">
                 <Col span={3} className="admin-aside">
-                    <div className="admin-aside-logo" ><img src="http://www.cs.swust.edu.cn/assets/img/logo2.png"/></div>
+                  
                     <Menu style={{marginTop:'20px'}} theme={this.state.theme} onClick={this.handleClick}  mode="vertical">
                         <Menu.Item key='0' >
                             <Icon type="user" /><span ><Link className="admin-aside-link" to='/admin/menbers' >用户管理</Link></span>
