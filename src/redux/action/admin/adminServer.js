@@ -5,15 +5,7 @@ import {message} from 'antd';
 import Qs from 'qs';
 const {
     GET_ADMIN_SERVER_SUCCESS,
-    GET_ADMIN_SERVER_FAILURE,
-    GET_SERVER_ADD_SUCCESS,
-    GET_SERVER_ADD_FAILURE,
-    GET_SERVER_DELETE_SUCCESS,
-    GET_SERVER_DELETE_FAILURE,
-    GET_SERVER_UPDATA_SUCCESS,
-    GET_SERVER_UPDATA__FAILURE,
     GET_SERVER_SUBJECT_SUCCESS,
-    GET_SERVER_SUBJECT_FAILURE,
 }=actions;
 
 const baseUrl=configs.baseUrl;
@@ -40,12 +32,21 @@ export function getServe(page,pageSize)
 // 添加修改服务
 export function addServe(query='')
 {
-    alert(`${Qs.stringify(query)}`);
+    query={...query,categoryId:1}
     return async(dispatch) => {
         try {
             console.log(`${Qs.stringify(query)}`);
+            axios({
+                method: 'post',
+                url: `${baseUrl}server.do`,
+                headers: {"Content-Type":"application/json"},
+                data: query
+                
+              });
             //let headers = getTokenHeader({});
-            const data = (await axios.get(`${baseUrl}server.do?${Qs.stringify(query)}`)).data;
+          //  const data = (await axios.post(`${baseUrl}server.do?${Qs.stringify(query)}`)).data;
+            //const data = (await axios.post(`${baseUrl}serverSubject.do?id`+"7&status=")).data;
+           
             message.success('添加成功');
         } catch (error) {
             alert('sever err');
@@ -59,7 +60,12 @@ export function addServe(query='')
 export function deteleServer(query=""){
     return async(dispatch) => {
         try {
-            const data = (await axios.get(`${baseUrl}server.do?${Qs.stringify(query)}`)).data;
+            //const data = (await axios.get(`${baseUrl}server.do?${Qs.stringify(query)}`)).data;
+            axios.delete(`${baseUrl}server.do`, {
+                ...query,
+                _method:"DELETE"
+            })
+            
             message.success('删除成功');
         } catch (error) {
             alert('sever err');

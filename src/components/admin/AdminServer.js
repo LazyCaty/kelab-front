@@ -5,6 +5,7 @@ import {getServe,addServe,deteleServer} from "../../redux/action/admin/adminServ
 import AdminSubject from './AdminSubject';
 import EditorDemo from './BraftEditors';
 import './AdminServer.less';
+import {Link} from 'react-router-dom';
 
 const FormItem=Form.Item;
 
@@ -38,6 +39,10 @@ class AdminServer extends Component{
     // 获得分页
     getCurrPage=(page, pageSize)=>{
         this.props.dispatch(getServe(page,pageSize)).then(()=>{
+             // 为每条数据添加Key值
+             this.props.adminServer.server.map((item)=>{
+                item.key=item.id;
+            })
             this.setState({
                 dataSource:this.props.adminServer.server
             })
@@ -46,9 +51,13 @@ class AdminServer extends Component{
     // 删除服务
     DeleteDates=()=>{
         //console.log(this.state.deleteData);
+
         if(this.state.deleteData)
         {
-            this.props.dispatch(deteleServer({ids:this.state.deleteData })).then(()=>{
+            let _cc=this.state.deleteData;
+            alert(_cc.replace(",",""));
+
+            this.props.dispatch(deteleServer({ids:_cc.replace(",","") })).then(()=>{
                 
             })
         }else{
@@ -111,6 +120,14 @@ class AdminServer extends Component{
           this.showModal();
             
       }
+      addServe=()=>{
+        this.setState({
+            nowEdit:{},
+            editFlag:-1,
+            editTitle:'添加'
+          })
+          this.showModal();
+      }
 
     render(){
 
@@ -129,12 +146,13 @@ class AdminServer extends Component{
                 title:'操作',
                 dataIndex:'',
                 render:(record)=>{
-                    return <div ><Button onClick={()=>this.editorServer(record)}>编辑</Button> <Button>编辑文档</Button>  <Button>添加微服务</Button></div>
+                    return <div ><Button onClick={()=>this.editorServer(record)}>编辑</Button> <Button><Link to={"/admin/serveredit/"+record.id}>编辑文档</Link></Button>  <Button>添加微服务</Button></div>
                 }
             }
         ]
         const rowSelection = {
             onChange: (selectedRowKeys, selectedRows) => {
+                
                 this.setState({
                     deleteData:`${selectedRowKeys}`
                 })
@@ -153,7 +171,7 @@ class AdminServer extends Component{
             <Card title="微服务管理"  >
                 <header className="admin-server-head">
                     <Button onClick={this.showModal}>添加服务</Button>
-                    <Popconfirm placement="top" title={`您确定删除${this.state.deleteData}号服务吗？`} onConfirm={this.DeleteDates} okText="Yes" cancelText="No">
+                    <Popconfirm placement="top" title={this.state.deleteData?`您确定删除${this.state.deleteData}号服务吗？`:`请选择要删除的服务`} onConfirm={this.DeleteDates} okText="Yes" cancelText="No">
                     <Button >删除</Button> 
                     </Popconfirm>
                    
