@@ -13,6 +13,7 @@ import NoFound from '../components/404/NoFound'
 import AccountInfo from '../components/user/personal/AccountInfo'
 import Goods from '../components/user/personal/Goods'
 import AdminDoc from '../components/admin/AdminDoc'
+import ServerEdit from '../components/admin/BraftEditors';
 
 class Routes extends Component{
     render(){
@@ -53,6 +54,7 @@ class Routes extends Component{
                             <Route path="/admin/menbers" exact component={AdminMenber} />
                             <Route path="/admin/server" exact component={AdminServer} />
                             <Route path='/admin/document' exact component={AdminDoc} />
+                            <Route path="/admin/serveredit/:data" exact component={ServerEdit} />
 
                         </Switch>
                     </Admin>

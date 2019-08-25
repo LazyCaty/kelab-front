@@ -4,10 +4,17 @@ import BraftEditor from 'braft-editor'
 import 'braft-editor/dist/index.css'
 import Markdown from 'braft-extensions/dist/markdown'
 import { ContentUtils } from 'braft-utils'
+import { Button} from 'antd'
+import {getServerDoc} from '../../redux/action/admin/brafEditors'
+import { connect } from 'react-redux';
+
 const MarkdownOptions = {
 };
 BraftEditor.use(Markdown(MarkdownOptions));
-export default class EditorDemo extends React.Component {
+@connect(state=>({
+  
+}))
+class EditorDemo extends React.Component {
 
     constructor(props){
         super(props); 
@@ -18,12 +25,18 @@ export default class EditorDemo extends React.Component {
 
 
     async componentDidMount () {
+
         // 假设此处从服务端获取html格式的编辑器内容
+        // this.props.dispatch(getServerDoc({serverid:1} )).then(()=>{
+
+        // })
+        
         //const htmlContent = await fetchEditorContent()
         // 使用BraftEditor.createEditorState将html字符串转换为编辑器需要的editorState数据
         this.setState({
             editorState: BraftEditor.createEditorState("<h1>ff</h1>")
         })
+       console.log("props:"+this.props.match.params.data);
     }
     //清空编辑器
     clearContent = () => {
@@ -139,15 +152,19 @@ export default class EditorDemo extends React.Component {
           ]
         return (
             <div className="my-component">
+              <Button>保存</Button> <Button>取消</Button>
                 <BraftEditor
                     value={editorState}
                     onChange={this.handleEditorChange}
                     onSave={this.submitContent}
                     extendControls={extendControls}
                 />
+          
             </div>
+            
         )
 
     }
 
 }
+export default EditorDemo;
