@@ -36,7 +36,7 @@ class EditorDemo extends React.Component {
         this.setState({
             editorState: BraftEditor.createEditorState("<h1>ff</h1>")
         })
-       console.log("props:"+this.props.match.params.data);
+      // console.log("props:"+this.props.match.params.data);
     }
     //清空编辑器
     clearContent = () => {
@@ -152,7 +152,6 @@ class EditorDemo extends React.Component {
           ]
         return (
             <div className="my-component">
-              <Button>保存</Button> <Button>取消</Button>
                 <BraftEditor
                     value={editorState}
                     onChange={this.handleEditorChange}

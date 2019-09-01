@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { Table,Button ,Popconfirm,Pagination,Card,Form,Input,Select,Modal,message} from 'antd';
+import { Table,Button ,Popconfirm,Pagination,Card,Form,Input,Select,Modal,message,Tag} from 'antd';
 import {connect} from 'react-redux'
 import {getServe,addServe,deteleServer} from "../../redux/action/admin/adminServer";
 import AdminSubject from './AdminSubject';
@@ -17,14 +17,16 @@ const {Option} = Select;
 
 
 class AdminServer extends Component{
-    state={
-        dataSource:[],
-        buttonState:false, // 添加按钮是否点击
-        visible: false,
-        nowEdit:{},
-        editFlag:-1, //判断是添加服务还是修改服务
-        editTitle:"添加",
-    }
+  state={
+            dataSource:[],
+            buttonState:false, // 添加按钮是否点击
+            visible: false,
+            nowEdit:{},
+            editFlag:-1, //判断是添加服务还是修改服务
+            editTitle:"添加",
+        }
+    
+    
     componentDidMount() {
         this.props.dispatch(getServe(1,4)).then(()=>{
             // 为每条数据添加Key值
@@ -132,7 +134,7 @@ class AdminServer extends Component{
     render(){
 
         const {getFieldDecorator}=this.props.form;
-
+        const color=['语言分析','自然语言','人工智能'];
         const columns=[
             {
                 title:'产品',
@@ -143,10 +145,23 @@ class AdminServer extends Component{
                 dataIndex:'description',
             },
             {
+                title: 'Tags',
+                key: 'categoryId',
+                dataIndex: 'categoryId',
+                render: categoryId => (
+                  <span>
+                        <Tag color={"geekblue"} key={categoryId}>
+                          {color[categoryId]}
+                        </Tag>
+                   
+                  </span>
+                ),
+              },
+            {
                 title:'操作',
                 dataIndex:'',
                 render:(record)=>{
-                    return <div ><Button onClick={()=>this.editorServer(record)}>编辑</Button> <Button><Link to={"/admin/serveredit/"+record.id}>编辑文档</Link></Button>  <Button>添加微服务</Button></div>
+                    return <div ><Button onClick={()=>this.editorServer(record)}>编辑</Button> <Button>添加微服务</Button></div>
                 }
             }
         ]
@@ -223,6 +238,17 @@ class AdminServer extends Component{
             <Option value="1">close</Option>
             <Option value="2">opened</Option>
             <Option value="3">pending</Option>
+        </Select>)
+    }
+</FormItem>
+<FormItem label="服务标签">
+    {
+        getFieldDecorator('categoryId',{
+            initialValue:"1",
+        })(<Select style={{ width: 120 }}>
+            <Option value="1">自然语言</Option>
+            <Option value="2">自然语言</Option>
+            <Option value="3">自然语言</Option>
         </Select>)
     }
 </FormItem>
