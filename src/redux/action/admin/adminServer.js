@@ -32,7 +32,7 @@ export function getServe(page,pageSize)
 // 添加修改服务
 export function addServe(query='')
 {
-    query={...query,categoryId:1}
+    query={...query}
     return async(dispatch) => {
         try {
             console.log(`${Qs.stringify(query)}`);
@@ -43,9 +43,6 @@ export function addServe(query='')
                 data: query
                 
               });
-            //let headers = getTokenHeader({});
-          //  const data = (await axios.post(`${baseUrl}server.do?${Qs.stringify(query)}`)).data;
-            //const data = (await axios.post(`${baseUrl}serverSubject.do?id`+"7&status=")).data;
            
             message.success('添加成功');
         } catch (error) {
