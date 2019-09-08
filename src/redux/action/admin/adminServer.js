@@ -17,7 +17,8 @@ export function getServe(page,pageSize)
         try {
             //let headers = getTokenHeader({});
             const data = (await axios.get(`${baseUrl}`+"server.do?page="+page+"&rows="+pageSize)).data;
-            const res=data.data.pagingList;
+            const res=data.data;
+            
             dispatch({
                 type:GET_ADMIN_SERVER_SUCCESS,
                 data:res
@@ -55,14 +56,13 @@ export function addServe(query='')
 // 删除服务
 
 export function deteleServer(query=""){
+    let _ids=query.ids;
+    
     return async(dispatch) => {
         try {
-            //const data = (await axios.get(`${baseUrl}server.do?${Qs.stringify(query)}`)).data;
-            axios.delete(`${baseUrl}server.do`, {
-                ...query,
-                _method:"DELETE"
-            })
-            
+          //  const data = (await axios.delete(`${baseUrl}server.do?ids=`+_ids)).data;
+          axios
+          .delete(`${baseUrl}server.do`, {params: query});
             message.success('删除成功');
         } catch (error) {
             alert('sever err');
