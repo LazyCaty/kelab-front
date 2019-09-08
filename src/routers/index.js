@@ -15,12 +15,14 @@ import Goods from '../components/user/personal/Goods'
 import AdminDoc from '../components/admin/AdminDoc'
 import ServerEdit from '../components/admin/BraftEditors';
 
+
 class Routes extends Component{
     render(){
         return(
             <Router>
                 <Switch>
                     <Route path='/' exact component = {Homepage}/>
+                   
                     <Route path='/personal/' render = { () =>
                             <Switch>
                                 <Route path = '/personal/' exact component = {GeneralView}/>
@@ -49,16 +51,16 @@ class Routes extends Component{
                     />
 
 
-             <Route path="/admin" render={()=><Admin>
-                        <Switch>
-                            <Route path="/admin/menbers" exact component={AdminMenber} />
-                            <Route path="/admin/server" exact component={AdminServer} />
-                            <Route path='/admin/document' exact component={AdminDoc} />
-                            <Route path="/admin/serveredit/:data" exact component={ServerEdit} />
+                    <Route path="/admin" render={()=><Admin>
+                                <Switch>
+                                    <Route path="/admin/menbers" exact component={AdminMenber} />
+                                    <Route path="/admin/server" exact component={AdminServer} />
+                                    <Route path='/admin/document' exact component={AdminDoc} />
+                                    <Route path="/admin/serveredit/:data" exact component={ServerEdit} />
 
-                        </Switch>
-                    </Admin>
-                    } />
+                                </Switch>
+                            </Admin>
+                            } />
                     <Route component={NoFound} path="*" />
             </Switch>
             

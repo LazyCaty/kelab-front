@@ -19,11 +19,7 @@ class AdminHome extends Component{
     }
 
     componentDidMount() {
-        this.props.dispatch(getMenu()).then(()=>{
-            this.setState({
-                menu:this.props.adminhome.menu
-            })
-        })
+       
 
     }
 
@@ -39,18 +35,25 @@ class AdminHome extends Component{
                 <Col span={3} className="admin-aside">
                   
                     <Menu style={{marginTop:'20px'}} theme={this.state.theme} onClick={this.handleClick}  mode="vertical">
+                    
                         <Menu.Item key='0' >
-                            <Icon type="user" /><span ><Link className="admin-aside-link" to='/admin/menbers' >用户管理</Link></span>
+                            <Link className="admin-aside-link" to='/admin/menbers' ><Icon type="user" /><span >用户管理</span></Link>
+
                         </Menu.Item>
+                        
                         <Menu.Item key='1' >
-                            <Icon type="user" /><span ><Link className="admin-aside-link" to='/admin/server' >微服务管理</Link></span>
+                            <Link className="admin-aside-link" to='/admin/server' ><Icon type="user" /><span >微服务管理</span></Link>
                         </Menu.Item>
+                        
+                        
                         <Menu.Item key='2' >
-                            <Icon type="user" /><span ><Link className="admin-aside-link" to='/admin/document' >文档管理</Link></span>
+                           <Link className="admin-aside-link" to='/admin/document' > <Icon type="user" /><span >文档管理</span></Link>
                         </Menu.Item>
+                        
                         <Menu.Item key='3' >
-                            <Icon type="user" /><span ><Link className="admin-aside-link" to='/4' >平台管理</Link></span>
+                            <Link className="admin-aside-link" to='/4' ><Icon type="user" /><span >平台管理</span></Link>
                         </Menu.Item>
+                        
 {/*                        {
                             this.state.menu.map((item,index)=>{
                                 if(item.children)
