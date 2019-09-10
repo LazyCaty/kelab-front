@@ -3,7 +3,7 @@ import React,{ Component } from 'react';
 import './ProIndex.less';
 import Footer from "../common/Footer";
 import UserHead from "../common/UserHead"
-import { Menu,  List, Avatar,Card,} from 'antd';
+import { Menu,  List, Avatar,Card,Pagination} from 'antd';
 import {getServiceClass,getService} from "../../../redux/action/user/proIndex";
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
@@ -41,7 +41,7 @@ class ProIndex extends Component{
         //获取微服务项
         this.props.dispatch(getService({
             page: 1,
-            rows: 10,
+            rows: 5,
         })).then(()=>{
             if(!!this.props.proIndex.getService){
                 console.log(this.props.proIndex.getService);
@@ -52,6 +52,23 @@ class ProIndex extends Component{
                 }
             }
         })
+    }
+
+    updatePage = (page) => {
+         //获取新一页微服务项
+         this.props.dispatch(getService({
+            page: page,
+            rows: 5,
+        })).then(()=>{
+            if(!!this.props.proIndex.getService){
+                console.log(this.props.proIndex.getService);
+                if(this.props.proIndex.getService.code === 'SUCCESS') {
+                    this.setState({
+                        service:this.props.proIndex.getService.data.pagingList
+                    });
+                }
+            }
+        })           
     }
 
     render(){
@@ -123,6 +140,7 @@ class ProIndex extends Component{
                             )}
                         />
                     </div>
+                    <Pagination defaultCurrent={1} total={50} onChange={this.updatePage}/>
                 </div>
                 <div className="proIndex-footer">
                     <Footer />
