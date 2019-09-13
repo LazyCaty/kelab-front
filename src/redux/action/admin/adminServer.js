@@ -6,6 +6,7 @@ import Qs from 'qs';
 const {
     GET_ADMIN_SERVER_SUCCESS,
     GET_SERVER_SUBJECT_SUCCESS,
+    GET_CATEGORY_SUCCESS
 }=actions;
 
 const baseUrl=configs.baseUrl;
@@ -91,3 +92,56 @@ export function getSubject(page,rows,serverId ){
         }
     };
 }
+
+//获取分类
+export function getCategory(){
+    return async(dispatch) => {
+        try {
+            //let headers = getTokenHeader({});
+            const data = (await axios.get(`${baseUrl}server/category.do`)).data;
+
+
+            const res=data.data;
+            dispatch({
+                type:GET_CATEGORY_SUCCESS,
+                data:res
+            })
+
+        } catch (error) {
+            alert(error);
+        }
+    };
+}
+
+
+// 添加分类
+export function addCategory(query='')
+{
+    query={...query}
+    return async(dispatch) => {
+        try {
+            axios({
+                method: 'post',
+                url: `${baseUrl}server/category.do`,
+                headers: {"Content-Type":"application/json"},
+                data: query
+                
+              });
+           
+            message.success('添加成功');
+        } catch (error) {
+            alert('sever err');
+        }
+    };
+
+}
+
+
+
+
+
+
+
+
+
+

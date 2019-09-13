@@ -48,7 +48,7 @@ export default KeyMirror({
     GET_PRODUCT_DOCUMENT_FAILURE:null,
 
     //获取文档信息
-    
+    GET_CATEGORY_SUCCESS:null,
 
 
 

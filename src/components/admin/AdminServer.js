@@ -2,7 +2,7 @@
 import React,{Component} from 'react';
 import { Table,Button ,Popconfirm,Pagination,Card,Form,Input,Select,Modal,message,Tag} from 'antd';
 import {connect} from 'react-redux'
-import {getServe,addServe,deteleServer} from "../../redux/action/admin/adminServer";
+import {getServe,addServe,deteleServer,getCategory,addCategory} from "../../redux/action/admin/adminServer";
 import AdminSubject from './AdminSubject';
 import EditorDemo from './BraftEditors';
 import './AdminServer.less';
@@ -18,18 +18,29 @@ const {Option} = Select;
 
 
 class AdminServer extends Component{
-  state={
+    constructor(){
+        super();
+        this.state={
             dataSource:[],
             total:0,
-            buttonState:false, // 添加按钮是否点击
-            visibleSer: false, // 添加产品弹框
-            visibleSub:false, // 添加微服务弹框
-            visibleV:false, // 添加微服务版本弹框
+            visible:false, // 添加微服务版本弹框
             nowEdit:{},
             editFlag:-1, //判断是添加服务还是修改服务
             editTitle:"添加",
+            category:[],
+            deleteData:'',
+            categroyShow:false
         }
-    
+        this.objRef=React.createRef();
+    }
+ 
+    componentWillMount(){
+        this.props.dispatch(getCategory()).then(()=>{
+            this.setState({
+                category:this.props.adminServer.serverCatrgory.pagingList
+            })     
+        })
+    }
     
     componentDidMount() {
         this.props.dispatch(getServe(1,4)).then(()=>{
@@ -98,31 +109,31 @@ class AdminServer extends Component{
             });
         
         
-        this.handleOk("Ser");
+        this.handleOk();
 
     }
     //弹出框控制
-    showModal = (f) => {
-        let _visible="visible"+f;
+    showModal = () => {
+       
         this.setState({
-          [_visible]: true,
+          visible: true,
         });
         
       };
     
       handleOk =(f)=> {
       
-        let _visible="visible"+f;
+       
         this.setState({
-         [_visible]: false,
+         visible: false,
         });
       };
     
       handleCancel = (f) => {
         
-       let _visible="visible"+f;
+      
         this.setState({
-          [_visible]: false,
+          visible: false,
         });
       };
       editorServer=(record)=>{
@@ -131,7 +142,7 @@ class AdminServer extends Component{
             editFlag:record.id,
             editTitle:'修改'
           })
-          this.showModal("Ser");
+          this.showModal();
             
       }
       addServe=()=>{
@@ -140,12 +151,31 @@ class AdminServer extends Component{
             editFlag:-1,
             editTitle:'添加'
           })
-          this.showModal("Ser");
+          this.showModal();
       }
 
+      changeCategory=()=>{
+          this.setState({
+              categroyShow:!this.state.categroyShow
+          })
+      }
+      submitCate=()=>{
+          let _catename=this.objRef.current.state.value;
+          console.log(_catename);
+          this.props.dispatch(addCategory({name:_catename})).then(()=>{
+            this.props.dispatch(getCategory()).then(()=>{
+                this.setState({
+                    category:this.props.adminServer.serverCatrgory.pagingList
+                })
+            })
+          })
+          this.changeCategory();
+      }
     render(){
+       
         const {getFieldDecorator}=this.props.form;
-        const color=['语言分析','自然语言',"没有分类"];
+        const color=['magenta','orange','gold','lime','green','cyan','blue','geekblue','purple']
+       const {category}=this.state;
         const columns=[
             {
                 title:'产品',
@@ -161,9 +191,13 @@ class AdminServer extends Component{
                 dataIndex: 'categoryId',
                 render: categoryId => (
                   <span>
-                        <Tag color={"geekblue"} key={categoryId}>
-                          {color[categoryId]}
-                        </Tag>
+                      {
+                          <Tag color={color[(categoryId-1)%9]} key={categoryId}>
+                              {category[categoryId-1].name}
+                            </Tag>
+                        
+                      }
+                       
                    
                   </span>
                 ),
@@ -172,7 +206,7 @@ class AdminServer extends Component{
                 title:'操作',
                 dataIndex:'',
                 render:(record)=>{
-                    return <div ><Button onClick={()=>this.editorServer(record)}>编辑</Button> <Button onClick={()=>this.showModal("Sub")}>添加微服务</Button></div>
+                    return <div ><Button onClick={()=>this.editorServer(record)}>编辑</Button> <Button>添加微服务</Button></div>
                 }
             }
         ]
@@ -196,7 +230,23 @@ class AdminServer extends Component{
         return <div>
             <Card title="微服务管理"  >
                 <header className="admin-server-head">
-                    <Button onClick={()=>this.showModal("Ser")}>添加服务</Button>
+                    <Button onClick={this.changeCategory}>添加分类</Button>
+                    <div className={this.state.categroyShow?'admin-categroy-block':'admin-categroy-hidden'}>
+                        
+                        <Input style={{width:200,marginTop:5,marginRight:10}} ref={this.objRef}/> <button onClick={this.submitCate}>提交</button>
+                    </div>
+                    <div className="admin-categroy">
+                        {
+                            category.map((item,index)=>{
+                                return  <Tag color={color[(item.id-1)%9]} key={index}>
+                                {item.name}
+                              </Tag>
+                            })
+                        }
+                    </div>
+                   
+                    <hr />
+                    <Button onClick={this.showModal}>添加服务</Button>
                     <Popconfirm placement="top" title={this.state.deleteData?`您确定删除${this.state.deleteData}号服务吗？`:`请选择要删除的服务`} onConfirm={this.DeleteDates} okText="Yes" cancelText="No">
                     <Button >删除</Button> 
                     </Popconfirm>
@@ -216,9 +266,9 @@ class AdminServer extends Component{
 
              <Modal
                 title={this.state.editTitle+"产品"}
-                visible={this.state.visibleSer}
-                onOk={()=>this.SubmitForm("Ser")}
-                onCancel={()=>this.handleCancel("Ser")}
+                visible={this.state.visible}
+                onOk={this.SubmitForm}
+                onCancel={this.handleCancel}
                 okText="提交"
                 cancelText="取消"
                 >
@@ -258,9 +308,13 @@ class AdminServer extends Component{
                             getFieldDecorator('categoryId',{
                                 initialValue:"1",
                             })(<Select style={{ width: 120 }}>
-                                <Option value="1">自然语言</Option>
-                                <Option value="2">自然语言</Option>
-                                <Option value="3">没有分类</Option>
+                                {
+                                    category.map((item,index)=>{
+                                        return  <Option value={item.id} key={index}>
+                                        {item.name}
+                                      </Option>
+                                    })
+                                }
                             </Select>)
                         }
                     </FormItem>
@@ -269,39 +323,7 @@ class AdminServer extends Component{
                     </Card>
         </Modal>
 
-        <Modal
-                title={this.state.editTitle+"微服务"}
-                visible={this.state.visibleSub}
-                onOk={()=>this.handleOk("Sub")}
-                onCancel={()=>this.handleCancel("Sub")}
-                okText="提交"
-                cancelText="取消"
-                >
-                    <Card>
 
-                    <Form layout="horizontal">
-                    <FormItem label="微服务名称：">
-                        {
-                            getFieldDecorator('name',{
-                                initialValue:"",
-                            })(<Input placeholder={"请输入微服务名"}/>)
-                        }
-                    </FormItem>
-                    <FormItem label="服务状态">
-                        {
-                            getFieldDecorator('status',{
-                                initialValue:"2",
-                            })(<Select style={{ width: 120 }}>
-                                <Option value="1">close</Option>
-                                <Option value="2">opened</Option>
-                                <Option value="3">pending</Option>
-                            </Select>)
-                        }
-                    </FormItem>
-                    </Form>
-
-                    </Card>
-        </Modal>
         </div>
 
     }

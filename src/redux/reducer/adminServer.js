@@ -4,6 +4,7 @@ const{
     GET_ADMIN_SERVER_FAILURE,
     GET_SERVER_SUBJECT_SUCCESS,
     GET_SERVER_SUBJECT_FAILURE,
+    GET_CATEGORY_SUCCESS
 
 }=actions
 
@@ -20,6 +21,11 @@ export default (state={},action)=>
             return{
                 ...state,
                 severSubject:action.data
+            }
+        case GET_CATEGORY_SUCCESS:
+            return{
+                ...state,
+                serverCatrgory:action.data
             }
     }
     return state;
