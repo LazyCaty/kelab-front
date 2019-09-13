@@ -136,7 +136,20 @@ export function addCategory(query='')
 
 }
 
-
+//删除分类
+export function deteleCate(query=""){
+    let _ids=query.ids;
+    
+    return async(dispatch) => {
+        try {
+          axios
+          .delete(`${baseUrl}server/category.do`, {params: query});
+            message.success('删除成功');
+        } catch (error) {
+            alert('sever err');
+        }
+    };
+}
 
 
 
