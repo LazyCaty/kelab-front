@@ -1,6 +1,6 @@
 // 微服务管理页面
 import React,{Component} from 'react';
-import { Table,Button ,Popconfirm,Pagination,Card,Form,Input,Select,Modal,message,Tag} from 'antd';
+import { Table,Button ,Popconfirm,Pagination,Card,Form,Input,Select,Modal,message,Tag,Popover} from 'antd';
 import {connect} from 'react-redux'
 import {getServe,addServe,deteleServer,getCategory,addCategory,deteleCate} from "../../redux/action/admin/adminServer";
 import AdminSubject from './AdminSubject';
@@ -29,6 +29,7 @@ class AdminServer extends Component{
             category:[],
             deleteData:'',
             categroyShow:false,
+            cateChShow:false,
         }
         this.objRef=React.createRef();
         this.cateArr=[]
@@ -160,6 +161,12 @@ class AdminServer extends Component{
           })
       }
 
+      catechShow=()=>{
+        this.setState({
+            cateChShow:!this.state.cateChShow
+        })
+      }
+
       //提交分类
       submitCate=()=>{
           let _catename=this.objRef.current.state.value;
@@ -175,15 +182,13 @@ class AdminServer extends Component{
       }
 
       //删除分类
-      DeleteCate=(ids)=>{
-      
-            this.props.dispatch(deteleCate({ids:ids})).then(
-                this.props.dispatch(getCategory()).then(()=>{
-                this.setState({
-                    category:this.props.adminServer.serverCatrgory.pagingList
-                })
-            }))
-            
+      DeleteCate=(ids,name)=>{
+          this.props.dispatch(deteleCate({ids:ids})).then(
+            this.props.dispatch(getCategory()).then(()=>{
+            this.setState({
+                category:this.props.adminServer.serverCatrgory.pagingList
+            })
+        }))   
       }
 
 render(){
@@ -253,11 +258,19 @@ render(){
                     <div className="admin-categroy">
                         {
                             category.map((item,index)=>{
-                                return   <Popconfirm placement="top" title={`您确定删除${item.name}号服务吗？`}  key={index} onConfirm={()=>this.DeleteCate(item.id)} okText="Yes" cancelText="No">
-                                <Tag color={color[(item.id-1)%9]}>
-                                {item.name}
-                              </Tag>
-                              </Popconfirm>
+                                return  <Popover content={<div className="admin-cate" onMouseLeave={this.catechShow}>
+                                    <Button type="primary" size={'small'} onClick={this.catechShow}>修改</Button>
+                                    <div className={this.state.cateChShow?'admin-categroy-block':'admin-categroy-hidden'}>
+                                    <Input style={{width:100,marginTop:5,marginRight:10}} ref={this.objRef}/> <Button size={'small'} onClick={this.submitCate}>提交</Button>
+                                    </div>
+                                    <hr />
+                                    <Button type="danger" size={'small'} onClick={()=>this.DeleteCate(item.id,item.name)}>删除</Button>
+                                </div>} trigger="hover">
+                                    <Tag color={color[(item.id-1)%9]}>
+                                    {item.name}
+                                    </Tag>
+                              </Popover>
+                         
                             })
                            
                     
