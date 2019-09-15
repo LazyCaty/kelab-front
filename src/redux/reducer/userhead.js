@@ -8,6 +8,8 @@ const{
 
     GET_REGISTER_SUCCESS,
     GET_REGISTER_FAILURE,
+
+    GET_VERIFICATION_SUCCESS
 }=actions
 
 const defaultState={
@@ -38,6 +40,11 @@ export default (state=defaultState,action)=>
             return{
                 ...state,
                 logins: action.data
+            }
+        case GET_VERIFICATION_SUCCESS:
+            return{
+                ...state,
+                pic:action.data
             }
 
     }

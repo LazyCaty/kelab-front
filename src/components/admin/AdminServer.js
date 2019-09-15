@@ -172,6 +172,7 @@ class AdminServer extends Component{
           let _catename=this.objRef.current.state.value;
           console.log(_catename);
           this.props.dispatch(addCategory({name:_catename})).then(
+       
             this.props.dispatch(getCategory()).then(()=>{
                 this.setState({
                     category:this.props.adminServer.serverCatrgory.pagingList

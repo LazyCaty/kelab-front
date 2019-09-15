@@ -50,6 +50,9 @@ export default KeyMirror({
     //获取文档信息
     GET_CATEGORY_SUCCESS:null,
 
+    //获取验证码
+    GET_VERIFICATION_SUCCESS:null,
+
 
 
 })
