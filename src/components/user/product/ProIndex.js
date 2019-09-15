@@ -140,7 +140,7 @@ class ProIndex extends Component{
                             )}
                         />
                     </div>
-                    <Pagination defaultCurrent={1} total={50} onChange={this.updatePage}/>
+                    <Pagination defaultCurrent={1} total={30} onChange={this.updatePage}/>
                 </div>
                 <div className="proIndex-footer">
                     <Footer />
