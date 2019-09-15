@@ -1,21 +1,36 @@
 import React, { Component } from 'react';
+import loadable from '../util/loadable';
 import {BrowserRouter as Router, Route,Switch } from 'react-router-dom'
-import Homepage from '../components/user/Homepage'
-import Product from "../components/user/product/Product"
-import ProIndex from "../components/user/product/ProIndex"
-import NavMenu from "../components/user/reproduction/NavMenu"
-import NlpRepro from "../components/user/reproduction/NlpRepro"
+/**公共路由最好不要按需引入 */
 import Admin from '../components/admin/AdminHome'
-import AdminServer from '../components/admin/AdminServer'
-import AdminMenber from '../components/admin/AdminMenber'
-import GeneralView from '../components/user/personal/GeneralView'
-import NoFound from '../components/404/NoFound'
-import AccountInfo from '../components/user/personal/AccountInfo'
-import Goods from '../components/user/personal/Goods'
-import AdminDoc from '../components/admin/AdminDoc'
-import ServerEdit from '../components/admin/BraftEditors';
+/**按需加载组件 */
+const Homepage = loadable(() => import('../components/user/Homepage'))
+const Product = loadable(() => import('../components/user/product/Product'))
+const ProIndex = loadable(() => import('../components/user/product/ProIndex'))
+const NavMenu = loadable(() => import('../components/user/reproduction/NavMenu'))
+const NlpRepro = loadable(() => import('../components/user/reproduction/NlpRepro'))
+const AdminServer = loadable(() => import('../components/admin/AdminServer'))
+const AdminMenber = loadable(() => import('../components/admin/AdminMenber'))
+const GeneralView = loadable(() => import('../components/user/personal/GeneralView'))
+const NoFound = loadable(() => import('../components/404/NoFound'))
+const AccountInfo = loadable(() => import('../components/user/personal/AccountInfo'))
+const Goods = loadable(() => import('../components/user/personal/Goods'))
+const AdminDoc = loadable(() => import('../components/admin/AdminDoc'))
+const ServerEdit = loadable(() => import('../components/admin/BraftEditors'))
 
+/* import React, { Fragment } from 'react'
+import { BrowserRouter, Route } from 'react-router-dom'
+import loadable from '../util/loadable'
 
+const Home = loadable(()=>import('@pages/home'))
+
+const Routes = () => (
+    <BrowserRouter>
+        <Route path="/home" component={Home}/>
+    </BrowserRouter>
+);
+
+export default Routes */
 class Routes extends Component{
     render(){
         return(
