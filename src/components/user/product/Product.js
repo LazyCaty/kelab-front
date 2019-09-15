@@ -6,10 +6,12 @@ import {getDocMenu} from "../../../redux/action/user/product";
 import { Input,Menu,  Breadcrumb } from 'antd';
 import {connect} from 'react-redux'
 import {Link,BrowserRouter} from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 import "./Product.less";
 
 const SubMenu = Menu.SubMenu;
 const Search = Input.Search;
+
 class Product extends Component{
     constructor(props){
         super(props);
@@ -20,6 +22,8 @@ class Product extends Component{
             docMenu: [],
             //分类索引
             menuIndex: '',
+            //当前文档key值
+            docKey: 0,
         }
     }
 
@@ -72,6 +76,11 @@ class Product extends Component{
 
     };
 
+    renderDoc = (e) => {
+        this.setState({
+            docKey: e.key
+        })
+    }
 
     render(){
 
@@ -80,6 +89,8 @@ class Product extends Component{
         let docMenu = this.state.docMenu;
         //具体单项服务名字索引
         let subjectIndex = [];
+        //获取每项服务的markdown字符串
+        let subjectDoc = [];
         if(docMenu.length !== 0){
             for (let i = 0;i < docMenu.docSubVos.length;i++){
                 let MenuData = [];
@@ -87,9 +98,10 @@ class Product extends Component{
                     let key = docMenu.docSubVos[i].docEntities[j].id.toString();
                     let href = window.location.pathname + '#/' + key;
                     MenuData.push(
-                        <Menu.Item key={key}><Link to={href}>{docMenu.docSubVos[i].docEntities[j].name}</Link></Menu.Item>
+                        <Menu.Item key={key} onClick={this.renderDoc}><Link to={href}>{docMenu.docSubVos[i].docEntities[j].name}</Link></Menu.Item>
                     );
                     subjectIndex.push(docMenu.docSubVos[i].docEntities[j].name)
+                    subjectDoc.push(docMenu.docSubVos[i].docEntities[j].markdownCode)
                 }
                 let key = docMenu.docSubVos[i].id;
                 subMenuData.push(
@@ -137,7 +149,7 @@ class Product extends Component{
                             onSearch={value => console.log(value)}
                             style={{ width: 200}}
                         />
-                        <p>some article</p>
+                        <ReactMarkdown source={subjectDoc[this.state.docKey]} />
                     </div>
                 </div>
                 <div className="product-footer">
