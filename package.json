@@ -19,6 +19,7 @@
     "braft-editor": "^2.3.7",
     "braft-extensions": "^0.0.18",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
+    "crypto": "^1.0.1",
     "css-loader": "1.0.0",
     "dotenv": "6.0.0",
     "dotenv-expand": "4.2.0",

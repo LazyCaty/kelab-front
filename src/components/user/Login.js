@@ -3,9 +3,11 @@ import React,{Component} from 'react';
 import  {changePage} from '../../redux/action/common/userhead';
 import {connect} from 'react-redux';
 import { Input,Icon,Form, Button,Card} from 'antd';
-import {sendLogin} from "../../redux/action/common/userhead";
+import {sendLogin,getVerification,sendRes} from "../../redux/action/common/userhead";
 import "./Login.less";
+import crypto from 'crypto';
 const FormItem=Form.Item;
+const md5 = crypto.createHash('md5');
 @connect(state=>({
         header:state.userHeader
     })
@@ -18,14 +20,37 @@ class Login extends Component{
         this.state={
             page:false ,// 判断是否显示页面
             pageRl:false ,//判断是否为登录
-            t:0
+            t:0,
+            pic:"data:image/png;base64,"
         }
     }
+    componentDidMount(){
+        this.props.dispatch(getVerification()).then(()=>{
+            this.setState({
+                pic:this.state.pic+this.props.header.pic.data
+            })
+            console.log(this.state.pic);
 
+        })
+        
+    }
+
+    toLoginAndRes=(n)=>{
+        let apply=this.props.form.getFieldsValue();//获取表单信息
+        if(n==1)
+        {
+            this.props.dispatch(sendLogin({username:apply.userNameL,password:md5.digest(apply.passwordL),uuid:"c87b54df-57b6-4ca7-8a9d-f07dcbb3f6bf",verifycode:"8ean"}));
+        }else{
+            console.log(apply);
+            this.props.dispatch(sendRes({username:apply.username,password:apply.password,email:apply.email}));
+        }
+    
+    }
 
     toLogin=()=>{
         let apply=this.props.form.getFieldsValue();//获取表单信息
-        this.props.dispatch(sendLogin(apply,1));
+        console.log(apply);
+        
     }
 
 
@@ -46,7 +71,7 @@ class Login extends Component{
 
                                 <FormItem>
                                     {
-                                        getFieldDecorator('userName',{//初始化
+                                        getFieldDecorator('userNameL',{//初始化
                                             initialValue:'',
                                             rules:[{
                                                 required:true,
@@ -67,7 +92,7 @@ class Login extends Component{
                                 </FormItem>
                                 <FormItem>
                                     {
-                                        getFieldDecorator('password',{
+                                        getFieldDecorator('passwordL',{
                                             initialValue:'',
                                             rules:[]
                                         })( <Input prefix={<Icon type="lock"/>} placeholder="请输入密码"/>)
@@ -75,7 +100,7 @@ class Login extends Component{
                                 </FormItem>
                                 <FormItem>
                                     {
-                                        getFieldDecorator('validation',{
+                                        getFieldDecorator('validationL',{
                                             initialValue:'',
                                             rules:[]
                                         })( <Input style={{width:200}} placeholder="请输入验证码"/>)
@@ -89,7 +114,7 @@ class Login extends Component{
 
 
                                 </FormItem>
-                                <Button style={{width:300,marginLeft:25}}  type="primary" onClick={this.toLogin}>登录</Button>
+                                <Button style={{width:300,marginLeft:25}}  type="primary" onClick={()=>this.toLoginAndRes(1)}>登录</Button>
                                 <FormItem>
                                     <div></div>
                                     <div></div>
@@ -102,7 +127,7 @@ class Login extends Component{
                                 <div className="registered-content-head">欢迎注册语义分析平台</div>
                                 <FormItem>
                                     {
-                                        getFieldDecorator('userName',{//初始化
+                                        getFieldDecorator('username',{//初始化
                                             initialValue:'',
                                             rules:[{
                                                 required:true,
@@ -123,7 +148,7 @@ class Login extends Component{
                                 </FormItem>
                                 <FormItem>
                                     {
-                                        getFieldDecorator('passwordf',{
+                                        getFieldDecorator('password',{
                                             initialValue:'',
                                             rules:[]
                                         })( <Input prefix={<Icon type="lock"/>} placeholder="请输入密码"/>)
@@ -154,9 +179,9 @@ class Login extends Component{
                                         })( <Input style={{width:200}} placeholder="请输入验证码"/>)
 
                                     }
-                                    <div style={{width:50,float:'right'} }>验证码</div>
+                                    <div style={{width:50,float:'right'} }><img src={this.state.pic}/></div>
                                 </FormItem>
-                                <Button style={{width:300,marginLeft:25}} onClick={this.toLogin}  type="primary">提交</Button>
+                                <Button style={{width:300,marginLeft:25}} onClick={()=>this.toLoginAndRes(2)}  type="primary">提交</Button>
 
                                 <FormItem>
                                     <div></div>

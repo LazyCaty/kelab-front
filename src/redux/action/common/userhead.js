@@ -2,6 +2,9 @@ import axios from 'axios';
 import configs from './configs';
 import actions from '../index';
 import { async } from 'rsvp';
+import {message} from 'antd';
+import Qs from 'qs';
+import { applyPatches } from '_immer@1.10.0@immer';
 const {
 
     GET_USER_MENU_SUCCESS,
@@ -13,11 +16,12 @@ const {
 
     GET_REGISTER_SUCCESS,
     GET_REGISTER_FAILURE,
+    GET_VERIFICATION_SUCCESS,
 }=actions;
 
 const baseUrln=configs.baseUrln;
 
-export function getMenu()
+export function getMenu(query="")
 {
     return async(dispatch) => {
         try {
@@ -37,24 +41,24 @@ export function getMenu()
 
 }
 
-export function sendLogin(apply,num)
+export function sendRes(apply,num)
 {
-    return (dispatch)=>{
-        console.log(apply,num);
-        axios({
-            method: 'GET',
-            url: `${baseUrln}user/login`,
-            //data: JSON.stringify(apply),
+    
 
-            /*
-                        xhrFields: {
-                            withCredentials: true
-                        },
+    return (dispatch)=>{
+        let dat={...apply,roleId:1}
+        axios({
+            method: 'POST',
+            url: "http://192.168.3.83:8088/api/user.do/register",
+            data: JSON.stringify(dat),
+
+          
+           
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         dataType:'json',
-            */
+          
         }).then((res)=>{
             console.log(res.data);
             dispatch({
@@ -69,6 +73,39 @@ export function sendLogin(apply,num)
             alert('登录出错了');
         })
     }
+
+}
+
+export function sendLogin(query='')
+{
+    return async(dispatch) => {
+        try {
+            console.log("dd",`${Qs.stringify(query)}`);
+            const data = (await axios.post(`http://192.168.3.83:8088/api/user.do/login?${Qs.stringify(query)}`)).data;
+            console.log(data);
+           
+        
+        } catch (error) {
+            alert('sever err');
+        }
+    };
+
+}
+export function getVerification(uuid)
+{
+    return async(dispatch) => {
+        try {
+            const data = (await axios.get(`http://192.168.3.83:8088/api/user.do/getverifycode?uuid=null`)).data;
+            console.log(data);
+            dispatch({
+                type:GET_VERIFICATION_SUCCESS,
+                data:data
+            })
+        
+        } catch (error) {
+            message.info("验证码获取失败");
+        }
+    };
 
 }
 
