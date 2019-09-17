@@ -4,7 +4,7 @@ import actions from '../index';
 import { async } from 'rsvp';
 import {message} from 'antd';
 import Qs from 'qs';
-import { applyPatches } from '_immer@1.10.0@immer';
+/* import { applyPatches } from '_immer@1.10.0@immer'; */
 const {
 
     GET_USER_MENU_SUCCESS,
