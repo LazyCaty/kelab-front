@@ -1,6 +1,6 @@
 // 微服务管理页面
 import React,{Component} from 'react';
-import { Table,Button ,Popconfirm,Pagination,Card,Form,Input,Select,Modal,message,Tag,Popover} from 'antd';
+import { Table,Button ,Popconfirm,Pagination,Card,Form,Input,Select,Modal,message,Tag,Tabs} from 'antd';
 import {connect} from 'react-redux'
 import {getServe,addServe,deteleServer,getCategory,addCategory,deteleCate} from "../../redux/action/admin/adminServer";
 import AdminSubject from './AdminSubject';
@@ -10,6 +10,7 @@ import {Link} from 'react-router-dom';
 
 const FormItem=Form.Item;
 const {Option} = Select;
+const { TabPane } = Tabs;
 
 @connect(state=>({
         adminServer:state.adminServer
@@ -28,19 +29,10 @@ class AdminServer extends Component{
             editTitle:"添加",
             category:[],
             deleteData:'',
-            categroyShow:false,
             cateChShow:false,
         }
         this.objRef=React.createRef();
         this.cateArr=[]
-    }
-    
-    componentWillMount(){
-        this.props.dispatch(getCategory()).then(()=>{
-            this.setState({
-                category:this.props.adminServer.serverCatrgory.pagingList
-            })
-        })
     }
     
     componentDidMount() {
@@ -53,16 +45,13 @@ class AdminServer extends Component{
             
         })
         // 获得分页
-        this.props.dispatch(getServe(1,4)).then(()=>{
+        this.props.dispatch(getServe(1,5)).then(()=>{
             // 为每条数据添加Key值
             this.props.adminServer.server.pagingList.map((item)=>{
                 item.key=item.id;
             })
             this.setState({
-                total:this.props.adminServer.server.total
-            })
-        
-            this.setState({
+                total:this.props.adminServer.server.total,
                 dataSource:this.props.adminServer.server.pagingList
             })
         })
@@ -86,7 +75,7 @@ class AdminServer extends Component{
         {
             this.props.dispatch(deteleServer({ids:this.state.deleteData})).then(()=>{ })
         }else{
-            message.info("请选择您要删除的部分");
+            message.error("请选择您要删除的删除");
         }
     }
 
@@ -155,146 +144,96 @@ class AdminServer extends Component{
           this.showModal();
       }
 
-      changeCategory=()=>{
-          this.setState({
-              categroyShow:!this.state.categroyShow
-          })
-      }
-
       catechShow=()=>{
         this.setState({
             cateChShow:!this.state.cateChShow
         })
       }
 
-      //提交分类
-      submitCate=()=>{
-          let _catename=this.objRef.current.state.value;
-          console.log(_catename);
-          this.props.dispatch(addCategory({name:_catename})).then(
-       
-            this.props.dispatch(getCategory()).then(()=>{
-                this.setState({
-                    category:this.props.adminServer.serverCatrgory.pagingList
-                })
-            })
-          )
-          this.changeCategory();
-      }
 
-      //删除分类
-      DeleteCate=(ids,name)=>{
-          this.props.dispatch(deteleCate({ids:ids})).then(
-            this.props.dispatch(getCategory()).then(()=>{
-            this.setState({
-                category:this.props.adminServer.serverCatrgory.pagingList
-            })
-        }))   
-      }
-
-render(){
-       
-        const {getFieldDecorator}=this.props.form;
-        const color=['magenta','orange','gold','lime','green','cyan','blue','geekblue','purple']
-       const {category}=this.state;
-        const columns=[
-            {
-                title:'产品',
-                dataIndex:'name',
-            },
-            {
-                title:'描述',
-                dataIndex:'description',
-            },
-            {
-                title: 'Tags',
-                key: 'categoryId',
-                dataIndex: 'categoryId',
-                render: categoryId => (
-                   
-                  <span>
-                      {
-                          category.map((item,index)=>{
-                              if(item.id==categoryId)
-                              {
-                                  console.log(item.id)
-                                return <Tag color={color[(item.id-1)%9]} key={index}>
-                                {item.name}
-                              </Tag>
-                              }
-                          })
-                      }
-                  </span>
-                ),
-              },
-            {
-                title:'操作',
-                dataIndex:'',
-                render:(record)=>{
-                    return <div ><Button onClick={()=>this.editorServer(record)}>编辑</Button> <Button>添加微服务</Button></div>
+    render(){
+        
+            const {getFieldDecorator}=this.props.form;
+            const {category,dataSource}=this.state;
+            const columns=[
+                {
+                    title:'产品',
+                    key: 'name',
+                    dataIndex:'name',
+                },
+                {
+                    title:'描述',
+                    key: 'description',
+                    dataIndex:'description',
+                },
+                {
+                    title: '产品编辑',
+                    key: 'categoryId',
+                    dataIndex: 'categoryId',
+                    render:(record)=>{
+                        return <div><Button onClick={()=>this.editorServer(record)}>修改</Button></div>
+                    }
+                },
+                {
+                    title:'微服务管理',
+                    key: 'subjectManage',
+                    render:(record)=>{
+                        return <div><Button>添加微服务</Button></div>
+                    }
+                }
+            ]
+            /**表格数据来源 */
+            let categoryData = [];
+            for(let i = 1;i <= category.length;i++){
+                categoryData[i] = [];
+                for(let j = 0;j < dataSource.length;j++){
+                    if(dataSource[j].categoryId === i){
+                            categoryData[i].push(dataSource[j])
+                    }
                 }
             }
-        ]
-        const rowSelection = {
-            onChange: (selectedRowKeys, selectedRows) => {
-                this.setState({
-                    deleteData:`${selectedRowKeys}`
-                })
-             
-            },
 
-            getCheckboxProps: record => ({
-              disabled: record.name === 'Disabled User', // Column configuration not to be checked
-              name: record.name,
-            }),
-          };
+            const rowSelection = {
+                onChange: (selectedRowKeys, selectedRows) => {
+                    this.setState({
+                        deleteData:`${selectedRowKeys}`
+                    })
+                
+                },
+
+                getCheckboxProps: record => ({
+                disabled: record.name === 'Disabled User', 
+                name: record.name,
+                }),
+            };
 
         return <div>
             <Card title="微服务管理"  >
-                <header className="admin-server-head">
-                    <Button onClick={this.changeCategory}>添加分类</Button>
-                    <div className={this.state.categroyShow?'admin-categroy-block':'admin-categroy-hidden'}>  
-                        <Input style={{width:200,marginTop:5,marginRight:10}} ref={this.objRef}/> <button onClick={this.submitCate}>提交</button>
-                    </div>
-                    <div className="admin-categroy">
-                        {
-                            category.map((item,index)=>{
-                                return  <Popover content={<div className="admin-cate" onMouseLeave={this.catechShow}>
-                                    <Button type="primary" size={'small'} onClick={this.catechShow}>修改</Button>
-                                    <div className={this.state.cateChShow?'admin-categroy-block':'admin-categroy-hidden'}>
-                                    <Input style={{width:100,marginTop:5,marginRight:10}} ref={this.objRef}/> <Button size={'small'} onClick={this.submitCate}>提交</Button>
-                                    </div>
-                                    <hr />
-                                    <Button type="danger" size={'small'} onClick={()=>this.DeleteCate(item.id,item.name)}>删除</Button>
-                                </div>} trigger="hover">
-                                    <Tag color={color[(item.id-1)%9]}>
-                                    {item.name}
-                                    </Tag>
-                              </Popover>
-                         
-                            })
-                           
-                    
-                   
-                        }
-                    </div>
-                    <hr />
-                    <Button onClick={this.showModal}>添加服务</Button>
-                    <Popconfirm placement="top" title={this.state.deleteData?`您确定删除${this.state.deleteData}号服务吗？`:`请选择要删除的服务`} onConfirm={this.DeleteDates} okText="Yes" cancelText="No">
-                    <Button >删除</Button> 
-                    </Popconfirm>
-                   
-                </header>
-                <article className="admin-server-content">
-                    <Table dataSource={this.state.dataSource}
-                            expandedRowRender={record => <AdminSubject serverid={record.id} /> } 
-                             columns={columns} pagination={false}
-                             rowSelection={rowSelection} />
-
-                </article>
-                <footer>
-                    <Pagination total={this.state.total}  defaultPageSize={4}   defaultCurrent={1} onChange={this.getCurrPage} />
-                </footer>
+            <div className="admin-categroy">
+                <Tabs defaultActiveKey="1" type="card">
+                    {
+                        category.map((item,index)=>{
+                            return  <TabPane tab={item.name} key={index} color='black'>
+                                <header className="admin-server-head">
+                                    <Button onClick={this.showModal} type="primary" style={{background:'rgb(92, 184, 92)'}}>添加产品</Button>
+                                    <Popconfirm placement="top" title={this.state.deleteData?`您确定删除选中的产品吗？`:
+                                    `请选择要删除的产品`} onConfirm={this.DeleteDates} okText="确定" cancelText="取消">
+                                    <Button type="primary" style={{marginLeft:'1%',backgroundColor:'rgb(217, 83, 79)'}}>删除</Button> 
+                                    </Popconfirm>  
+                                </header>
+                                <article className="admin-server-content">
+                                    <Table dataSource={categoryData[index + 1]}
+                                            expandedRowRender={record => <AdminSubject serverid={record.id} /> } 
+                                            columns={columns} pagination={false}
+                                            rowSelection={rowSelection} />
+                                </article>
+                                <footer>
+                                    <Pagination total= {50} defaultCurrent={1} onChange={this.getCurrPage} />
+                                </footer>                                
+                            </TabPane>})
+                    }
+                </Tabs>
+            </div>
             </Card>
 
              <Modal

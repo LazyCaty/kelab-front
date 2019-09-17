@@ -1,10 +1,10 @@
 import axios from 'axios';
 import actions from '../index';
 import configs from '../common/configs';
-import {message} from 'antd';
 import Qs from 'qs';
 const {
-    GET_CATEGORY_SUCCESS
+    GET_CATEGORY_SUCCESS,
+    GET_CATEGORY_FAILURE
 }=actions;
 
 const baseUrl=configs.baseUrl;
@@ -13,18 +13,17 @@ const baseUrl=configs.baseUrl;
 export function getCategory(){
     return async(dispatch) => {
         try {
-            //let headers = getTokenHeader({});
-            const data = (await axios.get(`${baseUrl}server/category.do`)).data;
-
-
-            const res=data.data;
+            const data = ((await axios.get(`${baseUrl}server/category.do`)).data).data;
             dispatch({
-                type:GET_CATEGORY_SUCCESS,
-                data:res
+                type: GET_CATEGORY_SUCCESS,
+                data: data
             })
 
         } catch (error) {
-            alert(error);
+            dispatch({
+                type: GET_CATEGORY_FAILURE,
+                error: new Error('服务器崩溃了')
+            })
         }
     };
 }
@@ -43,8 +42,6 @@ export function addCategory(query='')
                 data: query
                 
               });
-           
-            message.success('添加成功');
         } catch (error) {
             alert('sever err');
         }
@@ -60,7 +57,6 @@ export function deteleCate(query=""){
         try {
           axios
           .delete(`${baseUrl}server/category.do`, {params: query});
-            message.success('删除成功');
         } catch (error) {
             alert('sever err');
         }
@@ -79,8 +75,6 @@ export function changeCategory(query='')
                 data: query
                 
               });
-           
-            message.success('添加成功');
         } catch (error) {
             alert('sever err');
         }
