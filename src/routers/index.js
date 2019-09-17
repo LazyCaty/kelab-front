@@ -17,6 +17,7 @@ const AccountInfo = loadable(() => import('../components/user/personal/AccountIn
 const Goods = loadable(() => import('../components/user/personal/Goods'))
 const AdminDoc = loadable(() => import('../components/admin/AdminDoc'))
 const ServerEdit = loadable(() => import('../components/admin/BraftEditors'))
+const AdminCategory= loadable(() => import('../components/admin/AdminCategory'))
 
 /* import React, { Fragment } from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
@@ -70,6 +71,7 @@ class Routes extends Component{
                                 <Switch>
                                     <Route path="/admin/menbers" exact component={AdminMenber} />
                                     <Route path="/admin/server" exact component={AdminServer} />
+                                    <Route path="/admin/category" exact component={AdminCategory} />
                                     <Route path='/admin/document' exact component={AdminDoc} />
                                     <Route path="/admin/serveredit/:data" exact component={ServerEdit} />
 

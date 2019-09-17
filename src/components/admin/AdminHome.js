@@ -30,69 +30,60 @@ class AdminHome extends Component{
     render()
     {
         return(
-
-            <Row className="admin-home">
+            <div className="admin-home">
+            <div className="admin-head"><div className="admin-head-logo">后台管理</div><div className="admin-head-user">欢迎：xxx</div></div>
+            <Row>
                 <Col span={3} className="admin-aside">
                   
-                    <Menu style={{marginTop:'20px'}} theme={this.state.theme} onClick={this.handleClick}  mode="vertical">
+                    <Menu style={{marginTop:'20px'}}
+                     theme={this.state.theme}
+                      onClick={this.handleClick}
+                        mode="inline"
+                        >
                     
                         <Menu.Item key='0' >
                             <Link className="admin-aside-link" to='/admin/menbers' ><Icon type="user" /><span >用户管理</span></Link>
 
                         </Menu.Item>
-                        
+                        <SubMenu key="sub1" title={
+                            <span>
+                            <Icon type="mail" />
+                            <span>服务管理</span>
+                            </span>
+                        }>
                         <Menu.Item key='1' >
-                            <Link className="admin-aside-link" to='/admin/server' ><Icon type="user" /><span >微服务管理</span></Link>
+                            <Link className="admin-aside-link" to='/admin/category' ><span >分类管理</span></Link>
+                            
                         </Menu.Item>
-                        
-                        
                         <Menu.Item key='2' >
-                           <Link className="admin-aside-link" to='/admin/document' > <Icon type="user" /><span >文档管理</span></Link>
+                        <Link className="admin-aside-link" to='/admin/server' ><span >产品管理</span></Link>
                         </Menu.Item>
+                        </SubMenu>
                         
                         <Menu.Item key='3' >
-                            <Link className="admin-aside-link" to='/4' ><Icon type="user" /><span >平台管理</span></Link>
+                           <Link className="admin-aside-link" to='/admin/document' > <Icon type="file" /><span >文档管理</span></Link>
                         </Menu.Item>
                         
-{/*                        {
-                            this.state.menu.map((item,index)=>{
-                                if(item.children)
-                                {return  <SubMenu key={index} title={<span>
-                                                <Icon type="user"></Icon>
-                                                <span ><Link className="admin-aside-link"  to={"#"} >{item.title}</Link></span>
-                                            </span>} >
-                                    {
-                                        item.children.map((i)=>{
-                                            return <Menu.Item key={i.key}>
-                                                <Icon type="user" /><span ><Link className="admin-aside-link" to={i.key} >{i.title}</Link></span>
-                                            </Menu.Item>
-                                        })
-                                    }
-
-                                </SubMenu>
-                                }else
-                                {
-                                    return  <Menu.Item key={index} >
-                                        <Icon type="user" /><span ><Link className="admin-aside-link" to={item.key} >{item.title}</Link></span>
-                                    </Menu.Item>
-                                }
-                            })
-
-                        }*/}
+                        <Menu.Item key='4' >
+                            <Link className="admin-aside-link" to='/4' ><Icon type="setting" /><span >平台管理</span></Link>
+                        </Menu.Item>
+                       
+                  
+         
+                    
                     </Menu>
                 </Col>
                 <Col span={21}>
 
-                    <div className="admin-head"><div className="admin-head-user">欢迎：xxx</div></div>
+                    
 
                     <div className="admin-content">
                         {this.props.children}
                     </div>
-                    <div className="admin-footer">
-                        <Footer />
-                    </div>
+                    
                 </Col>
             </Row>
+            </div>
 
         )
     }
