@@ -27,7 +27,7 @@ class Login extends Component{
     componentDidMount(){
         this.props.dispatch(getVerification()).then(()=>{
             this.setState({
-                pic:this.state.pic+this.props.header.pic.data
+                pic:this.state.pic+this.props.header.pic.data||""
             })
             console.log(this.state.pic);
 
