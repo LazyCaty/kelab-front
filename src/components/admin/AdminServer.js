@@ -30,6 +30,7 @@ class AdminServer extends Component{
             category:[],
             deleteData:'',
             cateChShow:false,
+            categoryId: 1,
         }
         this.objRef=React.createRef();
         this.cateArr=[]
@@ -45,7 +46,8 @@ class AdminServer extends Component{
             
         })
         // 获得分页
-        this.props.dispatch(getServe(1,5)).then(()=>{
+        this.props.dispatch(getServe(1,5,this.state.categoryId)).then(()=>{
+          
             // 为每条数据添加Key值
             this.props.adminServer.server.pagingList.map((item)=>{
                 item.key=item.id;
@@ -56,9 +58,28 @@ class AdminServer extends Component{
             })
         })
         }
-
-    getCurrPage=(page, pageSize)=>{
-        this.props.dispatch(getServe(page,pageSize)).then(()=>{
+    /**
+     * 获取当前分类页
+     */
+    getCurrCate = (e) => {
+        let id = parseInt(e) + 1;
+        this.props.dispatch(getServe(1,5,id)).then(()=>{
+            // 为每条数据添加Key值
+            this.props.adminServer.server.pagingList.map((item)=>{
+               item.key=item.id;
+           })
+           this.setState({
+            dataSource: this.props.adminServer.server.pagingList,
+            total: this.props.adminServer.server.total,
+            categoryId: id,
+        })
+       })
+    }    
+    /**
+     * 获取当前分类下产品页
+     */
+    getCurrPage=(page)=>{
+        this.props.dispatch(getServe(page,5,this.state.categoryId)).then(()=>{
              // 为每条数据添加Key值
              this.props.adminServer.server.pagingList.map((item)=>{
                 item.key=item.id;
@@ -68,65 +89,55 @@ class AdminServer extends Component{
             })
         })
     }
-
-    // 删除服务
-    DeleteDates=()=>{
+    /**
+     * 删除产品
+     */
+    deleteProduct=()=>{
         if(this.state.deleteData)
         {
-            this.props.dispatch(deteleServer({ids:this.state.deleteData})).then(()=>{ })
+            this.props.dispatch(deteleServer({ids:this.state.deleteData}))
+            message.success('删除产品成功');
+            setTimeout(()=>window.location.reload(),1000);
         }else{
             message.error("请选择您要删除的删除");
         }
     }
 
-    changeButton=()=>{
-        this.setState({
-            buttonState:!this.state.buttonState
-        })
+    /**
+     * 提交添加服务
+     */
+    addProduct = () =>{
+        let data = this.props.form.getFieldsValue();
+        console.log(data)
+        this.props.dispatch(addServe({
+            name: data.pro_name,
+            description: data.pro_description,
+            status: data.pro_status,
+            categoryId: data.pro_categoryId,
+        }))        
+        this.handleAddProModal();
+        message.success('添加产品成功');
+        setTimeout(()=>window.location.reload(),1000);
     }
-
-    //提交添加服务
-    SubmitForm=()=>{
-        let formInformation=this.props.form.getFieldsValue();
-        console.log("formInformation:",formInformation);
-        if(this.state.editFlag!=-1)
-        {
-            formInformation={...formInformation,id:this.state.editFlag};
-        }
-        this.props.dispatch(addServe(formInformation)).then(()=>{
-                this.setState({
-                    nowEdit:{},
-                    editFlag:-1,
-                    editTitle:'添加'
-                })
-            });
-        
-        
-        this.handleOk();
-
-    }
-
-    //弹出框控制
-    showModal = () => {
+    /**
+     * 显示添加产品对话框
+     */
+    showAddProModal = () => {
         this.setState({
           visible: true,
         });
         
       };
-    
-      handleOk =(f)=> {
+    /**
+     * 关闭添加产品对话框
+     */
+    handleAddProModal =(f)=> {
         this.setState({
          visible: false,
         });
       };
-    
-      handleCancel = (f) => {
-        this.setState({
-          visible: false,
-        });
-      };
 
-      editorServer=(record)=>{
+    editorServer=(record)=>{
           this.setState({
             nowEdit:record,
             editFlag:record.id,
@@ -135,7 +146,7 @@ class AdminServer extends Component{
           this.showModal();    
       }
 
-      addServe=()=>{
+    addServe=()=>{
         this.setState({
             nowEdit:{},
             editFlag:-1,
@@ -144,7 +155,7 @@ class AdminServer extends Component{
           this.showModal();
       }
 
-      catechShow=()=>{
+    catechShow=()=>{
         this.setState({
             cateChShow:!this.state.cateChShow
         })
@@ -192,6 +203,7 @@ class AdminServer extends Component{
                     }
                 }
             }
+/*             console.log(categoryData) */
 
             const rowSelection = {
                 onChange: (selectedRowKeys, selectedRows) => {
@@ -210,14 +222,14 @@ class AdminServer extends Component{
         return <div>
             <Card title="微服务管理"  >
             <div className="admin-categroy">
-                <Tabs defaultActiveKey="1" type="card">
+                <Tabs defaultActiveKey="1" type="card" onChange={this.getCurrCate}>
                     {
                         category.map((item,index)=>{
                             return  <TabPane tab={item.name} key={index} color='black'>
                                 <header className="admin-server-head">
-                                    <Button onClick={this.showModal} type="primary" style={{background:'rgb(92, 184, 92)'}}>添加产品</Button>
+                                    <Button onClick={this.showAddProModal} type="primary" style={{background:'rgb(92, 184, 92)'}}>添加产品</Button>
                                     <Popconfirm placement="top" title={this.state.deleteData?`您确定删除选中的产品吗？`:
-                                    `请选择要删除的产品`} onConfirm={this.DeleteDates} okText="确定" cancelText="取消">
+                                    `请选择要删除的产品`} onConfirm={this.deleteProduct} okText="确定" cancelText="取消">
                                     <Button type="primary" style={{marginLeft:'1%',backgroundColor:'rgb(217, 83, 79)'}}>删除</Button> 
                                     </Popconfirm>  
                                 </header>
@@ -228,45 +240,42 @@ class AdminServer extends Component{
                                             rowSelection={rowSelection} />
                                 </article>
                                 <footer>
-                                    <Pagination total= {50} defaultCurrent={1} onChange={this.getCurrPage} />
+                                    <Pagination total= {(this.state.total / 5) * 10} defaultCurrent={1} onChange={this.getCurrPage} />
                                 </footer>                                
                             </TabPane>})
                     }
                 </Tabs>
             </div>
             </Card>
-
+            {/** 添加产品对话框 */}
              <Modal
                 title={this.state.editTitle+"产品"}
                 visible={this.state.visible}
-                onOk={this.SubmitForm}
-                onCancel={this.handleCancel}
+                onOk={this.addProduct}
+                onCancel={this.handleAddProModal}
                 okText="提交"
                 cancelText="取消"
                 >
                     <Card>
-
                     <Form layout="horizontal">
                     <FormItem label="产品名称：">
                         {
-                            getFieldDecorator('name',{
-                                initialValue:this.state.nowEdit.name,
-                            })(<Input placeholder={"请输入产品名"}/>)
+                            getFieldDecorator('pro_name')
+                            (<Input placeholder={"请输入产品名"}/>)
                         }
                     </FormItem>
 
                     <FormItem label="产品描述：">
                         {
-                            getFieldDecorator('description',{
-                                initialValue:this.state.nowEdit.description,
-                            })(<Input placeholder={"请输入对产品的描述"}/>)
+                            getFieldDecorator('pro_description')
+                            (<Input placeholder={"请输入对产品的描述"}/>)
                         }
                     </FormItem>
 
 
                     <FormItem label="产品状态">
                         {
-                            getFieldDecorator('status',{
+                            getFieldDecorator('pro_status',{
                                 initialValue:"2",
                             })(<Select style={{ width: 120 }}>
                                 <Option value="1">close</Option>
@@ -275,15 +284,15 @@ class AdminServer extends Component{
                             </Select>)
                         }
                     </FormItem>
-                    <FormItem label="产品标签">
+                    <FormItem label="产品分类id">
                         {
-                            getFieldDecorator('categoryId',{
+                            getFieldDecorator('pro_categoryId',{
                                 initialValue:"1",
                             })(<Select style={{ width: 120 }}>
                                 {
                                     category.map((item,index)=>{
-                                        return  <Option value={item.id} key={index}>
-                                        {item.name}
+                                        return  <Option value={index + 1} key={index}>
+                                        {index + 1}
                                       </Option>
                                     })
                                 }
@@ -291,7 +300,6 @@ class AdminServer extends Component{
                         }
                     </FormItem>
                     </Form>
-
                     </Card>
         </Modal>
 
