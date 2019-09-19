@@ -12,12 +12,12 @@ const {
 const baseUrl=configs.baseUrl;
 
 // 获取服务
-export function getServe(page,pageSize)
+export function getServe(page,pageSize,categoryId)
 {
     return async(dispatch) => {
         try {
             //let headers = getTokenHeader({});
-            const data = (await axios.get(`${baseUrl}`+"server.do?page="+page+"&rows="+pageSize)).data;
+            const data = (await axios.get(`${baseUrl}`+"server.do?page="+page+"&rows="+pageSize+"&categoryId="+categoryId)).data;
             const res=data.data;
             
             dispatch({
@@ -34,7 +34,6 @@ export function getServe(page,pageSize)
 // 添加修改服务
 export function addServe(query='')
 {
-    query={...query}
     return async(dispatch) => {
         try {
             console.log(`${Qs.stringify(query)}`);
@@ -45,8 +44,6 @@ export function addServe(query='')
                 data: query
                 
               });
-           
-            message.success('添加成功');
         } catch (error) {
             alert('sever err');
         }
@@ -64,7 +61,6 @@ export function deteleServer(query=""){
           //  const data = (await axios.delete(`${baseUrl}server.do?ids=`+_ids)).data;
           axios
           .delete(`${baseUrl}server.do`, {params: query});
-            message.success('删除成功');
         } catch (error) {
             alert('sever err');
         }
