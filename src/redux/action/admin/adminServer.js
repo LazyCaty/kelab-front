@@ -18,12 +18,14 @@ const {
 const baseUrl=configs.baseUrl;
 
 // 获取产品
+
 export function getServe(page,pageSize,categoryId)
 {
     return async(dispatch) => {
         try {
             //let headers = getTokenHeader({});
             const data = ((await axios.get(`${baseUrl}`+"server.do?page="+page+"&rows="+pageSize+"&categoryId="+categoryId)).data).data;
+
             dispatch({
                 type: GET_ADMIN_SERVER_SUCCESS,
                 data: data
@@ -50,6 +52,7 @@ export function addServe(query='')
                 type: GET_SERVER_ADD_SUCCESS,
                 data: data,
             })
+
         } catch (error) {
             alert('sever err');
         }

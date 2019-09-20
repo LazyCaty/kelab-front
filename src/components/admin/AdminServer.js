@@ -335,7 +335,6 @@ class AdminServer extends Component{
                             </Select>)
                         }
                     </FormItem>
-
                     <FormItem label="产品分类id">
                         {
                             getFieldDecorator('pro_categoryId',{
