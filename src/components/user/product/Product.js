@@ -75,7 +75,9 @@ class Product extends Component{
         }
 
     };
-
+    /**
+     * 渲染新一页的菜单
+     */
     renderDoc = (e) => {
         this.setState({
             docKey: e.key

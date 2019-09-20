@@ -2,11 +2,10 @@
 import React,{Component} from 'react';
 import { Table,Button ,Popconfirm,Pagination,Card,Form,Input,Select,Modal,message,Tag,Tabs} from 'antd';
 import {connect} from 'react-redux'
-import {getServe,addServe,deteleServer,getCategory,addCategory,deteleCate} from "../../redux/action/admin/adminServer";
+import {getServe,addServe,deteleServer,getCategory,updateServer,addSubject} from "../../redux/action/admin/adminServer";
 import AdminSubject from './AdminSubject';
-import EditorDemo from './BraftEditors';
 import './AdminServer.less';
-import {Link} from 'react-router-dom';
+
 
 const FormItem=Form.Item;
 const {Option} = Select;
@@ -21,15 +20,13 @@ class AdminServer extends Component{
     constructor(){
         super();
         this.state={
-            dataSource:[],
-            total:0,
-            visible:false, // 添加微服务版本弹框
-            nowEdit:{},
-            editFlag:-1, //判断是添加服务还是修改服务
-            editTitle:"添加",
-            category:[],
-            deleteData:'',
-            cateChShow:false,
+            dataSource: [],
+            total: 0,
+            visible: false, //添加产品弹框
+            visible1: false,  //更新产品弹框 
+            visible2: false,  //添加微服务弹框
+            category: [],
+            deleteData: '',  //删除的数据
             categoryId: 1,
         }
         this.objRef=React.createRef();
@@ -38,20 +35,21 @@ class AdminServer extends Component{
     
     componentDidMount() {
 
-        this.props.dispatch(getCategory()).then(()=>{
+        this.props.dispatch(getCategory({
+            page: 1,
+            rows: 5,
+        })).then(()=>{
             this.setState({
                 category:this.props.adminServer.serverCatrgory.pagingList
             })    
-            
-            
         })
         // 获得分页
-        this.props.dispatch(getServe(1,5,this.state.categoryId)).then(()=>{
-          
+        this.props.dispatch(getServe(1,5,this.state.categoryId)).then(()=>{       
             // 为每条数据添加Key值
             this.props.adminServer.server.pagingList.map((item)=>{
                 item.key=item.id;
             })
+            console.log(this.props.adminServer.server.pagingList)
             this.setState({
                 total:this.props.adminServer.server.total,
                 dataSource:this.props.adminServer.server.pagingList
@@ -78,7 +76,7 @@ class AdminServer extends Component{
     /**
      * 获取当前分类下产品页
      */
-    getCurrPage=(page)=>{
+    getCurrPage = (page) => {
         this.props.dispatch(getServe(page,5,this.state.categoryId)).then(()=>{
              // 为每条数据添加Key值
              this.props.adminServer.server.pagingList.map((item)=>{
@@ -92,32 +90,45 @@ class AdminServer extends Component{
     /**
      * 删除产品
      */
-    deleteProduct=()=>{
+    deleteProduct = () =>{
         if(this.state.deleteData)
         {
             this.props.dispatch(deteleServer({ids:this.state.deleteData}))
-            message.success('删除产品成功');
-            setTimeout(()=>window.location.reload(),1000);
+            .then(() =>{
+                if(this.props.adminServer.deleteServer.code === 'SUCCESS'){
+                    message.success('删除产品成功');
+                    setTimeout(()=>window.location.reload(),1000);
+                }else{
+                    message.error('删除产品失败')
+                }
+            })
+
         }else{
             message.error("请选择您要删除的删除");
         }
     }
 
     /**
-     * 提交添加服务
+     * 提交添加产品
      */
     addProduct = () =>{
         let data = this.props.form.getFieldsValue();
-        console.log(data)
         this.props.dispatch(addServe({
             name: data.pro_name,
             description: data.pro_description,
             status: data.pro_status,
             categoryId: data.pro_categoryId,
-        }))        
-        this.handleAddProModal();
-        message.success('添加产品成功');
-        setTimeout(()=>window.location.reload(),1000);
+        })).then(() => {
+            if(this.props.adminServer.addServer.code === 'SUCCESS'){
+                this.handleAddProModal();
+                message.success('添加产品成功');
+                setTimeout(()=>window.location.reload(),1000);
+            }else{
+                this.handleAddProModal();
+                message.error('添加产品失败');               
+            }
+
+        })    
     }
     /**
      * 显示添加产品对话框
@@ -131,36 +142,89 @@ class AdminServer extends Component{
     /**
      * 关闭添加产品对话框
      */
-    handleAddProModal =(f)=> {
+    handleAddProModal = (f) => {
         this.setState({
          visible: false,
         });
       };
-
-    editorServer=(record)=>{
-          this.setState({
-            nowEdit:record,
-            editFlag:record.id,
-            editTitle:'修改'
-          })
-          this.showModal();    
-      }
-
-    addServe=()=>{
-        this.setState({
-            nowEdit:{},
-            editFlag:-1,
-            editTitle:'添加'
-          })
-          this.showModal();
-      }
-
-    catechShow=()=>{
-        this.setState({
-            cateChShow:!this.state.cateChShow
+    /**
+     * 更新产品  
+     */  
+    updateProduct = () => {
+        let data = this.props.form.getFieldsValue();
+        this.props.dispatch(updateServer({
+            id: data._pro_id,
+            categoryId: data._pro_categoryId,
+            name: data._pro_name,
+            description: data._pro_description,
+            status: parseInt(data._pro_status),
+        })).then(() => {
+            if(this.props.adminServer.updateServer.code === 'SUCCESS'){
+                this.handleUpdateProModal();
+                message.success('修改产品成功');
+                setTimeout(()=>window.location.reload(),1000);
+            }else{
+                this.handleUpdateProModal();
+                message.error('添加产品失败');               
+            }
         })
-      }
-
+    }
+    /**
+     * 显示更新产品对话框
+     */
+    showUpdateProModal = (e) => {
+        this.props.form.setFieldsValue({
+            _pro_id: e.id,
+            _pro_categoryId: e.categoryId,
+            _pro_name: e.name,
+            _pro_description: e.description,
+        })
+        this.setState({
+          visible1: true,
+        });
+        
+      };
+    /**
+     * 关闭更新产品对话框
+     */
+    handleUpdateProModal = () => {
+        this.setState({
+         visible1: false,
+        });
+      };    
+    /**
+     * 添加微服务
+    */
+    addMicroServer = () => {
+        let data = this.props.form.getFieldsValue();
+        this.props.dispatch(addSubject({
+            serverid: data.server_id,
+            name: data.server_name,
+            status: parseInt(data.server_status)
+        })).then(() => {
+            console.log(this.props.adminServer)
+        })
+    }
+    /**
+     * 显示添加微服务对话框
+     */
+    showAddMicroServerModal = (e) => {
+        this.props.form.setFieldsValue({
+            server_id: e.id,
+        })
+        this.setState({
+          visible2: true,
+        });
+        
+      };
+    /**
+     * 关闭添加微服务对话框
+     */
+    handleAddMicroServerModal = () => {
+        this.setState({
+         visible2: false,
+        });
+      };        
 
     render(){
         
@@ -181,30 +245,18 @@ class AdminServer extends Component{
                     title: '产品编辑',
                     key: 'categoryId',
                     dataIndex: 'categoryId',
-                    render:(record)=>{
-                        return <div><Button onClick={()=>this.editorServer(record)}>修改</Button></div>
+                    render:(text,record)=>{
+                        return <div><Button onClick={()=>this.showUpdateProModal(record)}>修改</Button></div>
                     }
                 },
                 {
                     title:'微服务管理',
                     key: 'subjectManage',
-                    render:(record)=>{
-                        return <div><Button>添加微服务</Button></div>
+                    render:(text,record)=>{
+                        return <div><Button onClick = {() => this.showAddMicroServerModal(record)}>添加微服务</Button></div>
                     }
                 }
             ]
-            /**表格数据来源 */
-            let categoryData = [];
-            for(let i = 1;i <= category.length;i++){
-                categoryData[i] = [];
-                for(let j = 0;j < dataSource.length;j++){
-                    if(dataSource[j].categoryId === i){
-                            categoryData[i].push(dataSource[j])
-                    }
-                }
-            }
-/*             console.log(categoryData) */
-
             const rowSelection = {
                 onChange: (selectedRowKeys, selectedRows) => {
                     this.setState({
@@ -220,7 +272,7 @@ class AdminServer extends Component{
             };
 
         return <div>
-            <Card title="微服务管理"  >
+            <Card title="产品管理"  >
             <div className="admin-categroy">
                 <Tabs defaultActiveKey="1" type="card" onChange={this.getCurrCate}>
                     {
@@ -234,7 +286,7 @@ class AdminServer extends Component{
                                     </Popconfirm>  
                                 </header>
                                 <article className="admin-server-content">
-                                    <Table dataSource={categoryData[index + 1]}
+                                    <Table dataSource={this.state.dataSource}
                                             expandedRowRender={record => <AdminSubject serverid={record.id} /> } 
                                             columns={columns} pagination={false}
                                             rowSelection={rowSelection} />
@@ -249,7 +301,7 @@ class AdminServer extends Component{
             </Card>
             {/** 添加产品对话框 */}
              <Modal
-                title={this.state.editTitle+"产品"}
+                title={"添加产品"}
                 visible={this.state.visible}
                 onOk={this.addProduct}
                 onCancel={this.handleAddProModal}
@@ -272,7 +324,6 @@ class AdminServer extends Component{
                         }
                     </FormItem>
 
-
                     <FormItem label="产品状态">
                         {
                             getFieldDecorator('pro_status',{
@@ -284,6 +335,7 @@ class AdminServer extends Component{
                             </Select>)
                         }
                     </FormItem>
+
                     <FormItem label="产品分类id">
                         {
                             getFieldDecorator('pro_categoryId',{
@@ -302,10 +354,108 @@ class AdminServer extends Component{
                     </Form>
                     </Card>
         </Modal>
+            {/** 更新产品对话框 */}
+            <Modal
+                title={"修改产品"}
+                visible={this.state.visible1}
+                onOk={this.updateProduct}
+                onCancel={this.handleUpdateProModal}
+                okText="提交"
+                cancelText="取消"
+                >
+                    <Card>
+                    <Form layout="horizontal">
+                    <FormItem label="产品id：">
+                        {
+                            getFieldDecorator('_pro_id')
+                            (<Input placeholder={"请输入对产品的id"} disabled={true}/>)
+                        }
+                    </FormItem>
 
+                    <FormItem label="产品名称：">
+                        {
+                            getFieldDecorator('_pro_name')
+                            (<Input placeholder={"请输入产品名"}/>)
+                        }
+                    </FormItem>
 
+                    <FormItem label="产品描述：">
+                        {
+                            getFieldDecorator('_pro_description')
+                            (<Input placeholder={"请输入对产品的描述"}/>)
+                        }
+                    </FormItem>
+
+                    <FormItem label="产品状态">
+                        {
+                            getFieldDecorator('_pro_status',{
+                                initialValue:"2",
+                            })(<Select style={{ width: 120 }}>
+                                <Option value="1">close</Option>
+                                <Option value="2">opened</Option>
+                                <Option value="3">pending</Option>
+                            </Select>)
+                        }
+                    </FormItem>
+
+                    <FormItem label="产品分类id">
+                        {
+                            getFieldDecorator('_pro_categoryId',{
+                                initialValue:"1",
+                            })(<Select style={{ width: 120 }}>
+                                {
+                                    category.map((item,index)=>{
+                                        return  <Option value={index + 1} key={index}>
+                                        {index + 1}
+                                      </Option>
+                                    })
+                                }
+                            </Select>)
+                        }
+                    </FormItem>
+                    </Form>
+                    </Card>
+        </Modal>  
+            {/** 添加微服务对话框 */}
+            <Modal
+                title={"添加微服务"}
+                visible={this.state.visible2}
+                onOk={this.addMicroServer}
+                onCancel={this.handleAddMicroServerModal}
+                okText="提交"
+                cancelText="取消"
+                >
+                    <Card>
+                    <Form layout="horizontal">
+                    <FormItem label="微服务id：">
+                        {
+                            getFieldDecorator('server_id')
+                            (<Input placeholder={"请输入微服务id"} disabled={true}/>)
+                        }
+                    </FormItem>
+
+                    <FormItem label="微服务名称：">
+                        {
+                            getFieldDecorator('server_name')
+                            (<Input placeholder={"请输入微服务名称"}/>)
+                        }
+                    </FormItem>
+
+                    <FormItem label="微服务状态">
+                        {
+                            getFieldDecorator('server_status',{
+                                initialValue:"2",
+                            })(<Select style={{ width: 120 }}>
+                                <Option value="1">close</Option>
+                                <Option value="2">opened</Option>
+                                <Option value="3">pending</Option>
+                            </Select>)
+                        }
+                    </FormItem>
+                    </Form>
+                    </Card>
+        </Modal>              
         </div>
-
     }
 }
 export default Form.create()(AdminServer);

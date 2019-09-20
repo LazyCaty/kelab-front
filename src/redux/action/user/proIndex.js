@@ -5,10 +5,10 @@ import Qs from 'qs';
 import {getTokenHeader} from '../common/setTokenHead';
 
 const {
-    GET_SERVICE_CLASSIFICATION_SUCCESS,
-    GET_SERVICE_CLASSIFICATION_FAILURE,
-    GET_SERVICE_SUCCESS,
-    GET_SERVICE_FAILURE,
+    GET_CATEGORY_SUCCESS,
+    GET_CATEGORY_FAILURE,
+    GET_ADMIN_SERVER_SUCCESS,
+    GET_ADMIN_SERVER_FAILURE,
 } = actions;
 
 const baseUrl = configs.baseUrl;
@@ -18,13 +18,13 @@ export function getServiceClass(query='') {
         try{
             const data = (await axios.get(`${baseUrl}server/category.do?${Qs.stringify(query)}`)).data;
             dispatch({
-                type: GET_SERVICE_CLASSIFICATION_SUCCESS,
+                type: GET_CATEGORY_SUCCESS,
                 data: data
             })
         }
         catch (error) {
             dispatch({
-                type: GET_SERVICE_CLASSIFICATION_FAILURE,
+                type: GET_CATEGORY_FAILURE,
                 error: new Error('获取服务分类失败')
             })
         }
@@ -36,13 +36,13 @@ export function getService(query='') {
         try{
             const data = (await axios.get(`${baseUrl}server.do?${Qs.stringify(query)}`)).data;
             dispatch({
-                type: GET_SERVICE_SUCCESS,
+                type: GET_ADMIN_SERVER_SUCCESS,
                 data: data
             })
         }
         catch (error) {
             dispatch({
-                type: GET_SERVICE_FAILURE,
+                type: GET_ADMIN_SERVER_FAILURE,
                 error: new Error("获取微服务失败")
             })
         }

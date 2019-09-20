@@ -3,23 +3,27 @@ import {Table,Button,Popover} from 'antd';
 import {connect} from 'react-redux';
 import {getSubject} from '../../redux/action/admin/adminServer';
 @connect(state=>({
-    severSubject:state.adminServer
+    adminServer:state.adminServer
     })
 )
 
 class AdminSubject extends Component{
-    state={
-        dataSource:[],
-        page:1,
-        total:0
+    constructor(props) {
+        super(props);
+        this.state={
+            dataSource:[],
+            page: 1,
+            total:0
+        }
     }
-    componentDidMount() {
 
+
+    componentDidMount() {
         this.props.dispatch(getSubject(this.state.page,4,this.props.serverid)).then(()=>{
-            console.log("sever",this.props.severSubject.severSubject.total);
+            console.log(this.props)
             this.setState({
-                dataSource:this.props.severSubject.severSubject.pagingList,
-                total:this.props.severSubject.severSubject.total
+                dataSource:this.props.adminServer.severSubject.pagingList,
+                total:this.props.adminServer.severSubject.total
             })
         })
     }

@@ -1,18 +1,18 @@
 import actions from '../action/index';
 
 const {
-    GET_SERVICE_CLASSIFICATION_SUCCESS,
-    GET_SERVICE_SUCCESS,
+    GET_CATEGORY_SUCCESS,
+    GET_ADMIN_SERVER_SUCCESS,
 } = actions;
 
 export default (state = {},action) => {
     switch (action.type) {
-        case GET_SERVICE_CLASSIFICATION_SUCCESS:
+        case GET_CATEGORY_SUCCESS:
             return {
                 ...state,
                 getServiceClass: action.data,
             };
-        case GET_SERVICE_SUCCESS:
+        case GET_ADMIN_SERVER_SUCCESS:
             return {
                 ...state,
                 getService: action.data,

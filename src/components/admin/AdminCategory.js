@@ -24,7 +24,11 @@ class AdminCategory extends React.Component {
   }
     
     componentDidMount(){
-      this.props.dispatch(getCategory()).then(()=>{
+      this.props.dispatch(getCategory({
+        page: 1,
+        rows: 5,
+      })).then(()=>{
+        console.log(this.props)
           this.setState({
               categoryList:this.props.category.serverCatrgory.pagingList,
               totalData:this.props.category.serverCatrgory.total
@@ -32,8 +36,10 @@ class AdminCategory extends React.Component {
       })
     }
 
-    //提交分类
-    submitCate=()=>{
+    /**
+     * 提交分类
+     */
+    submitCate = () =>{
       let _catename = this.objRef.current.state.value;
       this.props.dispatch(addCategory({name:_catename}));
       if(_catename != undefined){
@@ -43,14 +49,19 @@ class AdminCategory extends React.Component {
         message.error('输入内容不能为空')
       } 
     }
-
-    checkDelete(ids){
+    /**
+     * 获取要删除的分类id
+     * @param ids 
+     */
+    checkDelete = ids =>{
         this.setState({
           deteleDatas:ids
         })
       }
-    //删除分类
-    deleteCates=()=>{
+    /**
+     * 删除分类
+     */
+    deleteCates = () =>{
       if(this.state.deteleDatas){
         this.props.dispatch(deteleCate({ids:this.state.deteleDatas}))
           message.success('删除分类成功');
@@ -59,15 +70,19 @@ class AdminCategory extends React.Component {
           message.info("请选择您要删除的部分");
       }
     }
-
+    /**
+     * 获取要修改的分类id
+     */
     setCate=(id)=>{
       this.setState({
         setData:id
       })
       this.showModal1();
     }
-    //修改分类
-    changeCate=()=>{
+    /**
+     * 修改分类
+     */
+    changeCate = () =>{
       let _catename=this.objRefSet.current.state.value;
       this.props.dispatch(changeCategory({name:_catename,id:this.state.setData}))
       if(_catename != undefined){
@@ -95,6 +110,7 @@ class AdminCategory extends React.Component {
     };
 
     render () {
+      /**table数据样式 */
         const columns = [
             {
               title: 'ID',

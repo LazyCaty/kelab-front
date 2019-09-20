@@ -3,11 +3,12 @@ import React,{ Component } from 'react';
 import './ProIndex.less';
 import Footer from "../common/Footer";
 import UserHead from "../common/UserHead"
-import { Menu,  List, Avatar,Card,Pagination} from 'antd';
+import { Menu,  List, Tabs,Card,Pagination} from 'antd';
 import {getServiceClass,getService} from "../../../redux/action/user/proIndex";
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
 
+const { TabPane } = Tabs;
 
 class ProIndex extends Component{
     constructor(props){
@@ -53,9 +54,10 @@ class ProIndex extends Component{
             }
         })
     }
-
+    /**
+     * 获取新一页微服务项
+     */
     updatePage = (page) => {
-         //获取新一页微服务项
          this.props.dispatch(getService({
             page: page,
             rows: 5,
@@ -80,12 +82,11 @@ class ProIndex extends Component{
         let menuData = [];
         for(let i = 0;i < serviceClass.length;i++)
         {
-            let key = serviceClass[i].id.toString();
-            let href = '#' + key;
+            let key = i + 1;
             let name = serviceClass[i].name;
             serverName = name;
             menuData.push(
-                <Menu.Item key={key}><a href={href}>{name}</a></Menu.Item>
+                <Menu.Item key={key}>{name}</Menu.Item>
             )
         }
         //生成具体微服务项信息
@@ -109,16 +110,11 @@ class ProIndex extends Component{
                     <UserHead />
                 </div>
                 <div className="proIndex-content">
-                    <Menu
-                        theme={this.state.theme}
-                        style={{ width: 256 }}
-                        selectedKeys={window.location.hash}
-                        mode="inline"
-                        className="proIndex-menuNav"
-                    >
-                        {menuData}
-                    </Menu>
-                    <div className="proIndex-dataList">
+                <Tabs defaultActiveKey="1" tabPosition={"left"}>
+                <div className="proIndex-dataList">
+                    {
+                        
+                    }
                         <List
                             itemLayout="horizontal"
                             dataSource={listInfo}
@@ -141,6 +137,7 @@ class ProIndex extends Component{
                         />
                     </div>
                     <Pagination defaultCurrent={1} total={30} onChange={this.updatePage}/>
+                </Tabs>
                 </div>
                 <div className="proIndex-footer">
                     <Footer />

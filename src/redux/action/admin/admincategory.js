@@ -10,23 +10,21 @@ const {
 const baseUrl=configs.baseUrl;
 
 //获取分类
-export function getCategory(){
+export function getCategory(query = ''){
     return async(dispatch) => {
         try {
-            const data = ((await axios.get(`${baseUrl}server/category.do`)).data).data;
+            const data = ((await axios.get(`${baseUrl}server/category.do?${Qs.stringify(query)}`)).data).data;
+            console.log(data)
             dispatch({
-                type: GET_CATEGORY_SUCCESS,
-                data: data
+                type:GET_CATEGORY_SUCCESS,
+                data:data
             })
-
         } catch (error) {
-            dispatch({
-                type: GET_CATEGORY_FAILURE,
-                error: new Error('服务器崩溃了')
-            })
+            alert(error);
         }
     };
 }
+
 
 
 // 添加分类
