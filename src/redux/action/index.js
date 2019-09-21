@@ -35,13 +35,25 @@ export default KeyMirror({
     GET_SERVER_UPDATE_SUCCESS:null,
     GET_SERVER_UPDATE_FAILURE:null,
 
-    //获取微服务主体
+    //获取微服务分类
     GET_SERVER_SUBJECT_SUCCESS:null,
     GET_SERVER_SUBJECT_FAILURE:null,
 
-    //添加微服务
-    GET_SERVER_SUBJECT_ADD_SUCCESS: null,
-    GET_SERVER_SUBJECT_ADD_FAILURE: null,
+    //添加微服务分类
+    GET_SERVER_SUBJECT_ADD_SUCCESS:null,
+    GET_SERVER_SUBJECT_ADD_FAILURE:null,
+
+    //添加微服务实例
+    GET_SERVER_ENTITY_ADD_SUCCESS:null,
+    GET_SERVER_ENTITY_ADD_FAILURE:null,
+
+    //删除微服务实例
+    GET_SERVER_ENTITY_DELETE_SUCCESS:null,
+    GET_SERVER_ENTITY_DELETE_FAILURE:null,
+
+    //修改微服务实例
+    GET_SERVER_ENTITY_UPDATE_SUCCESS:null,
+    GET_SERVER_ENTITY_UPDATE_FAILURE:null,
     
     //获取产品分类
     GET_CATEGORY_SUCCESS:null,

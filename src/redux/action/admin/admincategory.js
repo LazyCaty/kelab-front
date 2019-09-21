@@ -14,7 +14,6 @@ export function getCategory(query = ''){
     return async(dispatch) => {
         try {
             const data = ((await axios.get(`${baseUrl}server/category.do?${Qs.stringify(query)}`)).data).data;
-            console.log(data)
             dispatch({
                 type:GET_CATEGORY_SUCCESS,
                 data:data

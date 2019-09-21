@@ -28,7 +28,20 @@ class AdminCategory extends React.Component {
         page: 1,
         rows: 5,
       })).then(()=>{
-        console.log(this.props)
+          this.setState({
+              categoryList:this.props.category.serverCatrgory.pagingList,
+              totalData:this.props.category.serverCatrgory.total
+          })
+      })
+    }
+    /**
+     * 请求新一页的分类
+     */
+    getCategory = (page) => {
+      this.props.dispatch(getCategory({
+        page: page,
+        rows: 5,
+      })).then(()=>{
           this.setState({
               categoryList:this.props.category.serverCatrgory.pagingList,
               totalData:this.props.category.serverCatrgory.total
@@ -124,7 +137,7 @@ class AdminCategory extends React.Component {
               title: '更多操作',
               render: (record)=>(
               <div>
-                <span className={{marginLeft:20}} onClick={()=>this.setCate(record.id)}>
+                <span onClick={()=>this.setCate(record.id)} style={{cursor:"pointer"}}>
                   <Icon type="edit" style={{ fontSize: '20px', color: '#08c' }}/></span>
                <span onClick={()=>this.checkDelete(record.id)}>
                <Popconfirm placement="rightBottom" title={"你确定要删除这个分类么"} onConfirm={this.deleteCates} okText="确定" cancelText="取消">
@@ -148,7 +161,7 @@ class AdminCategory extends React.Component {
                       <Button type="primary" style={{background:'green'}} onClick={this.submitCate}><Icon type="plus" />添加</Button>
                       <div className="categroy-head-right">共有 {this.state.totalData} 条数据</div>
                     </div>
-                <Table  columns={columns} dataSource={categoryList} />
+                <Table  columns={columns} dataSource={categoryList} pagination={{onChange:(page) => this.getCategory(page),pageSize:5}}/>
                 </Card>
                 <Modal
                   title="修改分类"

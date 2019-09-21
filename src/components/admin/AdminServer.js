@@ -1,8 +1,8 @@
 // 微服务管理页面
 import React,{Component} from 'react';
-import { Table,Button ,Popconfirm,Pagination,Card,Form,Input,Select,Modal,message,Tag,Tabs} from 'antd';
+import { Table,Button ,Popconfirm,Pagination,Card,Form,Input,Select,Modal,message,List,Tabs} from 'antd';
 import {connect} from 'react-redux'
-import {getServe,addServe,deteleServer,getCategory,updateServer,addSubject} from "../../redux/action/admin/adminServer";
+import {getServe,addServe,deteleServer,getCategory,updateServer,addSubject,addEntity,getSubject} from "../../redux/action/admin/adminServer";
 import AdminSubject from './AdminSubject';
 import './AdminServer.less';
 
@@ -25,9 +25,11 @@ class AdminServer extends Component{
             visible: false, //添加产品弹框
             visible1: false,  //更新产品弹框 
             visible2: false,  //添加微服务弹框
+            visible3: false,  //微服务分类管理弹框
             category: [],
             deleteData: '',  //删除的数据
             categoryId: 1,
+            subject: [] //微服务主体
         }
         this.objRef=React.createRef();
         this.cateArr=[]
@@ -37,19 +39,23 @@ class AdminServer extends Component{
 
         this.props.dispatch(getCategory({
             page: 1,
-            rows: 5,
+            rows: 50,
         })).then(()=>{
             this.setState({
                 category:this.props.adminServer.serverCatrgory.pagingList
             })    
         })
-        // 获得分页
+        this.props.dispatch(getSubject(1,50)).then(() => {
+            this.setState({
+                subject:this.props.adminServer.severSubject.pagingList
+            })
+        })
+        // 获得产品分页
         this.props.dispatch(getServe(1,5,this.state.categoryId)).then(()=>{       
             // 为每条数据添加Key值
             this.props.adminServer.server.pagingList.map((item)=>{
                 item.key=item.id;
             })
-            console.log(this.props.adminServer.server.pagingList)
             this.setState({
                 total:this.props.adminServer.server.total,
                 dataSource:this.props.adminServer.server.pagingList
@@ -57,7 +63,7 @@ class AdminServer extends Component{
         })
         }
     /**
-     * 获取当前分类页
+     * 获取当前分类页面的产品
      */
     getCurrCate = (e) => {
         let id = parseInt(e) + 1;
@@ -197,21 +203,29 @@ class AdminServer extends Component{
     */
     addMicroServer = () => {
         let data = this.props.form.getFieldsValue();
-        this.props.dispatch(addSubject({
-            serverid: data.server_id,
+        console.log(data)
+        this.props.dispatch(addEntity({
+            serverSubjectId: parseInt(data.subject_id),
             name: data.server_name,
-            status: parseInt(data.server_status)
+            url: data.server_url,
+            version: data.server_version,
+            status: parseInt(data.server_status),
+            description: data.server_desc
         })).then(() => {
-            console.log(this.props.adminServer)
+            if(this.props.adminServer.addEntity.code === 'SUCCESS'){
+                this.handleAddMicroServerModal();
+                message.success('添加微服务成功');
+                setTimeout(()=>window.location.reload(),1000);
+            }else{
+                this.handleAddMicroServerModal();
+                message.error('添加微服务失败');             
+            }
         })
     }
     /**
      * 显示添加微服务对话框
      */
     showAddMicroServerModal = (e) => {
-        this.props.form.setFieldsValue({
-            server_id: e.id,
-        })
         this.setState({
           visible2: true,
         });
@@ -224,7 +238,26 @@ class AdminServer extends Component{
         this.setState({
          visible2: false,
         });
-      };        
+      }; 
+
+          /**
+     * 显示微服务分类管理对话框
+     */
+    showSubjectModal = (e) => {
+        this.setState({
+          visible3: true,
+          visible2:false,
+        });
+        
+      };
+    /**
+     * 关闭微服务分类管理对话框
+     */
+    handleSubjectModal = () => {
+        this.setState({
+         visible3: false,
+        });
+      }; 
 
     render(){
         
@@ -270,6 +303,15 @@ class AdminServer extends Component{
                 name: record.name,
                 }),
             };
+            /**微服务分类选框 */
+            let subjectSelection = [];
+            if(this.state.subject.length > 0){
+                for(let i = 0;i < this.state.subject.length;i++){
+                    subjectSelection.push(
+                        <Option value={this.state.subject[i].id}>{this.state.subject[i].name}</Option>
+                    )     
+                }
+            }
 
         return <div>
             <Card title="产品管理"  >
@@ -426,10 +468,15 @@ class AdminServer extends Component{
                 >
                     <Card>
                     <Form layout="horizontal">
-                    <FormItem label="微服务id：">
+                    <FormItem label="微服务分类：">
                         {
-                            getFieldDecorator('server_id')
-                            (<Input placeholder={"请输入微服务id"} disabled={true}/>)
+                            getFieldDecorator('subject_id')
+                            (<div><Select style={{ width: 120 }}>
+                                {subjectSelection}
+                            </Select>
+                            <Button style={{marginLeft:'50%'}} onClick={this.showSubjectModal}>分类管理</Button>
+                            </div>
+                            )
                         }
                     </FormItem>
 
@@ -440,8 +487,22 @@ class AdminServer extends Component{
                         }
                     </FormItem>
 
-                    <FormItem label="微服务状态">
+                    <FormItem label="微服务接口地址：">
                         {
+                            getFieldDecorator('server_url')
+                            (<Input placeholder={"请输入微服务接口地址"}/>)
+                        }
+                    </FormItem>
+
+                    <FormItem label="微服务版本：">
+                        {
+                            getFieldDecorator('server_version')
+                            (<Input placeholder={"请输入微服务版本"}/>)
+                        }
+                    </FormItem>
+
+                    <FormItem label="微服务状态：">
+                    {
                             getFieldDecorator('server_status',{
                                 initialValue:"2",
                             })(<Select style={{ width: 120 }}>
@@ -451,9 +512,35 @@ class AdminServer extends Component{
                             </Select>)
                         }
                     </FormItem>
+
+                    <FormItem label="微服务描述：">
+                        {
+                            getFieldDecorator('server_desc')
+                            (<Input placeholder={"请输入微服务描述"}/>)
+                        }
+                    </FormItem>                    
                     </Form>
                     </Card>
-        </Modal>              
+        </Modal>    
+            {/** 微服务分类管理对话框 */}
+            <Modal
+                title={"微服务分类管理"}
+                visible={this.state.visible3}
+                onCancel={this.handleSubjectModal}
+                okText="提交"
+                cancelText="取消"
+                >
+                    <Card>
+                    <List
+                        size="small"
+                        bordered
+                        dataSource={this.state.subject}
+                        renderItem={item => <List.Item>{item.name}</List.Item>}
+                        />
+                    <Input  placeholder={"请输入要添加的分类"}/> 
+                    </Card>
+        </Modal>                    
+
         </div>
     }
 }
