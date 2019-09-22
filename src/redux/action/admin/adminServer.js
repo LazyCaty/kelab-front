@@ -19,6 +19,10 @@ const {
     GET_SERVER_ENTITY_DELETE_FAILURE,
     GET_SERVER_ENTITY_UPDATE_SUCCESS,
     GET_SERVER_ENTITY_UPDATE_FAILURE,
+    GET_SERVER_SUBJECT_DELETE_SUCCESS,
+    GET_SERVER_SUBJECT_DELETE_FAILURE,
+    GET_SERVER_SUBJECT_UPDATE_SUCCESS,
+    GET_SERVER_SUBJECT_UPDATE_FAILURE,
 }=actions;
 
 const baseUrl=configs.baseUrl;
@@ -150,6 +154,49 @@ export function addSubject(query = ''){
     }
 }
 
+//删除微服务分类
+export function deleteSubject(query=""){    
+    return async(dispatch) => {
+        try {
+            console.log(query)
+          const data = (await axios.delete(`${baseUrl}serverSubject.do?${Qs.stringify(query)}`)).data;
+            dispatch({
+                type: GET_SERVER_SUBJECT_DELETE_SUCCESS,
+                data: data,
+            })
+        } catch (error) {
+            dispatch({
+                type: GET_SERVER_SUBJECT_DELETE_FAILURE,
+                data: new Error('删除微服务分类失败')
+            })
+        }
+    };
+}
+
+//修改微服务分类
+export function updateSubject(query = ''){
+    return async (dispatch) => {
+        try{
+            console.log(query)
+            const data = (await axios({
+                                        method:'put',
+                                        url:`${baseUrl}serverSubject.do`,
+                                        headers:{"Content-Type":"application/json"},
+                                        data:query})).data
+            dispatch({
+                type: GET_SERVER_SUBJECT_UPDATE_SUCCESS,
+                data: data
+            })
+        } 
+        catch(error){
+            dispatch({
+                type: GET_SERVER_SUBJECT_UPDATE_FAILURE,
+                error: new Error('修改微服务分类失败')
+            })
+        }
+    }
+}
+
 //添加微服务实例
 export function addEntity(query = ''){
     return async (dispatch) => {
@@ -192,7 +239,6 @@ export function deteleEntity(query=""){
 export function updateEntity(query = ''){
     return async (dispatch) => {
         try{
-            console.log(query)
             const data = (await axios({
                                         method:'put',
                                         url:`${baseUrl}serverEntity.do`,
@@ -226,13 +272,3 @@ export function getCategory(query = ''){
         }
     };
 }
-
-
-
-
-
-
-
-
-
-

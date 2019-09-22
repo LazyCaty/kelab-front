@@ -110,11 +110,16 @@ class ProIndex extends Component{
                     <UserHead />
                 </div>
                 <div className="proIndex-content">
-                <Tabs defaultActiveKey="1" tabPosition={"left"}>
+                <Menu
+                        theme={this.state.theme}
+                        style={{ width: 256 }}
+                        selectedKeys={window.location.hash}
+                        mode="inline"
+                        className="proIndex-menuNav"
+                    >
+                        {menuData}
+                    </Menu>
                 <div className="proIndex-dataList">
-                    {
-                        
-                    }
                         <List
                             itemLayout="horizontal"
                             dataSource={listInfo}
@@ -137,7 +142,7 @@ class ProIndex extends Component{
                         />
                     </div>
                     <Pagination defaultCurrent={1} total={30} onChange={this.updatePage}/>
-                </Tabs>
+
                 </div>
                 <div className="proIndex-footer">
                     <Footer />

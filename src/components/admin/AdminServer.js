@@ -1,8 +1,9 @@
 // 微服务管理页面
 import React,{Component} from 'react';
-import { Table,Button ,Popconfirm,Pagination,Card,Form,Input,Select,Modal,message,List,Tabs} from 'antd';
+import { Table,Button ,Popconfirm,Pagination,Card,Form,Input,Select,Modal,message,List,Tabs,Popover,Icon} from 'antd';
 import {connect} from 'react-redux'
-import {getServe,addServe,deteleServer,getCategory,updateServer,addSubject,addEntity,getSubject} from "../../redux/action/admin/adminServer";
+import {getServe,addServe,deteleServer,getCategory,updateServer,addSubject,addEntity,getSubject,deleteSubject,updateSubject} 
+from "../../redux/action/admin/adminServer";
 import AdminSubject from './AdminSubject';
 import './AdminServer.less';
 
@@ -203,7 +204,6 @@ class AdminServer extends Component{
     */
     addMicroServer = () => {
         let data = this.props.form.getFieldsValue();
-        console.log(data)
         this.props.dispatch(addEntity({
             serverSubjectId: parseInt(data.subject_id),
             name: data.server_name,
@@ -226,6 +226,9 @@ class AdminServer extends Component{
      * 显示添加微服务对话框
      */
     showAddMicroServerModal = (e) => {
+        this.props.form.setFieldsValue({
+            server_id: e.id
+        })
         this.setState({
           visible2: true,
         });
@@ -240,7 +243,7 @@ class AdminServer extends Component{
         });
       }; 
 
-          /**
+    /**
      * 显示微服务分类管理对话框
      */
     showSubjectModal = (e) => {
@@ -258,6 +261,55 @@ class AdminServer extends Component{
          visible3: false,
         });
       }; 
+    /**
+     * 添加微服务分类
+     */
+    addServerSubject = () => {
+        let data = this.props.form.getFieldsValue();
+        this.props.dispatch(addSubject({
+            name: data.subject_name,
+            serverId: data.server_id
+        })).then(() => {
+            if(this.props.adminServer.addSubject.code === 'SUCCESS'){
+                message.success('添加微服务分类成功')
+                setTimeout(()=>window.location.reload(),1000);
+            }else{
+                message.error('添加微服务分类失败');  
+            }
+        })
+    }
+    /**
+     * 删除微服务分类
+     */
+    deleteServerSubject = (e) =>{
+        this.props.dispatch(deleteSubject({
+            ids: parseInt(e.id),
+        })).then(() => {
+            if(this.props.adminServer.deleteSubject.code === 'SUCCESS'){
+                message.success('删除微服务分类成功')
+                setTimeout(()=>window.location.reload(),1000);               
+            }else{
+                message.error('删除微服务分类失败');  
+            }
+        })
+    }
+    /**
+     * 更新微服务分类
+     */
+    updateServerSubject = (e) =>{
+        let data = this.props.form.getFieldsValue();
+        this.props.dispatch(updateSubject({
+            id: e.id,
+            name: data._subject_name
+        })).then(() => {
+            if(this.props.adminServer.updateSubject.code){
+                message.success('更新微服务分类成功')
+                setTimeout(()=>window.location.reload(),1000);   
+            }else{
+                message.error('更新微服务分类失败');  
+            }
+        })
+    }
 
     render(){
         
@@ -313,7 +365,8 @@ class AdminServer extends Component{
                 }
             }
 
-        return <div>
+        return (
+        <div>
             <Card title="产品管理"  >
             <div className="admin-categroy">
                 <Tabs defaultActiveKey="1" type="card" onChange={this.getCurrCate}>
@@ -474,7 +527,9 @@ class AdminServer extends Component{
                             (<div><Select style={{ width: 120 }}>
                                 {subjectSelection}
                             </Select>
+                            <Popover content='没找到想要的分类？试试分类管理吧。'>
                             <Button style={{marginLeft:'50%'}} onClick={this.showSubjectModal}>分类管理</Button>
+                            </Popover>
                             </div>
                             )
                         }
@@ -535,13 +590,46 @@ class AdminServer extends Component{
                         size="small"
                         bordered
                         dataSource={this.state.subject}
-                        renderItem={item => <List.Item>{item.name}</List.Item>}
+                        renderItem=
+                        {item => 
+                        <List.Item>
+                            {item.name}
+                            <span><Popconfirm placement="rightBottom" title={"你确定要删除这个分类么"} 
+                            onConfirm={() => this.deleteServerSubject(item)} okText="确定" cancelText="取消">
+                            <Icon type="delete" style={{ fontSize: '20px', color: '#D94A38', float:'right'}}  /></Popconfirm></span> 
+                            
+                            <span><Popconfirm placement="rightBottom" title={
+                            <Form>
+                            <FormItem>
+                                {
+                                    getFieldDecorator('_subject_name')
+                                    (<Input placeholder={'请输入新的分类名称'}/>)
+                                }
+                            </FormItem>
+                            </Form>
+                            } 
+                            onConfirm={() => this.updateServerSubject(item)} okText="确定" cancelText="取消">
+                            <Icon type="edit" style={{ fontSize: '20px', color: '#08c',float:'right', marginRight:'5%'}}/></Popconfirm></span>
+                        </List.Item>}
                         />
-                    <Input  placeholder={"请输入要添加的分类"}/> 
+                        <Form style={{display:'inline-block'}}>
+                        <FormItem>
+                            {
+                                getFieldDecorator('server_id')
+                            }
+                        </FormItem>
+                        <FormItem>
+                            {
+                                getFieldDecorator('subject_name')
+                                (<Input style={{width:200,marginTop:5,marginRight:10}} placeholder="请输入要添加的分类名称"/>)
+                            }
+                        </FormItem>
+                    </Form>
+                      <Button type="primary" style={{background:'green'}} onClick={this.addServerSubject}><Icon type="plus"/>添加</Button>
                     </Card>
         </Modal>                    
 
-        </div>
+        </div>)
     }
 }
 export default Form.create()(AdminServer);
