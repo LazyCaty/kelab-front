@@ -44,7 +44,7 @@ export default (state=defaultState,action)=>
         case GET_VERIFICATION_SUCCESS:
             return{
                 ...state,
-                pic:action.data
+                Captcha:action.data
             }
 
     }
