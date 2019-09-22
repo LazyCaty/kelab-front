@@ -95,8 +95,7 @@ export function getVerification(uuid)
 {
     return async(dispatch) => {
         try {
-            const data = (await axios.get(`http://192.168.3.83:8088/api/user.do/getverifycode?uuid=null`)).data;
-            console.log(data);
+           const data = (await axios.get(`/api/user.do/getverifycode?uuid=`+uuid)).data;
             dispatch({
                 type:GET_VERIFICATION_SUCCESS,
                 data:data
