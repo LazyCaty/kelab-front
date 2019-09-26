@@ -14,10 +14,15 @@ class ProIndex extends Component{
     constructor(props){
         super(props);
         this.state={
-            //服务分类
+            //产品分类
             serviceClass: [],
-            //微服务
+            //产品
             service: [],
+            //产品数据数量
+            total: 0,
+            //产品分类id
+            categoryId: 1,
+            
         }
     }
 
@@ -33,7 +38,7 @@ class ProIndex extends Component{
             if(!!this.props.proIndex.getServiceClass){
                 if(this.props.proIndex.getServiceClass.code === 'SUCCESS') {
                     this.setState({
-                        serviceClass:this.props.proIndex.getServiceClass.data.pagingList
+                        serviceClass: this.props.proIndex.getServiceClass.data.pagingList
                     })
                 }
             }
@@ -43,12 +48,13 @@ class ProIndex extends Component{
         this.props.dispatch(getService({
             page: 1,
             rows: 5,
+            categoryId: this.state.categoryId,
         })).then(()=>{
             if(!!this.props.proIndex.getService){
-                console.log(this.props.proIndex.getService);
                 if(this.props.proIndex.getService.code === 'SUCCESS') {
                     this.setState({
-                        service:this.props.proIndex.getService.data.pagingList
+                        service: this.props.proIndex.getService.data.pagingList,
+                        total: this.props.proIndex.getService.data.total,
                     });
                 }
             }
@@ -61,34 +67,43 @@ class ProIndex extends Component{
          this.props.dispatch(getService({
             page: page,
             rows: 5,
+            categoryId: this.state.categoryId,
         })).then(()=>{
             if(!!this.props.proIndex.getService){
-                console.log(this.props.proIndex.getService);
                 if(this.props.proIndex.getService.code === 'SUCCESS') {
                     this.setState({
-                        service:this.props.proIndex.getService.data.pagingList
+                        service: this.props.proIndex.getService.data.pagingList
                     });
                 }
             }
         })           
     }
+    /**
+     * 获取当前分类页面的产品
+     */
+    getCurrCate = (e) => {
+        this.props.dispatch(getService({
+            page: 1,
+            rows: 5,
+            categoryId: e,
+        })).then(()=>{
+            if(!!this.props.proIndex.getService){
+                if(this.props.proIndex.getService.code === 'SUCCESS') {
+                    this.setState({
+                        service: this.props.proIndex.getService.data.pagingList,
+                        categoryId: e,
+                        total: this.props.proIndex.getService.data.total,
+                    });
+                }
+            }
+        })          
+
+    } 
 
     render(){
         //获取当前状态的值
         let serviceClass = this.state.serviceClass;
         let service = this.state.service;
-        let serverName = null;
-        //生成导航栏数据
-        let menuData = [];
-        for(let i = 0;i < serviceClass.length;i++)
-        {
-            let key = i + 1;
-            let name = serviceClass[i].name;
-            serverName = name;
-            menuData.push(
-                <Menu.Item key={key}>{name}</Menu.Item>
-            )
-        }
         //生成具体微服务项信息
         let listInfo = [];
         for(let i = 0;i < service.length;i++)
@@ -103,6 +118,7 @@ class ProIndex extends Component{
                 reproduction: 'reproduction/nlp/#' + service[i].categoryId.toString()
             })
         }
+        console.log(listInfo)
         return(
 
             <div className="proIndex">
@@ -110,38 +126,35 @@ class ProIndex extends Component{
                     <UserHead />
                 </div>
                 <div className="proIndex-content">
-                <Menu
-                        theme={this.state.theme}
-                        style={{ width: 256 }}
-                        selectedKeys={window.location.hash}
-                        mode="inline"
-                        className="proIndex-menuNav"
-                    >
-                        {menuData}
-                    </Menu>
-                <div className="proIndex-dataList">
-                        <List
-                            itemLayout="horizontal"
-                            dataSource={listInfo}
-                            renderItem={item => (
-                                <List.Item id={item.categoryId}>
-                                    <List.Item.Meta
-/*                                        avatar={<Avatar src={item.avatar} alt={"图片加载失败"}/>}*/
-                                        title={<strong>{item.name}</strong>}
-                                        description=""
-                                    />
-                                    <Card style={{ width: 850 }}>
-                                        {item.description}
-                                        <div className="proIndex-dataList-link">
-                                        <span><Link to={item.doc}>产品文档</Link>&nbsp;&nbsp;&nbsp;
-                                        <Link to={item.reproduction}>产品演示</Link></span>
-                                        </div>
-                                    </Card>,
-                                </List.Item>
-                            )}
-                        />
-                    </div>
-                    <Pagination defaultCurrent={1} total={30} onChange={this.updatePage}/>
+                <Tabs defaultActiveKey="1" tabPosition="left" onChange={this.getCurrCate}>
+                    {
+                        serviceClass.map((items,index) => {
+                            return <TabPane tab={items.name} key={index + 1}>                          
+                                        <div className="proIndex-dataList">
+                                        <List
+                                            itemLayout="horizontal"
+                                            dataSource={listInfo}
+                                            renderItem={item => (
+                                                <List.Item id={item.categoryId}>
+                                                    <List.Item.Meta
+                                                        description=""
+                                                    />
+                                                    <Card style={{ width: 850 }} title={item.name}>
+                                                        {item.description}
+                                                        <div className="proIndex-dataList-link">
+                                                        <span><Link to={item.doc}>产品文档</Link>&nbsp;&nbsp;&nbsp;
+                                                        <Link to={item.reproduction}>产品演示</Link></span>
+                                                        </div>
+                                                    </Card>
+                                                </List.Item>
+                                            )}
+                                        />
+                                    </div>
+                                    <Pagination defaultCurrent={1} total= {(this.state.total / 5) * 10} onChange={this.updatePage}/>
+                                </TabPane>
+                        })
+                    }
+                </Tabs>
 
                 </div>
                 <div className="proIndex-footer">

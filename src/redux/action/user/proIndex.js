@@ -32,6 +32,7 @@ export function getServiceClass(query='') {
 }
 
 export function getService(query='') {
+
     return async(dispatch) => {
         try{
             const data = (await axios.get(`${baseUrl}server.do?${Qs.stringify(query)}`)).data;

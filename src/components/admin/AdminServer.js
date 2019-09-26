@@ -32,8 +32,6 @@ class AdminServer extends Component{
             categoryId: 1,
             subject: [] //微服务主体
         }
-        this.objRef=React.createRef();
-        this.cateArr=[]
     }
     
     componentDidMount() {

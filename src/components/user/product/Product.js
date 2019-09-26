@@ -31,6 +31,7 @@ class Product extends Component{
      * 组件加载完毕用于ajax请求
      */
     componentDidMount(){
+        console.log(window.location)
         this.props.dispatch(getDocMenu({
             serverId: 1,
         })).then(() =>{
