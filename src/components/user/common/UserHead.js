@@ -1,11 +1,14 @@
 /* 这里是首页导航栏 */
-import React, {Component} from 'react';
+import React, {Component}  from 'react';
 import './UserHead.less';
-import {Link} from 'react-router-dom';
-import {Col, Form, Button,message, Icon, Checkbox} from 'antd';
-import {connect} from 'react-redux';
-import Login from '../Login';
-import {getMenu,changePage} from '../../../redux/action/common/userhead';
+import {Link}              from 'react-router-dom';
+import {Col}               from 'antd';
+import {connect}           from 'react-redux';
+import Login               from '../Login';
+import {changePage}        from '../../../redux/action/common/userhead';
+
+let    jwtDecode = require('jwt-decode');
+
 @connect(state=>({
         header:state.userHeader
     })
@@ -30,14 +33,25 @@ class UserHead extends Component {
 
         }
     }
-    // 获取菜单
+
+    componentWillMount(){
+        if (localStorage.username && localStorage.token) {
+            let token = jwtDecode(localStorage.token);
+            // 如果token没有过期
+            if (
+                token.exp * 1000 - 7* 60 * 1000 - 2000 >
+                Date.parse(new Date())
+            ) {
+                this.setState({
+                   
+                });
+            } else {
+                this.logout();
+            }
+        }
+    }
     componentDidMount()
-    {/*
-        this.props.dispatch(getMenu()).then(()=>{
-            this.setState({
-                menu:this.props.header.menu
-            })
-        })*/
+    {
         this.props.dispatch(changePage(0))
 
 

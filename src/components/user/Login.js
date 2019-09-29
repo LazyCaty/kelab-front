@@ -1,30 +1,34 @@
 /*登录界面*/
-import React,{Component}    from 'react';
+import  React,{Component}   from 'react';
+import  storage             from '../../util/Storage';
+import  crypto              from 'crypto';
+import  axios               from 'axios';
+import  configs             from '../../redux/action/common/configs';
 import  {changePage}        from '../../redux/action/common/userhead';
-import {connect}            from 'react-redux';
-import { 
-    Input,
-    Icon,
-    Form, 
-    Button,
-    Card,
-    message}                from 'antd';
-import {sendLogin,
-    getVerification,
-    sendRes}                from "../../redux/action/common/userhead";
+import  {connect}           from 'react-redux';
+import  { 
+        Input,
+        Icon,
+        Form, 
+        Button,
+        Card,
+        message}            from 'antd';
+import  {sendLogin,
+        getVerification,
+        sendRes}            from "../../redux/action/common/userhead";
+import  "./Login.less";
 
-import storage              from '../../util/Storage';
-import "./Login.less";
-import crypto from 'crypto';
-const  FormItem=Form.Item;
-const  md5 = crypto.createHash('md5');
-let jwtDecode = require('jwt-decode');
-let timer;
+
+const   FormItem  =Form.Item;
+const   md5       = crypto.createHash('md5');
+const   baseUrl   =configs.baseUrl;
+let     jwtDecode = require('jwt-decode');
+let     timer;
+
 @connect(state=>({
         header:state.userHeader
     })
 )
-
 
 class Login extends Component{
     constructor(props){
@@ -40,6 +44,8 @@ class Login extends Component{
 
     componentDidMount(){
        this.getCaptcha(null);
+       //设置定时器
+       //setTimer();
        this.setState({
            page:this.props.header.displaying
        })
@@ -51,17 +57,17 @@ class Login extends Component{
      * @param {string} uuid
      */
     getCaptcha=(uuid)=>{
-        // this.props.dispatch(
-        //     getVerification(uuid)
-        //     )
-        //     .then(()=>{
-        //     this.setState({
-        //         picSource:this.props.header.Captcha.data,
-        //         uuid:this.props.header.Captcha.uuid
-        //     })
-        //     storage.setStorage('token',this.props.header.Captcha.token);
+        this.props.dispatch(
+            getVerification(uuid)
+            )
+            .then(()=>{
+            this.setState({
+                picSource :this.props.header.Captcha.data,
+                uuid      :this.props.header.Captcha.uuid
+            })
+            storage.setStorage('token',this.props.header.Captcha.token);
 
-        // })
+        })
     }
 
     /**
@@ -70,26 +76,21 @@ class Login extends Component{
     toRegister=()=>{
         let apply=this.props.form.getFieldsValue();//获取表单信息
         console.log();
-        if(apply.username===""
-        &&apply.password===''
-        &&apply.validation===''
-        &&apply.email==='')
+        if(apply.username   ===""
+         &&apply.password   ===''
+         &&apply.validation ===''
+         &&apply.email      ==='')
         {
             message.warning('信息不能为空')
         }
         else
         {
-            message.success("注册成功，请重新登录");
-            // this.props.dispatch(sendRes({
-            //     username:apply.username,
-            //     password:apply.password,
-            //     email:apply.email
-            // }))
-            // .then(()=>{
-            //     storage.setStorage('username',apply.username);
-            //     //storage.setStorage('token','');
-                
-            // });
+            this.props.dispatch(sendRes({
+                username :apply.username,
+                password :apply.password,
+                email    :apply.email
+            }))
+            
             window.location.href="/";
 
         }
@@ -106,13 +107,18 @@ class Login extends Component{
             message.warning('信息不能为空')
         }
         else{
-            
+            //md5加密
+            md5.update(apply.passwordL);
+            console.log(md5.update('hex'));
             this.props.dispatch(sendLogin({
                 username    :apply.userNameL,
-                password    :md5.digest(apply.passwordL),
-                uuid        :"c87b54df-57b6-4ca7-8a9d-f07dcbb3f6bf",
-                verifycode  :"8ean"
-            }));
+                password    :md5.update('hex'),
+                uuid        :this.state.uuid,
+                verifycode  :apply.validationL
+            })).then({
+                 //storage.setStorage('username',apply.username);
+                //storage.setStorage('token','');
+            });
         }
           
     }
@@ -127,6 +133,7 @@ class Login extends Component{
         }
         callback();
         }
+
         checkPass2(rule, value, callback) {
             const { getFieldValue } = this.props.form;
             if (value && value !== getFieldValue('password')) {
@@ -135,6 +142,7 @@ class Login extends Component{
                 callback();
             }
         }
+
         /**
          * 设置定时器
          */
@@ -151,35 +159,65 @@ class Login extends Component{
                     let time =token.exp * 1000 - 7 * 60 * 1000 - Date.parse(new Date());
     
                     timer = setTimeout(() => {
-                        // 刷新token
+                        //请求新token
+                        //this.reGetToken();
+                        
                     }, time);
                 } catch (error) {
                     console.log('timer err');
                 }
             }
         }
+        
         /**
          * 刷新token
          */
         reGetToken=()=>{
             //刷新token
-            //重启定时器
-            //退出登录
-        }
-       
+            try{
+                const data=axios.get(`${baseUrl}`).data;
+                //检查是否会出现错误
+                // if(有错)
+                // {
+                //   message.info('用户认证已过期，请重新登录。');  
+                //   this.loginOut();
+                // }else{
+                //     storage.setStorage('token',data.token);
+                // }
 
+            }
+            catch(err){
+                message.info('用户认证已过期，请重新登录。');
+                //退出登录
+            }
+        }
+       /**
+        * 退出登录
+        */
+        loginOut() {
+            // 如果存在定时器，则使用clearTimeout清空,避免内存泄漏。
+            timer && clearTimeout(timer);
+            localStorage.clear();
+            window.location.reload();
+        }
 
 
     render(){
         const {getFieldDecorator}=this.props.form;//getFieldDecorator属性，要用Form.create创建
         const {picSource,uuid,notEmpL,notEmp,page} = this.state;
+        const styleImg={ 
+            cursor: 'pointer',
+            width:100,
+            height:30,
+            paddingBottom:5
+        }
         return(
             <div className={this.props.header.displaying==0?"login-display":""}>
                 <div className="login-content">
                     {
 
 
-                            page===1?<Card>
+            this.props.header.displaying===1?<Card>
                             <Form style={{width:350}}>
                                 <div className="login-content-close" onClick={()=>this.props.dispatch(changePage(0))}><Icon type="close" /></div>
                                 <div className="login-content-head">欢迎登录语义分析平台</div>
@@ -227,11 +265,8 @@ class Login extends Component{
                                     }
                                     <div style={{float:'right',marginRight:30} }>
                                         <img 
-                                            //src={`data:image/png;base64,${picSource}`}
-                                                src="http://cas.swust.edu.cn/authserver/captcha?timestamp=1568887949728"
-                                            style={{
-                                                cursor: 'pointer',
-                                            }}
+                                            src={`data:image/png;base64,${picSource}`}
+                                            style={styleImg}
                                             onClick={()=>this.getCaptcha(uuid)}
                                         />
                                         </div>
@@ -242,7 +277,7 @@ class Login extends Component{
 
 
                                 </FormItem>
-                                <Button style={{width:300,marginLeft:25}}  type="primary" onClick={this.toLoginh}>登录</Button>
+                                <Button style={{width:300,marginLeft:25}}  type="primary" onClick={this.toLogin}>登录</Button>
                                 <FormItem>
                                     <div></div>
                                     <div></div>
@@ -303,6 +338,14 @@ class Login extends Component{
                                         })( <Input prefix={<Icon type="lock"/>} placeholder="请确认密码"/>)
                                     }
                                 </FormItem>
+                                <FormItem>
+                                    {
+                                        getFieldDecorator('email',{
+                                            initialValue:'',
+                                            rules:[]
+                                        })( <Input prefix={<Icon type="email"/>} placeholder="请填写邮箱"/>)
+                                    }
+                                </FormItem>
                                 
                                 <FormItem>
                                     {
@@ -314,11 +357,8 @@ class Login extends Component{
                                     }
                                     <div style={{float:'right',marginRight:30} }>
                                         <img 
-                                            //src={`data:image/png;base64,${picSource}`}
-                                                src="http://cas.swust.edu.cn/authserver/captcha?timestamp=1568887949728"
-                                            style={{
-                                                cursor: 'pointer',
-                                            }}
+                                            src={`data:image/png;base64,${picSource}`} 
+                                            style={styleImg}
                                             onClick={()=>this.getCaptcha(uuid)}
                                         />
                                         </div>
