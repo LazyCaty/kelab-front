@@ -19,41 +19,18 @@ const {
     GET_VERIFICATION_SUCCESS,
 }=actions;
 
-const baseUrln=configs.baseUrln;
+const baseUrl=configs.baseUrl;
 
-export function getMenu(query="")
-{
-    return async(dispatch) => {
-        try {
-            //let headers = getTokenHeader({});
-            const data = (await axios.get(`${baseUrln}user/menu`)).data;
-            dispatch({
-                type:  GET_USER_MENU_SUCCESS,
-                data: data.data
-            });
-        } catch (error) {
-            dispatch({
-                type: GET_USER_MENU_FAILURE,
-                error: new Error('获取导航信息失败')
-            });
-        }
-    };
 
-}
 
 export function sendRes(apply,num)
 {
-    
-
     return (dispatch)=>{
         let dat={...apply,roleId:1}
         axios({
             method: 'POST',
-            url: "http://192.168.3.83:8088/api/user.do/register",
+            url: `${baseUrl}user.do/register`,
             data: JSON.stringify(dat),
-
-          
-           
                         headers: {
                             'Content-Type': 'application/json'
                         },
@@ -80,11 +57,8 @@ export function sendLogin(query='')
 {
     return async(dispatch) => {
         try {
-            console.log("dd",`${Qs.stringify(query)}`);
-            const data = (await axios.post(`http://192.168.3.83:8088/api/user.do/login?${Qs.stringify(query)}`)).data;
-            console.log(data);
-           
-        
+            const data = (await axios.post(`${baseUrl}user.do/login?${Qs.stringify(query)}`)).data;
+            console.log("hshs",data);
         } catch (error) {
             alert('sever err');
         }
@@ -95,7 +69,7 @@ export function getVerification(uuid)
 {
     return async(dispatch) => {
         try {
-           const data = (await axios.get(`/api/user.do/getverifycode?uuid=`+uuid)).data;
+           const data = (await axios.get(`${baseUrl}user.do/getverifycode?uuid=`+uuid)).data;
             dispatch({
                 type:GET_VERIFICATION_SUCCESS,
                 data:data

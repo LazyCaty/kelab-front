@@ -1,6 +1,6 @@
 export default Storage={
     /**
-     * 添加localStorage键值
+     * 添加设置localStorage键值
      * @param {*} name 
      * @param {*} data 
      */
