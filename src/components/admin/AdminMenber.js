@@ -214,35 +214,7 @@ class AdminMenber extends Component{
                         }
 
                     </FormItem>
-                    <FormItem label="我向往的那个实验室" {...formItemLayout}>
-                        {
-                            getFieldDecorator('lab_id',{//初始化
-                                    initialValue:'1',
-                                    rules:[{
-                                        required:true,
-                                        message:'实验室不能为空'
-                                    },]
-                                },
-                            )(
-                                <Select>
-                                    <Option value="1">计算机科学与技术学院</Option>
-                                    <Option value="2">材料科学与工程学院</Option>
-                                    <Option value="3">法学院</Option>
-                                    <Option value="4">国防科技学院</Option>
-                                    <Option value="5">环境与资源学院</Option>
-                                    <Option value="6">计算机科学与技术学院</Option>
-                                    <Option value="7">经济管理学院</Option>
-                                    <Option value="8">理学院</Option>
-                                    <Option value="9">马克思主义学院</Option>
-                                    <Option value="10">生命科学与工程学院</Option>
-                                    <Option value="11">体育学科部</Option>
-                                    <Option value="12">土木工程与建筑学院</Option>
-                                    <Option value="13">外国语学院</Option>
-                                </Select>
-                            )
-                        }
-
-                    </FormItem>
+                  
                 </Modal>
             </div>
         );

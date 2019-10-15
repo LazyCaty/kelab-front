@@ -75,8 +75,7 @@ class Login extends Component{
      */
     toRegister=()=>{
         let apply=this.props.form.getFieldsValue();//获取表单信息
-        console.log();
-        if(apply.username   ===""
+        if(apply.username   ===''
          &&apply.password   ===''
          &&apply.validation ===''
          &&apply.email      ==='')
@@ -91,7 +90,7 @@ class Login extends Component{
                 email    :apply.email
             }))
             
-            window.location.href="/";
+            //window.location.href="/";
 
         }
     
@@ -115,13 +114,15 @@ class Login extends Component{
                 password    :md5.update('hex'),
                 uuid        :this.state.uuid,
                 verifycode  :apply.validationL
-            })).then({
-                 //storage.setStorage('username',apply.username);
-                //storage.setStorage('token','');
-            });
+            })).then(()=>{
+               
+            }
+            );
         }
           
     }
+
+
 
        // 检查注册
        checkPass(rule, value, callback) {
@@ -188,14 +189,14 @@ class Login extends Component{
             }
             catch(err){
                 message.info('用户认证已过期，请重新登录。');
-                //退出登录
+                this.loginOut();
             }
         }
        /**
         * 退出登录
         */
         loginOut() {
-            // 如果存在定时器，则使用clearTimeout清空,避免内存泄漏。
+            // 如果存在定时器，则使用clearTimeout清空。
             timer && clearTimeout(timer);
             localStorage.clear();
             window.location.reload();

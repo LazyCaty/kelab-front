@@ -25,7 +25,7 @@ const baseUrl=configs.baseUrl;
 
 export function sendRes(apply,num)
 {
-    return (dispatch)=>{
+    return async(dispatch)=>{
         let dat={...apply,roleId:1}
         axios({
             method: 'POST',
@@ -38,16 +38,33 @@ export function sendRes(apply,num)
           
         }).then((res)=>{
             console.log(res.data);
+            if(res.data.data==='user_is_exist')
+            {
+                message.warning('用户已存在');
+            }
+            else if(res.data.data==='SUCCESS')
+            {
+                message.success('注册成功');
+                dispatch({
+                    type:GET_REGISTER_SUCCESS,
+                    data:res.data,
+                    
+                })
+            }
+            else
+            {
+                message.warning("注册失败");
+            }
             dispatch({
-                type:GET_USERS_LOGIN_SUCCESS,
-                data:true
+                type:GET_REGISTER_FAILURE,
+                data:res.data,
             })
         }).catch((err)=>{
             dispatch({
                 type:GET_USERS_LOGIN_FAILURE,
                 data:false
             })
-            alert('登录出错了');
+            alert('出错了');
         })
     }
 
@@ -58,7 +75,7 @@ export function sendLogin(query='')
     return async(dispatch) => {
         try {
             const data = (await axios.post(`${baseUrl}user.do/login?${Qs.stringify(query)}`)).data;
-            console.log("hshs",data);
+            console.log("login",data);
         } catch (error) {
             alert('sever err');
         }

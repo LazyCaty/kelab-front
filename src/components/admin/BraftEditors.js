@@ -60,6 +60,7 @@ class EditorDemo extends React.Component {
     }
 
     handleEditorChange = (editorState) => {
+      console.log(editorState);
         this.setState({ editorState })
     }
     preview = () => {
