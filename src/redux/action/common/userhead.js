@@ -21,8 +21,6 @@ const {
 
 const baseUrl=configs.baseUrl;
 
-
-
 export function sendRes(apply,num)
 {
     return async(dispatch)=>{

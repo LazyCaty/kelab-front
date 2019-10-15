@@ -69,7 +69,7 @@ class Login extends Component{
 
         })
     }
-
+    
     /**
      * 注册
      */

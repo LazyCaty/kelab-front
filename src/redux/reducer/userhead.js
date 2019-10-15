@@ -51,6 +51,7 @@ export default (state=defaultState,action)=>
                 ...state,
                 registerData:action.data
             }
+            
 
     }
     return state;
