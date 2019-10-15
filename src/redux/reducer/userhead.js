@@ -46,6 +46,12 @@ export default (state=defaultState,action)=>
                 ...state,
                 Captcha:action.data
             }
+        case GET_REGISTER_SUCCESS:
+            return{
+                ...state,
+                registerData:action.data
+            }
+            
 
     }
     return state;

@@ -70,13 +70,11 @@ class UserHead extends Component {
     }
     //登录或注册
     changeDisplay=(num)=> {
-
         this.props.dispatch(changePage(num));
     }
 
     render()
     {
-
 
         return(
             <div className="userhead-wrap">
