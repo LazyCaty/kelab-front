@@ -216,6 +216,7 @@ class AdminServer extends Component{
                 setTimeout(()=>window.location.reload(),1000);
             }else{
                 this.handleAddMicroServerModal();
+                console.log(data)
                 message.error('添加微服务失败');             
             }
         })
@@ -519,18 +520,17 @@ class AdminServer extends Component{
                 >
                     <Card>
                     <Form layout="horizontal">
-                    <FormItem label="微服务分类：">
+                    <FormItem label="微服务产品分类：">
                         {
                             getFieldDecorator('subject_id')
-                            (<div><Select style={{ width: 120 }}>
+                            (<Select style={{ width: 120 }}>
                                 {subjectSelection}
                             </Select>
-                            <Popover content='没找到想要的分类？试试分类管理吧。'>
-                            <Button style={{marginLeft:'50%'}} onClick={this.showSubjectModal}>分类管理</Button>
-                            </Popover>
-                            </div>
                             )
                         }
+                            <Popover content='没找到想要的分类？试试微服务分类管理吧。'>
+                            <Button style={{marginLeft:'50%'}} onClick={this.showSubjectModal}><Icon type="plus-circle" /></Button>
+                            </Popover>
                     </FormItem>
 
                     <FormItem label="微服务名称：">

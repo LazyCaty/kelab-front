@@ -7,6 +7,7 @@ const{
     GET_CATEGORY_SUCCESS,
     GET_SERVER_UPDATE_SUCCESS,
     GET_SERVER_SUBJECT_ADD_SUCCESS,
+    GET_SERVER_ENTITY_SUCCESS,
     GET_SERVER_ENTITY_ADD_SUCCESS,
     GET_SERVER_ENTITY_DELETE_SUCCESS,
     GET_SERVER_ENTITY_UPDATE_SUCCESS,
@@ -53,6 +54,11 @@ export default (state={},action)=>
                 ...state,
                 addSubject: action.data
             }
+        case GET_SERVER_ENTITY_SUCCESS:
+            return{
+                ...state,
+                Entity: action.data
+            }             
         case GET_SERVER_ENTITY_ADD_SUCCESS:
             return{
                 ...state,

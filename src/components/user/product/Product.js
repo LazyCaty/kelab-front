@@ -31,9 +31,8 @@ class Product extends Component{
      * 组件加载完毕用于ajax请求
      */
     componentDidMount(){
-        console.log(window.location)
         this.props.dispatch(getDocMenu({
-            serverId: 1,
+            serverId: window.location.hash.replace('#',''),
         })).then(() =>{
             if(!!this.props.product.getDocMenu){
                 if(this.props.product.getDocMenu.code === 'SUCCESS') {
@@ -95,23 +94,25 @@ class Product extends Component{
         //获取每项服务的markdown字符串
         let subjectDoc = [];
         if(docMenu.length !== 0){
-            for (let i = 0;i < docMenu.docSubVos.length;i++){
-                let MenuData = [];
-                for (let j = 0;j < docMenu.docSubVos[i].docEntities.length;j++){
-                    let key = docMenu.docSubVos[i].docEntities[j].id.toString();
-                    let href = window.location.pathname + '#/' + key;
-                    MenuData.push(
-                        <Menu.Item key={key} onClick={this.renderDoc}><Link to={href}>{docMenu.docSubVos[i].docEntities[j].name}</Link></Menu.Item>
-                    );
-                    subjectIndex.push(docMenu.docSubVos[i].docEntities[j].name)
-                    subjectDoc.push(docMenu.docSubVos[i].docEntities[j].markdownCode)
+            if(docMenu.docSubVos.length !== 0){
+                for (let i = 0;i < docMenu.docSubVos.length;i++){
+                    let MenuData = [];
+                    for (let j = 0;j < docMenu.docSubVos[i].docEntities.length;j++){
+                        let key = docMenu.docSubVos[i].docEntities[j].id.toString();
+                        let href = window.location.pathname + '#/' + key;
+                        MenuData.push(
+                            <Menu.Item key={key} onClick={this.renderDoc}><Link to={href}>{docMenu.docSubVos[i].docEntities[j].name}</Link></Menu.Item>
+                        );
+                        subjectIndex.push(docMenu.docSubVos[i].docEntities[j].name)
+                        subjectDoc.push(docMenu.docSubVos[i].docEntities[j].markdownCode)
+                    }
+                    let key = docMenu.docSubVos[i].id;
+                    subMenuData.push(
+                        <SubMenu key={key} title={<span>{this.state.docMenu.docSubVos[i].name}</span>}>
+                            {MenuData}
+                        </SubMenu>
+                    )
                 }
-                let key = docMenu.docSubVos[i].id;
-                subMenuData.push(
-                    <SubMenu key={key} title={<span>{this.state.docMenu.docSubVos[i].name}</span>}>
-                        {MenuData}
-                    </SubMenu>
-                )
             }
         }
 
