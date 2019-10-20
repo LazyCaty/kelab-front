@@ -41,6 +41,7 @@
     "jest-pnp-resolver": "1.0.2",
     "jest-resolve": "23.6.0",
     "jest-watch-typeahead": "^0.2.1",
+    "js-md5": "^0.7.3",
     "jwt-decode": "^2.2.0",
     "key-mirror": "^1.0.1",
     "less": "^3.8.1",
@@ -160,3 +161,4 @@
     ]
   }
 }
+
