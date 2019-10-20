@@ -23,7 +23,9 @@ class Routes extends Component{
     render(){
         return(
             <Router>
+                <div>
                 <Switch>
+                
                     <Route path='/' exact component = {Homepage}/>
                    
                     <Route path='/personal/' render = { () =>
@@ -67,7 +69,7 @@ class Routes extends Component{
                             } />
                     <Route component={NoFound} path="*" />
             </Switch>
-            
+            </div>
             </Router>
 
         )

@@ -2,8 +2,10 @@ import axios from 'axios';
 import configs from './configs';
 import actions from '../index';
 import { async } from 'rsvp';
+import Storage from '../../../util/Storage'
 import {message} from 'antd';
 import Qs from 'qs';
+let  jwtDecode = require('jwt-decode');
 /* import { applyPatches } from '_immer@1.10.0@immer'; */
 const {
 
@@ -36,18 +38,24 @@ export function sendRes(apply,num)
           
         }).then((res)=>{
             console.log(res.data);
-            if(res.data.data==='user_is_exist')
+            if(res.data.code==='user_is_exist')
             {
                 message.warning('用户已存在');
             }
-            else if(res.data.data==='SUCCESS')
+            else if(res.data.code==='SUCCESS')
             {
                 message.success('注册成功');
+                dispatch({
+                    type:CHANGE_PAGE_SUCCSEE,
+                    data:1
+        
+                })
                 dispatch({
                     type:GET_REGISTER_SUCCESS,
                     data:res.data,
                     
                 })
+                //this.changePage(1);
             }
             else
             {
@@ -62,7 +70,7 @@ export function sendRes(apply,num)
                 type:GET_USERS_LOGIN_FAILURE,
                 data:false
             })
-            alert('出错了');
+            alert('注册出错了');
         })
     }
 
@@ -70,21 +78,34 @@ export function sendRes(apply,num)
 
 export function sendLogin(query='')
 {
+   Storage.setStorage("username",query.username);
     return async(dispatch) => {
         try {
             const data = (await axios.post(`${baseUrl}user.do/login?${Qs.stringify(query)}`)).data;
             console.log("login",data);
+            if(data.code==='SUCCESS'){
+                Storage.setStorage("token",data.token);
+                let token = jwtDecode(localStorage.token);
+                console.log("token:",token.exp);
+                dispatch({
+                    type: GET_USERS_LOGIN_SUCCESS,
+                    data:true
+                })
+                window.location.href="/";
+            }
         } catch (error) {
-            alert('sever err');
+            alert('login sever err');
         }
     };
 
 }
 export function getVerification(uuid)
 {
+   // console.log
     return async(dispatch) => {
         try {
            const data = (await axios.get(`${baseUrl}user.do/getverifycode?uuid=`+uuid)).data;
+           console.log("dataV:",data);
             dispatch({
                 type:GET_VERIFICATION_SUCCESS,
                 data:data
@@ -96,7 +117,10 @@ export function getVerification(uuid)
     };
 
 }
-
+/**
+ * 改变登录注册页面，1为登录，2为注册
+ * @param {*} num 
+ */
 export const changePage=(num)=>
 {
     return (dispatch)=>{
@@ -107,3 +131,5 @@ export const changePage=(num)=>
         })
     }
 }
+
+
