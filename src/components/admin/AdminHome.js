@@ -8,6 +8,7 @@ import {getMenu} from "../../redux/action/admin/adminHome";
 import {connect} from 'react-redux';
 const {SubMenu} =Menu;
 
+
 @connect(state=>({
     adminhome:state.adminHome
 }))

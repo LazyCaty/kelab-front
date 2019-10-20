@@ -82,7 +82,8 @@ class AdminServer extends Component{
      * 获取当前分类下产品页
      */
     getCurrPage = (page) => {
-        this.props.dispatch(getServe(page,5,this.state.categoryId)).then(()=>{
+        this.props.dispatch(getServe(page,5,this.state.categoryId))
+        .then(()=>{
              // 为每条数据添加Key值
              this.props.adminServer.server.pagingList.map((item)=>{
                 item.key=item.id;
