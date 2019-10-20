@@ -1,7 +1,7 @@
 /*登录界面*/
 import  React,{Component}   from 'react';
 import  storage             from '../../util/Storage';
-import  crypto              from 'crypto';
+import md5 from 'js-md5';
 import  axios               from 'axios';
 import  configs             from '../../redux/action/common/configs';
 import  {changePage}        from '../../redux/action/common/userhead';
@@ -20,10 +20,10 @@ import  "./Login.less";
 
 
 const   FormItem  =Form.Item;
-const   md5       = crypto.createHash('md5');
 const   baseUrl   =configs.baseUrl;
 let     jwtDecode = require('jwt-decode');
 let     timer;
+React.Component.prototype.$md5 = md5
 
 @connect(state=>({
         header:state.userHeader
@@ -49,7 +49,6 @@ class Login extends Component{
        this.setState({
            page:this.props.header.displaying
        })
-       
     }
 
     /**
@@ -63,9 +62,9 @@ class Login extends Component{
             .then(()=>{
             this.setState({
                 picSource :this.props.header.Captcha.data,
-                uuid      :this.props.header.Captcha.uuid
+                uuid      :this.props.header.Captcha.token
             })
-            storage.setStorage('token',this.props.header.Captcha.token);
+            storage.setStorage('uuid',this.props.header.Captcha.token);
 
         })
     }
@@ -74,6 +73,7 @@ class Login extends Component{
      * 注册
      */
     toRegister=()=>{
+
         let apply=this.props.form.getFieldsValue();//获取表单信息
         if(apply.username   ===''
          &&apply.password   ===''
@@ -101,18 +101,19 @@ class Login extends Component{
      */
     toLogin=()=>{
         let apply=this.props.form.getFieldsValue();
+       
         if(apply.usernameL===''&&apply.passwordL===''&&apply.validationL==='')
         {
             message.warning('信息不能为空')
         }
         else{
             //md5加密
-            md5.update(apply.passwordL);
+           let passw = this.$md5(apply.passwordL).toLocaleUpperCase();
             console.log(md5.update('hex'));
             this.props.dispatch(sendLogin({
                 username    :apply.userNameL,
-                password    :md5.update('hex'),
-                uuid        :this.state.uuid,
+                password    :passw,
+                uuid        :localStorage.uuid,
                 verifycode  :apply.validationL
             })).then(()=>{
                
@@ -120,6 +121,7 @@ class Login extends Component{
             );
         }
           
+        
     }
 
 
@@ -268,7 +270,7 @@ class Login extends Component{
                                         <img 
                                             src={`data:image/png;base64,${picSource}`}
                                             style={styleImg}
-                                            onClick={()=>this.getCaptcha(uuid)}
+                                            onClick={()=>this.getCaptcha(localStorage.uuid)}
                                         />
                                         </div>
                                 </FormItem>
@@ -360,7 +362,7 @@ class Login extends Component{
                                         <img 
                                             src={`data:image/png;base64,${picSource}`} 
                                             style={styleImg}
-                                            onClick={()=>this.getCaptcha(uuid)}
+                                            onClick={()=>this.getCaptcha(localStorage.uuid)}
                                         />
                                         </div>
                                 </FormItem>

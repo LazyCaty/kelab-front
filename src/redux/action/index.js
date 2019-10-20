@@ -13,6 +13,7 @@ export default KeyMirror({
     GET_USER_MENU_SUCCESS: null,
     GET_USER_MENU_FAILURE: null,
 
+    
     //管理菜单
     GET_ADMIN_MENU_SUCCESS:null,
     GET_ADMIN_MENU_FAILUER:null,
