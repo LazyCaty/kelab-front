@@ -384,7 +384,8 @@ class AdminServer extends Component{
                                     <Table dataSource={this.state.dataSource}
                                             expandedRowRender={record => <AdminSubject serverid={record.id} /> } 
                                             columns={columns} pagination={false}
-                                            rowSelection={rowSelection} />
+                                            rowSelection={rowSelection} 
+                                            />
                                 </article>
                                 <footer>
                                     <Pagination total= {(this.state.total / 5) * 10} defaultCurrent={1} onChange={this.getCurrPage} />

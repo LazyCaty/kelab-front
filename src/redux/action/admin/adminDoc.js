@@ -15,8 +15,7 @@ const baseUrl=configs.baseUrl;
 export function getDocument(serverId,page,rows) {
     return async(dispatch)=> {
         try{
-            const data=(await axios.get(`${baseUrl}`+"doc.do?serverId="+serverId+"&page="+page+"&rows="+rows)).data.data;
-            console.log(data);
+            const data=(await axios.get(`${baseUrl}`+"doc.do?")).data.data;
             dispatch({
                 type: GET_DOCUMENT_SUCCESS,
                 data:data
@@ -50,6 +49,7 @@ export function upDocument(query){
     }
 }
 export function delDocument(query){
+    console.log(query)
     return async(dispatch)=>{
         try {
             const data=(await axios({
@@ -57,7 +57,6 @@ export function delDocument(query){
                                 url:`${baseUrl}doc.do`,
                                 headers:{"Content-Type":"application/json"},
                                 data:query}))
-            console.log(data)
             dispatch({
                 type:GET_DOCUMENT_DELETE_SUCCESS,
                 data:data

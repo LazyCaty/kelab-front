@@ -2,7 +2,8 @@ import React,{Component} from 'react';
 import './AdminDoc.less' ;
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {Button, Card, Table, Modal, Form, Input,Icon,message,Popconfirm} from 'antd'
+import {Button, Card, Table, Modal, Form, Input,Icon,message,Popconfirm,Tooltip} from 'antd'
+import AdminDoccatalog from "./AdminDoccatalog"
 
 import {getDocument,upDocument,delDocument} from '../../redux/action/admin/adminDoc'
 
@@ -21,22 +22,22 @@ class AdminDoc extends Component{
     }
     componentDidMount(){
         this.props.dispatch(getDocument(46,1,50))
-        // .then(()=>{
-        //     为每条数据添加key值
-        //     this.props.adminDoc.document.pagingList.map((item)=>{
-        //         item.key=item.id
-        //     })
-        //     this.setState({
-        //         sourseData:this.props.adminDoc.document.pagingList
-        //     })
-        // })
+        .then(()=>{
+            //为每条数据添加key值
+            this.props.adminDoc.document.pagingList.map((item)=>{
+                item.key=item.id
+            })
+            this.setState({
+                sourseData:this.props.adminDoc.document.pagingList
+            })
+        })
     }
 
     // 确认删除文档
     deleteDoc = (record) => {
         console.log(record)
         this.props.dispatch(delDocument({
-            ids:record.serverId
+            ids:record.serverId+''
         }))
         .then(()=>{
             if(this.props.adminDoc.deletedocument.code === 'SUCCESS'){
@@ -49,6 +50,7 @@ class AdminDoc extends Component{
     }
 
     changeDoc = (record) => {
+        console.log(record);
         this.props.form.setFieldsValue({
             _doc_id:record.id,
             _doc_name:record.name
@@ -93,25 +95,19 @@ class AdminDoc extends Component{
             {title:'id',dataIndex:'id'},
             {title:"文档名",dataIndex:'name'},
             {title: 'serverId', dataIndex: 'serverId' },
-            {title: 'URL', dataIndex: 'url' },
+            //{title: 'URL', dataIndex: 'url' },
             {
-                dataIndex: 'revise',
-                render: (text, record) => {
-                    return(
-                        <Button onClick={()=>{this.changeDoc(record)}}  >修改</Button>
-                    )
-                }
-            },
-            {
-                dataIndex: 'delete',
-                render: (text, record) => {
-                    return (
-                        <Popconfirm title={`确定删除${record.id}的评论吗?`} okText='确定' cancelText='取消' onConfirm={()=>{this.deleteDoc(record)}}>
-                             <Button >删除</Button>
-                        </Popconfirm>
-                       
-                    )
-                }
+                title: '更多操作',
+                render: (record)=>(
+                <div>
+                    <Tooltip title="修改" placement="top">
+                  <span  style={{cursor:"pointer"}} onClick={()=>{this.changeDoc(record)}} >
+                    <Icon type="edit" style={{ fontSize: '20px', color: '#08c' }}/></span>
+                    </Tooltip>
+                 <span >{/* onClick={} */}
+                 <Popconfirm placement="topLeft" title={"你确定要删除这个文档么"} onConfirm={this.deleteCates} okText="确定" cancelText="取消">
+                   <Icon type="delete" style={{ fontSize: '20px', color: '#D94A38', marginLeft:'5%'}}  /></Popconfirm></span> 
+                </div>)
             }
 
         ];
@@ -148,14 +144,14 @@ class AdminDoc extends Component{
                                                placeholder="名称" />
                                     )}
                                 </Form.Item>
-                                <Form.Item>
+                                {/* <Form.Item>
                                     {getFieldDecorator('_doc_sketch', {
                                         rules: [{ required: true, message: '请输入要添加的文档简述!' }],
                                     })(
                                         <Input prefix={<Icon type="solution" style={{ color: 'rgba(0,0,0,.25)' }} />}
                                                placeholder="简述" />
                                     )}
-                                </Form.Item>
+                                </Form.Item> */}
                                 <Form.Item>
                                     <label>内容</label>
                                    
@@ -168,6 +164,7 @@ class AdminDoc extends Component{
                         columns={columns}
                         dataSource={this.state.sourseData}
                         pagination={true} //是否要分页
+                        expandedRowRender={record => <AdminDoccatalog serverid={record.id} />}
                     >
                     </Table>
                 </Card>
