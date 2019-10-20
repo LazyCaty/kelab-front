@@ -14,7 +14,7 @@ const baseUrl = config.baseUrl;
 export function getDocMenu(query='') {
     return async(dispatch) => {
         try {
-            const data = (await axios(`${baseUrl}doc.do?${Qs.stringify(query)}`)).data;
+            const data = (await axios(`${baseUrl}doc/info.do?${Qs.stringify(query)}`)).data;
             dispatch({
                 type: GET_PRODUCT_DOCUMENT_SUCCESS,
                 data: data

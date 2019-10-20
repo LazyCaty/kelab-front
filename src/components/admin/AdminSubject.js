@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {Table,Modal,Form,Popconfirm,Icon,message,Card,Input,Select} from 'antd';
 import {connect} from 'react-redux';
-import {getSubject,deteleEntity,updateEntity} from '../../redux/action/admin/adminServer';
+import {getEntity,deteleEntity,updateEntity} from '../../redux/action/admin/adminServer';
 
 const FormItem=Form.Item;
 const {Option} = Select;
@@ -24,11 +24,13 @@ class AdminSubject extends Component{
 
 
     componentDidMount() {
-        this.props.dispatch(getSubject(this.state.page,4,this.props.serverid)).then(()=>{
-            this.setState({
-                dataSource:this.props.adminServer.severSubject.pagingList,
-                total:this.props.adminServer.severSubject.total
-            })
+        this.props.dispatch(getEntity(this.props.serverid)).then(()=>{
+            if(this.props.adminServer.Entity !== null){
+                this.setState({
+                    dataSource:this.props.adminServer.Entity.pagingList,
+                    total:this.props.adminServer.Entity.total
+                })
+            }
         })
     }
 
@@ -139,40 +141,19 @@ class AdminSubject extends Component{
               },
         ]
         /**微服务列表 */
-        const microServerData = [];
-        const dataSource = this.state.dataSource;
-        const len = this.state.dataSource.length;
+        let microServerData = this.state.dataSource;
+        let len = this.state.dataSource.length;
         if(len > 0){
             for(let i = 0;i < len;i++){
-                for(let j = 0;j < dataSource[i].entities.length;j++){
-                    microServerData.push(dataSource[i].entities[j])
-                }
+                    microServerData[i].index = i + 1;
             }
         }
-        for(let i = 0;i < microServerData.length;i++){
-            microServerData[i].index = i + 1;
-        }
-
-        const pagination = {
-            total: this.state.total|| 0,
-            onChange: function(cur) {
-                this.setState({
-                    page: cur,
-                });
-                //pageConfig['page'] = cur;
-                this.props.dispatch(getSubject(this.state.page,2,6)).then(()=>{
-                    this.setState({
-                        dataSource:this.props.severSubject.severSubject.pagingList
-                    })
-                })
-            }.bind(this),
-        }      
+   
 
     return(
         <div>
         <Table
             columns={columns}
-            pagination={pagination}
             dataSource={microServerData}
         />
                     {/** 修改微服务对话框 */}
