@@ -49,9 +49,6 @@ class Login extends Component{
        this.setState({
            page:this.props.header.displaying
        })
-       let token = jwtDecode("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzZXJ2aWNlIiwiYXVkIjoid2ViIiwicm9sZUlkIjpudWxsLCJ1c2VySWQiOjE5LCJ1c2VybmFtZSI6IjUxMjAwOTMzNDQiLCJpYXQiOjE1NzE1NTc2MDIsImV4cCI6MTU3MTU2MTIwMn0.23PROK2t8maM0upvo95OZ-iJZtwFbvVSDSZnnJ77BXs");
-       let time =token.exp * 1000 - 7 * 60 * 1000 - Date.parse(new Date());
-       console.log("token:",time);
     }
 
     /**
@@ -124,6 +121,7 @@ class Login extends Component{
             );
         }
           
+        
     }
 
 

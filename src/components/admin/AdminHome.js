@@ -32,7 +32,7 @@ class AdminHome extends Component{
     {
         return(
             <div className="admin-home">
-            <div className="admin-head"><div className="admin-head-logo">后台管理</div><div className="admin-head-user">欢迎：{localStorage.username}</div></div>
+            <div className="admin-head"><div className="admin-head-logo">后台管理</div><div className="admin-head-user">欢迎!{localStorage.username}</div></div>
             <Row>
                 <Col span={3} className="admin-aside">
                   

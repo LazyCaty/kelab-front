@@ -90,6 +90,9 @@ class UserHead extends Component {
        })
    }
 
+
+
+   
    logout=()=>{
     Storage.removeStorage("username");
     Storage.removeStorage("token");
