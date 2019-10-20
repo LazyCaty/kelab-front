@@ -77,7 +77,21 @@ export default KeyMirror({
     //获取验证码
     GET_VERIFICATION_SUCCESS:null,
 
+     //获取文档(AdminDoc)
+     GET_DOCUMENT_SUCCESS:null,
+     GET_DOCUMENT_FAILURE:null,
+ 
+     //修改文档(AdminDoc)
+     GET_DOCUMENT_UPDATE_SUCCESS:null,
+     GET_DOCUMENT_UPDATA_FAILURE:null,
+ 
+     //删除文档(AdminDoc)
+     GET_DOCUMENT_DELETE_SUCCESS:null,
+     GET_DOCUMENT_DELETE_FAILURE:null,
 
+     //添加文档(AdminDoc)
+     GET_DOCUMENT_ADD_SUCCESS:null,
+     GET_DOCUMENT_ADD_FAILURE:null,
 
 })
 

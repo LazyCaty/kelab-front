@@ -1,53 +1,82 @@
 import React,{Component} from 'react';
 import './AdminDoc.less' ;
-import {Button, Card, Table, Modal, Form, Input,Icon} from 'antd'
-import EditorDemo from './BraftEditors';
+import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
+import {Button, Card, Table, Modal, Form, Input,Icon,message,Popconfirm} from 'antd'
 
+import {getDocument,upDocument,delDocument} from '../../redux/action/admin/adminDoc'
+
+@connect(state=>({
+    adminDoc:state.adminDoc
+})
+)
 class AdminDoc extends Component{
     constructor(props){
         super(props);
         this.state = {
-            addDocModal: false,
             changeDocModal:false,
+            sourseData:[],
+            docurl:''
         }
     }
+    componentDidMount(){
+        this.props.dispatch(getDocument(46,1,50))
+        // .then(()=>{
+        //     为每条数据添加key值
+        //     this.props.adminDoc.document.pagingList.map((item)=>{
+        //         item.key=item.id
+        //     })
+        //     this.setState({
+        //         sourseData:this.props.adminDoc.document.pagingList
+        //     })
+        // })
+    }
 
-    /**
-     * 修改文档内容
-     * @param data
-     */
-    changeDoc = () => {
+    // 确认删除文档
+    deleteDoc = (record) => {
+        console.log(record)
+        this.props.dispatch(delDocument({
+            ids:record.serverId
+        }))
+        .then(()=>{
+            if(this.props.adminDoc.deletedocument.code === 'SUCCESS'){
+                message.success('删除文档成功');
+                setTimeout(()=>window.location.reload(),1000);
+            }else{
+                message.error('删除文档失败');               
+            }
+        })
+    }
+
+    changeDoc = (record) => {
+        this.props.form.setFieldsValue({
+            _doc_id:record.id,
+            _doc_name:record.name
+        })
         this.setState({
             changeDocModal: true,
-        });
+            docurl:record.url
+        })
     };
-
-    /**
-     * 添加文档对话框
-     */
-    addDocShowModal = () => {
-        this.setState({
-            addDocModal: true,
-        });
-    };
-
-    addDocHandleOk = (e) => {
-        this.setState({
-            addDocModal: false,
-        });
-    };
-
-    addDocHandleCancel = e => {
-        this.setState({
-            addDocModal: false,
-        });
-    };
-
     /**
      * 修改文档对话框
      */
 
-    changeDocHandleOk = (e) => {
+    changeDocHandleOk = () => {
+        const data=this.props.form.getFieldsValue();
+        this.props.dispatch(upDocument({
+            id:data._doc_id,
+            // url:this.state.docurl,
+            name:data._doc_name
+        }))
+        .then(()=>{
+            if(this.props.adminDoc.updatadocument.code === 'SUCCESS'){
+                message.success('修改文档成功');
+                setTimeout(()=>window.location.reload(),1000);
+            }else{
+                message.error('添加文档失败');               
+            }
+        })
         this.setState({
             changeDocModal: false,
         });
@@ -60,35 +89,16 @@ class AdminDoc extends Component{
     };
     render(){
         const { getFieldDecorator } = this.props.form;
-        const data = [{
-            id: 1,
-            name:'test',
-            des:'some description',
-            time:'2019/8/5',
-        },
-            {
-                id: 2,
-                name:'test2',
-                des:'some description',
-                time:'2019/8/5',
-            },
-            {
-                id: 3,
-                name:'test3',
-                des:'some description',
-                time:'2019/8/5',
-            }];
-
         const columns=[
             {title:'id',dataIndex:'id'},
             {title:"文档名",dataIndex:'name'},
-            { title: '简述', dataIndex: 'des' },
-            { title: '时间', dataIndex: 'time' },
+            {title: 'serverId', dataIndex: 'serverId' },
+            {title: 'URL', dataIndex: 'url' },
             {
                 dataIndex: 'revise',
                 render: (text, record) => {
                     return(
-                        <Button onClick={()=>{this.changeDoc(record)}}>修改</Button>
+                        <Button onClick={()=>{this.changeDoc(record)}}  >修改</Button>
                     )
                 }
             },
@@ -96,7 +106,10 @@ class AdminDoc extends Component{
                 dataIndex: 'delete',
                 render: (text, record) => {
                     return (
-                        <Button >删除</Button>
+                        <Popconfirm title={`确定删除${record.id}的评论吗?`} okText='确定' cancelText='取消' onConfirm={()=>{this.deleteDoc(record)}}>
+                             <Button >删除</Button>
+                        </Popconfirm>
+                       
                     )
                 }
             }
@@ -107,47 +120,9 @@ class AdminDoc extends Component{
             <div className="admin-doc">
                 <Card title="文档管理">
                     <div style={{margin:'10px 0'}}>
-                        {/**/}
-                        <Button  onClick={this.addDocShowModal}>添加文档</Button>
-                        <Modal
-                            title="添加文档"
-                            visible={this.state.addDocModal}
-                            onOk={this.addDocHandleOk}
-                            onCancel={this.addDocHandleCancel}
-                            okText='确定'
-                            cancelText='取消'
-                        >
-                            <Form>
-                                <Form.Item>
-                                    {getFieldDecorator('文档ID', {
-                                        rules: [{ required: true, message: '请输入要添加的文档ID!' }],
-                                    })(
-                                        <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                               placeholder="ID" />
-                                    )}
-                                </Form.Item>
-                                <Form.Item>
-                                    {getFieldDecorator('文档名称', {
-                                        rules: [{ required: true, message: '请输入要添加的文档名称!' }],
-                                    })(
-                                        <Input prefix={<Icon type="robot" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                               placeholder="名称" />
-                                    )}
-                                </Form.Item>
-                                <Form.Item>
-                                    {getFieldDecorator('文档简述', {
-                                        rules: [{ required: true, message: '请输入要添加的文档简述!' }],
-                                    })(
-                                        <Input prefix={<Icon type="solution" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                               placeholder="简述" />
-                                    )}
-                                </Form.Item>
-                                <Form.Item>
-                                    <label>内容</label>
-                                    <EditorDemo />
-                                </Form.Item>
-                            </Form>
-                        </Modal>
+                        <Link to='/admin/docedit/:data'>
+                            <Button  onClick={this.addDocShowModal}>添加文档</Button>
+                        </Link>
                         <Modal
                             title="修改文档"
                             visible={this.state.changeDocModal}
@@ -158,15 +133,15 @@ class AdminDoc extends Component{
                         >
                             <Form>
                                 <Form.Item>
-                                    {getFieldDecorator('文档ID', {
+                                    {getFieldDecorator('_doc_id', {
                                         rules: [{ required: true, message: '请输入要添加的文档ID!' }],
                                     })(
                                         <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                               placeholder="ID" />
+                                               placeholder="ID" disabled={true}/>
                                     )}
                                 </Form.Item>
                                 <Form.Item>
-                                    {getFieldDecorator('文档名称', {
+                                    {getFieldDecorator('_doc_name', {
                                         rules: [{ required: true, message: '请输入要添加的文档名称!' }],
                                     })(
                                         <Input prefix={<Icon type="robot" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -174,7 +149,7 @@ class AdminDoc extends Component{
                                     )}
                                 </Form.Item>
                                 <Form.Item>
-                                    {getFieldDecorator('文档简述', {
+                                    {getFieldDecorator('_doc_sketch', {
                                         rules: [{ required: true, message: '请输入要添加的文档简述!' }],
                                     })(
                                         <Input prefix={<Icon type="solution" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -183,7 +158,7 @@ class AdminDoc extends Component{
                                 </Form.Item>
                                 <Form.Item>
                                     <label>内容</label>
-                                    <EditorDemo />
+                                   
                                 </Form.Item>
                             </Form>
                         </Modal>
@@ -191,7 +166,7 @@ class AdminDoc extends Component{
                     <Table
                         bordered
                         columns={columns}
-                        dataSource={data}
+                        dataSource={this.state.sourseData}
                         pagination={true} //是否要分页
                     >
                     </Table>

@@ -37,7 +37,6 @@ export function getServe(page,pageSize,categoryId)
         try {
             //let headers = getTokenHeader({});
             const data = ((await axios.get(`${baseUrl}`+"server.do?page="+page+"&rows="+pageSize+"&categoryId="+categoryId)).data).data;
-
             dispatch({
                 type: GET_ADMIN_SERVER_SUCCESS,
                 data: data
