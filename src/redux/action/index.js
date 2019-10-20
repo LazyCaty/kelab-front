@@ -51,6 +51,9 @@ export default KeyMirror({
     GET_SERVER_SUBJECT_UPDATE_SUCCESS:null,
     GET_SERVER_SUBJECT_UPDATE_FAILURE:null,
 
+    //获取微服务实例
+    GET_SERVER_ENTITY_SUCCESS:null,
+    GET_SERVER_ENTITY_FAILURE:null,   
     //添加微服务实例
     GET_SERVER_ENTITY_ADD_SUCCESS:null,
     GET_SERVER_ENTITY_ADD_FAILURE:null,
@@ -74,7 +77,21 @@ export default KeyMirror({
     //获取验证码
     GET_VERIFICATION_SUCCESS:null,
 
+     //获取文档(AdminDoc)
+     GET_DOCUMENT_SUCCESS:null,
+     GET_DOCUMENT_FAILURE:null,
+ 
+     //修改文档(AdminDoc)
+     GET_DOCUMENT_UPDATE_SUCCESS:null,
+     GET_DOCUMENT_UPDATA_FAILURE:null,
+ 
+     //删除文档(AdminDoc)
+     GET_DOCUMENT_DELETE_SUCCESS:null,
+     GET_DOCUMENT_DELETE_FAILURE:null,
 
+     //添加文档(AdminDoc)
+     GET_DOCUMENT_ADD_SUCCESS:null,
+     GET_DOCUMENT_ADD_FAILURE:null,
 
 })
 

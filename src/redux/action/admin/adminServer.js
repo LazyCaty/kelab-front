@@ -13,6 +13,8 @@ const {
     GET_SERVER_UPDATE_FAILURE,
     GET_SERVER_SUBJECT_ADD_SUCCESS,
     GET_SERVER_SUBJECT_ADD_FAILURE,
+    GET_SERVER_ENTITY_SUCCESS,
+    GET_SERVER_ENTITY_FAILURE,  
     GET_SERVER_ENTITY_ADD_SUCCESS,
     GET_SERVER_ENTITY_ADD_FAILURE,
     GET_SERVER_ENTITY_DELETE_SUCCESS,
@@ -35,7 +37,6 @@ export function getServe(page,pageSize,categoryId)
         try {
             //let headers = getTokenHeader({});
             const data = ((await axios.get(`${baseUrl}`+"server.do?page="+page+"&rows="+pageSize+"&categoryId="+categoryId)).data).data;
-
             dispatch({
                 type: GET_ADMIN_SERVER_SUCCESS,
                 data: data
@@ -112,7 +113,7 @@ export function updateServer(query = ''){
     }
 }
 
-// 获取微服务分类及其实例
+// 获取微服务分类
 export function getSubject(page,rows,serverId ){
     return async(dispatch) => {
         try {
@@ -122,6 +123,25 @@ export function getSubject(page,rows,serverId ){
             const data = ((await axios.get(`${baseUrl}`+"serverSubject.do?page="+page+"&rows="+rows+id)).data).data;
             dispatch({
                 type:GET_SERVER_SUBJECT_SUCCESS,
+                data:data
+            })
+
+        } catch (error) {
+            alert(error);
+        }
+    };
+}
+
+// 获取微服务实例
+export function getEntity(query=''){
+    return async(dispatch) => {
+        try {
+            //let headers = getTokenHeader({});
+            let id = '';
+            query === undefined ? id = '&serverId=' : id = '&serverId=' + query;
+            const data = ((await axios.get(`${baseUrl}`+"serverEntity.do?page="+id)).data).data;
+            dispatch({
+                type:GET_SERVER_ENTITY_SUCCESS,
                 data:data
             })
 
@@ -158,7 +178,6 @@ export function addSubject(query = ''){
 export function deleteSubject(query=""){    
     return async(dispatch) => {
         try {
-            console.log(query)
           const data = (await axios.delete(`${baseUrl}serverSubject.do?${Qs.stringify(query)}`)).data;
             dispatch({
                 type: GET_SERVER_SUBJECT_DELETE_SUCCESS,

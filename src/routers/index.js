@@ -18,6 +18,8 @@ const Goods = loadable(() => import('../components/user/personal/Goods'))
 const AdminDoc = loadable(() => import('../components/admin/AdminDoc'))
 const ServerEdit = loadable(() => import('../components/admin/BraftEditors'))
 const AdminCategory= loadable(() => import('../components/admin/AdminCategory'))
+const DocEdit = loadable(()=>import('../components/admin/Editor/DocEditor'))
+
 
 class Routes extends Component{
     render(){
@@ -63,7 +65,7 @@ class Routes extends Component{
                                     <Route path="/admin/category" exact component={AdminCategory} />
                                     <Route path='/admin/document' exact component={AdminDoc} />
                                     <Route path="/admin/serveredit/:data" exact component={ServerEdit} />
-
+                                    <Route path="/admin/docedit/:data" exact component={DocEdit} />
                                 </Switch>
                             </Admin>
                             } />
